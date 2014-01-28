@@ -1,0 +1,6 @@
+node_modules
+tmp
+*.sublime-*
+
+test/actual
+test/yfm

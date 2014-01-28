@@ -1,0 +1,61 @@
+---
+analytics:
+  alexa: lpTeh1awA400OE
+  google:
+    domain: assemble.github.io
+    id: UA-XXXXXXXX-YY
+    siteid: false
+    tags: FOO-012345
+assets: "<%= site.dest %>/assets"
+author: "<%= pkg.author.name %>"
+brand: ASSEMBLE
+components: "<%= site.styles %>/components"
+data: data
+date: "<%= new Date() %>"
+description: "<%= pkg.description %>"
+dest: "<%= site.root %>"
+disqus:
+  enabled: false
+  shortname: "<%= pkg.name %>"
+download:
+  latest: "<%= pkg.homepage %>/master/dist/<%= pkg.name %>-<%= pkg.version %>.min.js"
+  source: "<%= pkg.homepage %>/archive/master.zip"
+helpers: "<%= site.templates %>/helpers"
+includes: "<%= site.templates %>/includes"
+layout: default
+layoutext: .hbs
+layouts: "<%= site.templates %>/layouts"
+lead: "The most awe inspiring static site boilerplate in Northern Kentucky."
+name: "<%= pkg.name %>"
+pages: "<%= site.templates %>"
+plugins: ~
+root: _gh_pages
+sharing:
+  facebook: false
+  google: false
+  gplus: false
+  hn: false
+  twitter: false
+social:
+  facebook: false
+  google: false
+  gplus: false
+  hn: false
+  linkedin: false
+  twitter:
+    related: "jonschlinkert:Assemble core team."
+    username: jonschlinkert
+    via: jonschlinkert
+styles: styles
+templates: templates
+title: BOILERPLATE
+url:
+  about: "<%= site.url.domain %>/about/"
+  blog: "<%= site.url.domain %>/blog/"
+  domain: "http://assemble.io/"
+  ghpages: "https://<%= site.username %>.github.io/<%= pkg.name %>/"
+  homepage: "<%= pkg.homepage %>"
+  issues: "<%= pkg.bugs.url %>?state=open"
+  repo: "<%= pkg.homepage %>"
+version: "<%= pkg.version %>"
+---

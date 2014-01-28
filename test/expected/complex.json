@@ -1,0 +1,73 @@
+{
+  "context": {
+    "root": "_gh_pages",
+    "dest": "<%= site.root %>",
+    "assets": "<%= site.dest %>/assets",
+    "date": "<%= new Date() %>",
+    "data": "data",
+    "templates": "templates",
+    "pages": "<%= site.templates %>",
+    "includes": "<%= site.templates %>/includes",
+    "layouts": "<%= site.templates %>/layouts",
+    "layoutext": ".hbs",
+    "layout": "default",
+    "styles": "styles",
+    "components": "<%= site.styles %>/components",
+    "helpers": "<%= site.templates %>/helpers",
+    "plugins": null,
+    "brand": "ASSEMBLE",
+    "title": "BOILERPLATE",
+    "lead": "The most awe inspiring static site boilerplate in Northern Kentucky.",
+    "version": "<%= pkg.version %>",
+    "author": "<%= pkg.author.name %>",
+    "name": "<%= pkg.name %>",
+    "description": "<%= pkg.description %>",
+    "url": {
+      "homepage": "<%= pkg.homepage %>",
+      "repo": "<%= pkg.homepage %>",
+      "issues": "<%= pkg.bugs.url %>?state=open",
+      "ghpages": "https://<%= site.username %>.github.io/<%= pkg.name %>/",
+      "domain": "http://assemble.io/",
+      "about": "<%= site.url.domain %>/about/",
+      "blog": "<%= site.url.domain %>/blog/"
+    },
+    "download": {
+      "source": "<%= pkg.homepage %>/archive/master.zip",
+      "latest": "<%= pkg.homepage %>/master/dist/<%= pkg.name %>-<%= pkg.version %>.min.js"
+    },
+    "analytics": {
+      "alexa": "lpTeh1awA400OE",
+      "google": {
+        "id": "UA-XXXXXXXX-YY",
+        "domain": "assemble.github.io",
+        "siteid": false,
+        "tags": "FOO-012345"
+      }
+    },
+    "disqus": {
+      "enabled": false,
+      "shortname": "<%= pkg.name %>"
+    },
+    "social": {
+      "twitter": {
+        "via": "jonschlinkert",
+        "username": "jonschlinkert",
+        "related": "jonschlinkert:Assemble core team."
+      },
+      "facebook": false,
+      "linkedin": false,
+      "gplus": false,
+      "hn": false,
+      "google": false
+    },
+    "sharing": {
+      "twitter": false,
+      "facebook": false,
+      "gplus": false,
+      "hn": false,
+      "google": false
+    }
+  },
+  "content": "\n\n<span class=\"alert alert-info\">This is an alert</span>\n\n## YAML Front Matter\nAdd YAML front matter to documents to extend the metadata that is supplied to your project's templates.\n\n```yaml\n---\nusername: jonschlinkert\n---\n```\nThis is probably most useful when:\n1. You need to use the same or similar templates on a number of different projects\n1. You want to supply data to the templates that won't typically be found in package.json\n\n\n## Code Comments\nCode comments may be used in markdown templates, and they will be stripped from the rendered README as long as they adhere to the following syntax:\n\n```handlebars\n[[!-- foo --]]\n[[! foo ]]\n[[!foo]]\n```\n\n## Escaping\n\n### Escaping hashes\nThis task automatically adjusts heading levels in included templates. For example, `#` is adjusted to `##`, so that heading levels \"line up\" properly after the README is built.\n\nThis can cause problems if you're using hashes for a reason other than headings, such as CSS Id's in code comments. So to prevent grunt-readme from converting `#id {}` to `##id {}`, just add a  single backtick before the hash: <code>`#id {}</code>.\n\n### Escaping Lo-Dash templates\nTo prevent Lo-Dash from attempting to evaluat templates that shouldn't be (_as with code examples_), just use square brackets instead of curly braces in any templates that have similar patterns to these: `[%= .. %]`, `[%- .. %]`, and `[% .. %]`. The square brackets will be replaced with curly braces in the rendered output.\n\n\n~~~\nfoo: bar\nversion: 2\n~~~\n\n<span class=\"alert alert-info\">This is an alert</span>\n\n# yfm [![NPM version](https://badge.fury.io/js/yfm.png)](http://badge.fury.io/js/yfm)\n\n> A simple to use YAML Front-Matter parsing and extraction Library.\n\n**Why another YAML Front Matter library?**\n\nBecause other libraries we tried failed to meet our requirements with [Assemble](http://assemble.io). Some most of the libraries met most of the requirements, but _none had all of them_. Here are the most important:\n\n* Be usable, if not simple\n* Allow custom delimiters\n* Use a dependable and well-supported library for parsing YAML\n* Don't fail if YAML front matter exists, but no content\n* Don't fail if content exists, but no YAML front matter\n* Have no problem reading YAML files directly\n* Should return an object that contains the parsed YAML front matter and content, as well as the \"original\" content.\n\n```bash\nnpm i yfm --save\n```\n## Usage\n\n```js\nvar yfm = require('yfm');\nyfm('yfm.html');\n```\n## Options\nYou may pass an options object as a second parameter.\n\n#### custom delimiters\nType: `object`\n\nDefault: `{close: '---', open: '---'}`\n\nOpen and close delimiters can be a string or an array of strings. If an array of strings is passed for a delimiter then all patterns supplied will be used to check for YAML front matter.\n\nExample:\n\n```js\n{\n  close: ['---', '~~~'],\n  open: ['...', '---']\n}\n```\n\nChecks for all patterns using these delimiters.\n\n_Passing multiple delimiters will likely provide unpredictable results, but the option is included for testing purposes._\n\n#### read\nType: `boolean`\n\nDefault: `true`\n\nSpecify whether or not to read a file from the file system. When set to `false` a raw string may be passed to the function. Example:\n\n```js\nyfm('---\\nTitle: YFM\\n---\\nContent.', {read: false})\n```\n\n\n## Examples\n#### Extract front matter\n\nLet's say our page, `foo.html` contains\n\n```html\n---\ntitle: YAML Front matter\n---\n<h1>{{title}}</h1>\n```\n\nthen running the following in the command line:\n\n```js\nconsole.log(yfm('foo.html'));\n```\nreturns\n\n```json\n{\n  \"context\": {\n    \"title\": \"YAML Front matter\"\n  },\n  \"content\": \"<h1>{{title}}</h1>\",\n  \"original\": \"---\\ntitle: YAML Front matter\\n---\\n<h1>{{title}}</h1>\"\n}\n```\nand\n\n```js\nconsole.log(yfm('foo.html').context);\n```\nreturns\n\n\n```json\n{\"title\": \"YAML Front matter\"}\n```\n\n#### Check for YAML front matter\n\n```js\nvar hasYFM = function (src, options) {\n  var obj = yfm(src, options).context;\n  return _.keys(obj).length > 0;\n};\n```\n\n\n## Authors\n\n**Jon Schlinkert**\n\n+ [github/jonschlinkert](https://github.com/jonschlinkert)\n+ [twitter/jonschlinkert](http://twitter.com/jonschlinkert)\n\n**Brian Woodward**\n\n+ [github/doowb](https://github.com/doowb)\n+ [twitter/doowb](http://twitter.com/jonschlinkert)\n\n\n## License\nCopyright (c) 2014 Jon Schlinkert, Brian Woodward, contributors.\nReleased under the MIT license\n\n***\n\n_This file was generated by [grunt-readme](https://github.com/assemble/grunt-readme) on Monday, January 27, 2014._\n\n[grunt]: http://gruntjs.com/\n[Getting Started]: https://github.com/gruntjs/grunt/blob/devel/docs/getting_started.md\n[package.json]: https://npmjs.org/doc/json.html\n",
+  "original": "---\n# =============================================\n# BUILD CONFIG\n# =============================================\n\nroot:             _gh_pages\ndest:             <%= site.root %>\nassets:           <%= site.dest %>/assets\ndate:             <%= new Date() %>\n\n\n# Data\ndata:             data\n\n# Templates\ntemplates:        templates\npages:            <%= site.templates %>\nincludes:         <%= site.templates %>/includes\nlayouts:          <%= site.templates %>/layouts\nlayoutext:        .hbs\nlayout:           default\n\n# Styles\nstyles:           styles\ncomponents:       <%= site.styles %>/components\n\n\n# =============================================\n# EXTENSIONS\n# =============================================\n\nhelpers:          <%= site.templates %>/helpers\nplugins:\n  # - assemble-contrib-permalinks\n  # - assemble-contrib-anchors\n  # - assemble-contrib-toc\n\n\n# =============================================\n# PROJECT METADATA\n# =============================================\n\nbrand:            ASSEMBLE\ntitle:            BOILERPLATE\nlead:             The most awe inspiring static site boilerplate in Northern Kentucky.\n\n# GitHub\nversion:          <%= pkg.version %>\nauthor:           <%= pkg.author.name %>\nname:             <%= pkg.name %>\ndescription:      <%= pkg.description %>\n\n# URLs\nurl:\n\n  # Repo\n  homepage:       <%= pkg.homepage %>\n  repo:           <%= pkg.homepage %>\n  issues:         <%= pkg.bugs.url %>?state=open\n  ghpages:        https://<%= site.username %>.github.io/<%= pkg.name %>/\n\n  # Site\n  domain:         http://assemble.io/\n  about:          <%= site.url.domain %>/about/\n  blog:           <%= site.url.domain %>/blog/\n\n# Download Links\ndownload:\n  source:         <%= pkg.homepage %>/archive/master.zip\n  latest:         <%= pkg.homepage %>/master/dist/<%= pkg.name %>-<%= pkg.version %>.min.js\n\n\n# =============================================\n# SEO / SEM\n# =============================================\n\nanalytics:\n  alexa:           lpTeh1awA400OE\n  google:\n    id:             UA-XXXXXXXX-YY\n    domain:         assemble.github.io\n    siteid:         false\n    tags:           FOO-012345 # Google Tags (see: https://www.google.com/tagmanager/)\n\n\n# =============================================\n# SOCIAL / SHARING\n# =============================================\n\n# Comments\ndisqus:\n  enabled:        false\n  shortname:      <%= pkg.name %>\n\n# Social\nsocial:\n  twitter:\n    via:          jonschlinkert\n    username:     jonschlinkert\n    related:      jonschlinkert:Assemble core team.\n  facebook:       false\n  linkedin:       false\n  gplus:          false\n  hn:             false\n  google:         false\n\n# Sharing\nsharing:\n  twitter:        false\n  facebook:       false\n  gplus:          false\n  hn:             false\n  google:         false\n---\n\n<span class=\"alert alert-info\">This is an alert</span>\n\n## YAML Front Matter\nAdd YAML front matter to documents to extend the metadata that is supplied to your project's templates.\n\n```yaml\n---\nusername: jonschlinkert\n---\n```\nThis is probably most useful when:\n1. You need to use the same or similar templates on a number of different projects\n1. You want to supply data to the templates that won't typically be found in package.json\n\n\n## Code Comments\nCode comments may be used in markdown templates, and they will be stripped from the rendered README as long as they adhere to the following syntax:\n\n```handlebars\n[[!-- foo --]]\n[[! foo ]]\n[[!foo]]\n```\n\n## Escaping\n\n### Escaping hashes\nThis task automatically adjusts heading levels in included templates. For example, `#` is adjusted to `##`, so that heading levels \"line up\" properly after the README is built.\n\nThis can cause problems if you're using hashes for a reason other than headings, such as CSS Id's in code comments. So to prevent grunt-readme from converting `#id {}` to `##id {}`, just add a  single backtick before the hash: <code>`#id {}</code>.\n\n### Escaping Lo-Dash templates\nTo prevent Lo-Dash from attempting to evaluat templates that shouldn't be (_as with code examples_), just use square brackets instead of curly braces in any templates that have similar patterns to these: `[%= .. %]`, `[%- .. %]`, and `[% .. %]`. The square brackets will be replaced with curly braces in the rendered output.\n\n\n~~~\nfoo: bar\nversion: 2\n~~~\n\n<span class=\"alert alert-info\">This is an alert</span>\n\n# yfm [![NPM version](https://badge.fury.io/js/yfm.png)](http://badge.fury.io/js/yfm)\n\n> A simple to use YAML Front-Matter parsing and extraction Library.\n\n**Why another YAML Front Matter library?**\n\nBecause other libraries we tried failed to meet our requirements with [Assemble](http://assemble.io). Some most of the libraries met most of the requirements, but _none had all of them_. Here are the most important:\n\n* Be usable, if not simple\n* Allow custom delimiters\n* Use a dependable and well-supported library for parsing YAML\n* Don't fail if YAML front matter exists, but no content\n* Don't fail if content exists, but no YAML front matter\n* Have no problem reading YAML files directly\n* Should return an object that contains the parsed YAML front matter and content, as well as the \"original\" content.\n\n```bash\nnpm i yfm --save\n```\n## Usage\n\n```js\nvar yfm = require('yfm');\nyfm('yfm.html');\n```\n## Options\nYou may pass an options object as a second parameter.\n\n#### custom delimiters\nType: `object`\n\nDefault: `{close: '---', open: '---'}`\n\nOpen and close delimiters can be a string or an array of strings. If an array of strings is passed for a delimiter then all patterns supplied will be used to check for YAML front matter.\n\nExample:\n\n```js\n{\n  close: ['---', '~~~'],\n  open: ['...', '---']\n}\n```\n\nChecks for all patterns using these delimiters.\n\n_Passing multiple delimiters will likely provide unpredictable results, but the option is included for testing purposes._\n\n#### read\nType: `boolean`\n\nDefault: `true`\n\nSpecify whether or not to read a file from the file system. When set to `false` a raw string may be passed to the function. Example:\n\n```js\nyfm('---\\nTitle: YFM\\n---\\nContent.', {read: false})\n```\n\n\n## Examples\n#### Extract front matter\n\nLet's say our page, `foo.html` contains\n\n```html\n---\ntitle: YAML Front matter\n---\n<h1>{{title}}</h1>\n```\n\nthen running the following in the command line:\n\n```js\nconsole.log(yfm('foo.html'));\n```\nreturns\n\n```json\n{\n  \"context\": {\n    \"title\": \"YAML Front matter\"\n  },\n  \"content\": \"<h1>{{title}}</h1>\",\n  \"original\": \"---\\ntitle: YAML Front matter\\n---\\n<h1>{{title}}</h1>\"\n}\n```\nand\n\n```js\nconsole.log(yfm('foo.html').context);\n```\nreturns\n\n\n```json\n{\"title\": \"YAML Front matter\"}\n```\n\n#### Check for YAML front matter\n\n```js\nvar hasYFM = function (src, options) {\n  var obj = yfm(src, options).context;\n  return _.keys(obj).length > 0;\n};\n```\n\n\n## Authors\n\n**Jon Schlinkert**\n\n+ [github/jonschlinkert](https://github.com/jonschlinkert)\n+ [twitter/jonschlinkert](http://twitter.com/jonschlinkert)\n\n**Brian Woodward**\n\n+ [github/doowb](https://github.com/doowb)\n+ [twitter/doowb](http://twitter.com/jonschlinkert)\n\n\n## License\nCopyright (c) 2014 Jon Schlinkert, Brian Woodward, contributors.\nReleased under the MIT license\n\n***\n\n_This file was generated by [grunt-readme](https://github.com/assemble/grunt-readme) on Monday, January 27, 2014._\n\n[grunt]: http://gruntjs.com/\n[Getting Started]: https://github.com/gruntjs/grunt/blob/devel/docs/getting_started.md\n[package.json]: https://npmjs.org/doc/json.html\n"
+}
