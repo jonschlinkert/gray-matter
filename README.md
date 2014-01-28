@@ -1,27 +1,19 @@
-# matter [![NPM version](https://badge.fury.io/js/matter.png)](http://badge.fury.io/js/matter)
+# gray-matter [![NPM version](https://badge.fury.io/js/gray-matter.png)](http://badge.fury.io/js/gray-matter)
 
-> A simple to use YAML Front-Matter parsing and extraction Library.
+> A simple-to-use Front-Matter parsing and extraction Library.
 
-**Why another YAML Front Matter library?**
+* Use custom delimiters
+* Will extract and parse YAML, JSON, or CoffeeScript.
+* Easy to add additional parsers!
 
-Because other libraries we tried failed to meet our requirements with [Assemble](http://assemble.io). Some most of the libraries met most of the requirements, but _none had all of them_. Here are the most important:
-
-* Be usable, if not simple
-* Allow custom delimiters
-* Use a dependable and well-supported library for parsing YAML
-* Don't fail if YAML front matter exists, but no content
-* Don't fail if content exists, but no YAML front matter
-* Have no problem reading YAML files directly
-* Have no problem with complex content, including fenced code blocks containing examples of YAML front matter.
-* Should return an object that contains the parsed YAML front matter and content, as well as the "original" content.
 
 ```bash
-npm i matter --save
+npm i gray-matter --save
 ```
 ## Usage
 
 ```js
-var matter = require('matter');
+var matter = require('gray-matter');
 matter(String, Object);
 ```
 
@@ -68,6 +60,14 @@ matter.exists('file.md');
 ## Options
 
 > All methods will accept an options object to be passed as a second paramer
+
+#### format
+Type: `String`
+
+Default: `yaml`
+
+The parser to use on the extracted front matter. Valid options are, `yaml`, `coffee` and `json`.
+
 
 #### delimiters
 Type: `object`
