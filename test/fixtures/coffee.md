@@ -4,7 +4,7 @@ description: '''
   Front matter
   '''
 categories: '''
-  front matter coffee coffescript
+  front matter coffee coffee-script
   '''
 ---
 

@@ -86,51 +86,68 @@ describe('Use custom delimiters:', function() {
 
 
 describe('Parse JSON:', function() {
+
+  var expected = {
+    context: {
+      title: "JSON",
+      "description": "Front Matter"
+    },
+    content: "\n\n# This page has JSON front matter!",
+    original: "---\n{\n  \"title\": \"JSON\",\n  \"description\": \"Front Matter\"\n}\n---\n\n# This page has JSON front matter!"
+  };
+
   it('should parse JSON front matter.', function(done) {
-    var actual = matter.read('./test/fixtures/json.md', {format: 'json'});
-    var expected = {
-      context: {
-        title: "JSON",
-        "description": "Front Matter"
-      },
-      content: "\n\n# This page has JSON front matter!",
-      original: "---\n{\n  \"title\": \"JSON\",\n  \"description\": \"Front Matter\"\n}\n---\n\n# This page has JSON front matter!"
-    };
+    var actual = matter.read('./test/fixtures/json.md', {lang: 'json'});
+    expect(actual).to.deep.equal(expected);
+    done();
+  });
+
+  it('should parse JSON front matter with custom delimiters.', function(done) {
+    expected.original = ";;;\n{\n  \"title\": \"JSON\",\n  \"description\": \"Front Matter\"\n}\n;;;\n\n# This page has JSON front matter!";
+    var actual = matter.read('./test/fixtures/json-semi-colons.md', {lang: 'json', delims: [';;;', ';;;']});
+    expect(actual).to.deep.equal(expected);
+    done();
+  });
+
+  it('should autodetect language and parse JSON front matter.', function(done) {
+    expected.original = ";;; json\n{\n  \"title\": \"JSON\",\n  \"description\": \"Front Matter\"\n}\n;;;\n\n# This page has JSON front matter!";
+    var actual = matter.read('./test/fixtures/json-autodetect.md', {autodetect: 'true', delims: [';;;', ';;;']});
     expect(actual).to.deep.equal(expected);
     done();
   });
 });
 
 describe('Parse coffee:', function() {
+  var expected = {
+    context: {
+      categories: "front matter coffee coffee-script",
+      title: "Coffee",
+      description: "Front matter",
+    },
+    content: "\n\n# This page has coffee front matter!",
+    original: "---\ntitle: 'Coffee'\ndescription: '''\n  Front matter\n  '''\ncategories: '''\n  front matter coffee coffee-script\n  '''\n---\n\n# This page has coffee front matter!"
+  };
+
   it('should parse coffee front matter.', function(done) {
     var actual = matter.read('./test/fixtures/coffee.md', {lang: 'coffee'});
-    var expected = {
-      context: {
-        categories: "front matter coffee coffescript",
-        "title": "Coffee",
-        "description": "Front matter",
-      },
-      content: "\n\n# This page has coffee front matter!",
-      original: "---\ntitle: 'Coffee'\ndescription: '''\n  Front matter\n  '''\ncategories: '''\n  front matter coffee coffescript\n  '''\n---\n\n# This page has coffee front matter!"
-    }
     expect(actual).to.deep.equal(expected);
     done();
   });
   it('should evaluate functions in coffee front matter.', function(done) {
-    var actual = matter.read('./test/fixtures/coffee-fn.md', {lang: 'coffee'});
+    var actual = matter.read('./test/fixtures/coffee-fn.md', {autodetect: true});
     expect(typeof actual.context).to.equal('function');
     done();
   });
 });
 
 describe('Autodetect language:', function() {
+  var expected = {
+    context: 'jonschlinkert',
+    content: "\nContent",
+    original: "--- coffee\nuser = 'jonschlinkert'\n---\nContent"
+  };
   it('should autodetect front matter language, and use the correct parser.', function(done) {
     var actual = matter.read('./test/fixtures/autodetect.md', {autodetect: true});
-    var expected = {
-      context: 'jonschlinkert',
-      content: "\nContent",
-      original: "--- coffee\nuser = 'jonschlinkert'\n---\nContent"
-    }
     expect(actual).to.deep.equal(expected);
     done();
   });
