@@ -1,4 +1,5 @@
 --- coffee
-user = 'jonschlinkert'
+data =
+  user: 'jonschlinkert'
 ---
 Content

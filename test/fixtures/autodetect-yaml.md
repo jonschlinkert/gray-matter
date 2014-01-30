@@ -1,0 +1,4 @@
+---yaml
+user: jonschlinkert
+---
+Content
