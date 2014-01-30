@@ -61,16 +61,15 @@ matter.exists('file.md');
 
 > All methods will accept an options object to be passed as a second paramer
 
-#### format
+#### lang
 Type: `String`
 
 Default: `yaml`
 
 The parser to use on the extracted front matter. Valid options are, `yaml`, `coffee` and `json`.
 
-
-#### delimiters
-Type: `object`
+#### delims
+Type: `Object`
 
 Default: `{delims: ['---', '---']}`
 
@@ -90,9 +89,26 @@ You may also pass an array of arrays, allowing multiple alternate delimiters to 
   ]
 }
 ```
+_Note that passing multiple delimiters will yield unpredictable results, so it is recommended that you use this option only for testing purposes._
 
-_However, passing multiple delimiters will yield unpredictable results, so it is recommended that you use this option only for testing purposes._
+#### autodetect
+Type: `Boolean`
 
+Default: `undefined`
+
+Attempts to automatically register a language that is specified after the first code boundary (delimiter).
+
+Usage Example:
+
+```coffee
+--- coffee
+user = 'jonschlinkert'
+reverse = (src) ->
+  src.split('').reverse().join('')
+---
+{%= user %}
+{%= reverse(user) %}
+```
 
 ## Examples
 

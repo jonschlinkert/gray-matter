@@ -1,0 +1,4 @@
+--- coffee
+user = 'jonschlinkert'
+---
+Content

@@ -7,27 +7,38 @@
 'use strict';
 
 // node_modules
-var delim = require('delims');
+var delims = require('delims');
 var file = require('fs-utils');
 var _ = require('lodash');
 
 // Local libs
-var parse = require('./lib/parsers');
-
+var parsers = require('./lib/parsers');
+var utils = require('./lib/utils');
 
 // Parse the given string
-var matter = function (src, options) {
-  var opts = _.extend({delims: ['---','---'], format: 'yaml'}, options)
+function matter(src, options) {
+  var opts = _.extend({delims: ['---','---'], lang: 'yaml'}, options);
 
   var metadata = {};
   var content = src;
-  var delimiters = delim(opts.delims).evaluate;
+  var delimiters = delims(opts.delims).evaluate;
+
+  // If true, will attempt to detect and register
+  // the correct parser based on the returned string
+  if(opts.autodetect) {
+    opts.lang = utils.detectLang(opts.delims[0], content);
+    content = content.replace(opts.lang, '');
+  }
 
   // File object
   var fileObject = content.match(delimiters);
-
   if (fileObject && fileObject.length === 3) {
-    metadata = parse[opts.format](fileObject[1]);
+    try {
+      metadata = parsers[opts.lang](fileObject[1]);
+    } catch(e) {
+      e.origin = __filename;
+      console.warn('Front-matter language not detected by gray-matter', e);
+    }
     content = fileObject[2];
   }
 
