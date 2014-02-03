@@ -6,10 +6,42 @@
 * Will extract and parse YAML, JSON, or CoffeeScript.
 * Easy to add additional parsers!
 
+## Quickstart
+
+Install with [npm](npmjs.org)
 
 ```bash
 npm i gray-matter --save
 ```
+Install with [bower](https://github.com/bower/bower)
+
+```bash
+bower install gray-matter --save
+```
+
+<!-- toc -->
+* [Quickstart](#quickstart)
+* [Usage](#usage)
+* [Methods](#methods)
+  * [matter](#matter)
+  * [matter.read](#matterread)
+  * [matter.exists](#matterexists)
+  * [matter.extend](#matterextend)
+  * [matter.recontruct](#matterrecontruct)
+  * [matter.stringify](#matterstringify)
+  * [matter.stringifyYAML](#matterstringifyyaml)
+* [Options](#options)
+    * [lang](#lang)
+    * [delims](#delims)
+    * [autodetect](#autodetect)
+* [Examples](#examples)
+  * [matter](#matter)
+  * [matter.extend](#matterextend)
+* [Authors](#authors)
+* [License](#license)
+
+<!-- toc stop -->
+
 ## Usage
 
 ```js
@@ -24,37 +56,76 @@ matter(String, Object);
 By default the `matter()` method expects a string. So this:
 
 ```js
-matter('---\nTitle: This is matter\n---\n<p>This is content.<p>');
+matter(str);
 ```
 
-results in:
+results in something like:
 
 ```json
 {
-  "context": {
-    "title": "This is matter"
-  },
-  "content": "<p>This is content.<p>",
-  "original": "---\nTitle: This is matter\n---\n<p>This is content.<p>"
+  "context": {"foo": "bar"},
+  "content": "baz",
+  "original": "---\nfoo: bar\n---\nbaz"
 }
 ```
 
 ### matter.read
 
-To read a file from the file system before parsing, use `matter.read`:
+Read a file from the file system before parsing.
 
 ```js
 matter.read('file.md');
 ```
+Returns:
+
+```json
+{
+  "context": {"foo": "bar"},
+  "content": "baz",
+  "original": "---\nfoo: bar\n---\nbaz"
+}
+```
 
 ### matter.exists
 
-To check for YAML front matter, returning `true` or `false` if it exists, use `matter.exists`:
+Returns `true` or `false` if front matter exists:
 
 ```js
-matter.exists('file.md');
+matter.exists(str);
 ```
 
+### matter.extend
+
+Extend and stringify **YAML** front matter. Takes an object as the second parameter, and returns either the extended, stringified object (YAML), or if no front matter is found an empty string is returned.
+
+```js
+matter.extend(str, obj);
+```
+
+### matter.recontruct
+
+A convenience wrapper around the `matter` and `matter.extend`. Extends YAML front matter, then re-assembles front matter with the content of the file.
+
+```js
+matter.recontruct(str, obj);
+```
+
+### matter.stringify
+
+A convenience wrapper around the `matter(str).context` method.
+
+```js
+matter.stringify(str);
+```
+
+
+### matter.stringifyYAML
+
+Stringify parsed front matter back to YAML.
+
+```js
+matter.stringifyYAML(str);
+```
 
 
 ## Options
@@ -112,6 +183,8 @@ reverse = (src) ->
 
 ## Examples
 
+### matter
+
 Let's say our page, `foo.html` contains
 
 ```html
@@ -150,6 +223,37 @@ returns
 ```json
 {"title": "YAML Front matter", "description": "This is a page"}
 ```
+
+### matter.extend
+
+Given this page:
+
+```html
+---
+title: Gray Matter
+---
+Hooray!
+```
+and this config:
+
+```js
+var file = require('fs').readFileSync('file.md', 'utf8');
+var obj = {
+  description: 'A simple to use front matter lib';
+};
+matter.extend(file, obj);
+```
+
+the result would be:
+
+```html
+---
+title: Gray Matter
+description: A simple to use front matter lib
+---
+Hooray!
+```
+
 
 
 ## Authors

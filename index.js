@@ -17,11 +17,11 @@ var parsers = require('./lib/parsers');
 var utils = require('./lib/utils');
 
 // Parse the given string
-function matter(src, options) {
+function matter(str, options) {
   var opts = _.extend({delims: ['---','---'], lang: 'yaml'}, options);
 
   var metadata = {};
-  var content = src;
+  var content = str;
   var delimiters = delims(opts.delims).evaluate;
 
   // If true, will attempt to detect and register
@@ -46,7 +46,7 @@ function matter(src, options) {
   return {
     context: metadata,
     content: content,
-    original: src
+    original: str
   };
 };
 
@@ -56,19 +56,37 @@ matter.read = function(src, options) {
 };
 
 // Does YAML front matter exist?
-matter.exists = function(src, options) {
-  var obj = matter.read(src, options).context;
+matter.exists = function(str, options) {
+  var obj = matter(str, options).context;
   return _.keys(obj).length > 0;
 };
 
+// Extend and stringify YAML.
+matter.extend = function(str, obj) {
+  if(matter.exists(str)) {
+    var context = _.extend({}, matter(str).context, obj);
+    var yaml = matter.stringifyYAML(context);
+    return '---\n' + yaml + '---';
+  } else {
+    return '';
+  }
+};
+
+// Extend YAML, then put the file back together
+matter.reconstruct = function(str, obj) {
+  var front = matter.extend(str, obj);
+  var content = matter(str).content;
+  return front + content;
+};
+
 // Stringify to jSON
-matter.stringifyJSON = function(src, options) {
-  return matter(src, options).context;
+matter.stringify = function(str, options) {
+  return matter(str, options).context;
 };
 
 // Stringify to YAML
-matter.stringifyYAML = function(src) {
-  return YAML.dump(src);
+matter.stringifyYAML = function(obj) {
+  return YAML.dump(obj);
 };
 
 module.exports = matter;

@@ -277,7 +277,8 @@ describe('Custom delimiters:', function () {
 
 describe('Check for matter:', function () {
   it('should return true or false if YAML front matter exists.', function (done) {
-    var actual = matter.exists('./test/fixtures/alpha.hbs');
+    var fixture = file.readFileSync('./test/fixtures/alpha.hbs');
+    var actual = matter.exists(fixture);
     expect(actual).to.equal(true);
     done();
   });
