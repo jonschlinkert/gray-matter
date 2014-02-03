@@ -91,8 +91,8 @@ describe('Stringify YAML:', function () {
   });
 
   it('should stringify YAML.', function (done) {
-    var fixture = file.readFileSync('./test/fixtures/alpha.hbs');
-    var actual = matter.stringifyYAML(fixture);
+    var fixture = matter.read('./test/fixtures/alpha.hbs');
+    var actual = matter.stringifyYAML(fixture.context);
     expect(actual).to.deep.equal('foo: bar\nversion: 2\n');
     done();
   });

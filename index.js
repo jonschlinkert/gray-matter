@@ -67,9 +67,8 @@ matter.stringifyJSON = function(src, options) {
 };
 
 // Stringify to YAML
-matter.stringifyYAML = function(src, options) {
-  var front = matter(src, options).context;
-  return YAML.dump(front);
+matter.stringifyYAML = function(src) {
+  return YAML.dump(src);
 };
 
 module.exports = matter;
