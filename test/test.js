@@ -82,6 +82,23 @@ describe('Read from strings:', function () {
 
 
 
+describe('Stringify YAML:', function () {
+  it('should stringify JSON.', function (done) {
+    var fixture = file.readFileSync('./test/fixtures/alpha.hbs');
+    var actual = matter.stringifyJSON(fixture);
+    expect(actual).to.deep.equal({foo: 'bar', version: 2});
+    done();
+  });
+
+  it('should stringify YAML.', function (done) {
+    var fixture = file.readFileSync('./test/fixtures/alpha.hbs');
+    var actual = matter.stringifyYAML(fixture);
+    expect(actual).to.deep.equal('foo: bar\nversion: 2\n');
+    done();
+  });
+});
+
+
 describe('Read from file system:', function () {
   it('should extract YAML front matter from files with content.', function (done) {
     var actual = matter.read('./test/fixtures/alpha.hbs');

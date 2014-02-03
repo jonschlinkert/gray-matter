@@ -7,6 +7,7 @@
 'use strict';
 
 // node_modules
+var YAML = require('js-yaml');
 var delims = require('delims');
 var file = require('fs-utils');
 var _ = require('lodash');
@@ -58,6 +59,17 @@ matter.read = function(src, options) {
 matter.exists = function(src, options) {
   var obj = matter.read(src, options).context;
   return _.keys(obj).length > 0;
+};
+
+// Stringify to jSON
+matter.stringifyJSON = function(src, options) {
+  return matter(src, options).context;
+};
+
+// Stringify to YAML
+matter.stringifyYAML = function(src, options) {
+  var front = matter(src, options).context;
+  return YAML.dump(front);
 };
 
 module.exports = matter;
