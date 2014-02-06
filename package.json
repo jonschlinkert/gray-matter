@@ -8,12 +8,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/assemble/matter.git"
+    "url": "https://github.com/assemble/gray-matter.git"
   },
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/assemble/matter/blob/master/LICENSE-MIT"
+      "url": "https://github.com/assemble/gray-matter/blob/master/LICENSE-MIT"
     }
   ],
   "main": "index.js",
