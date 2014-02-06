@@ -85,7 +85,7 @@ describe('Read from strings:', function () {
 describe('Stringify YAML:', function () {
   it('should stringify JSON.', function (done) {
     var fixture = file.readFileSync('./test/fixtures/alpha.hbs');
-    var actual = matter.stringifyJSON(fixture);
+    var actual = matter.stringify(fixture);
     expect(actual).to.deep.equal({foo: 'bar', version: 2});
     done();
   });
@@ -118,6 +118,23 @@ describe('Use custom delimiters:', function () {
   it('should use custom delimiters.', function (done) {
     var actual = matter.read('./test/fixtures/custom-delims.md', {
       delims: ['~~~', '~~~']
+    });
+    expect(actual).to.deep.equal(customDelims);
+    done();
+  });
+});
+
+
+describe('Use custom delimiters:', function () {
+  it('should use custom delimiters.', function (done) {
+    var actual = matter.read('./test/fixtures/code-comments.js', {
+      // /\/\*\*([\S\s]+)\*\//
+
+      delims: ['\/\*\*', '\*\/'],
+      delimsOpts: {
+        body: '\\s+\\*\\s*([\\s\\S]+?)',
+        escape: true
+      }
     });
     expect(actual).to.deep.equal(customDelims);
     done();

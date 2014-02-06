@@ -18,11 +18,15 @@ var utils = require('./lib/utils');
 
 // Parse the given string
 function matter(str, options) {
-  var opts = _.extend({delims: ['---','---'], lang: 'yaml'}, options);
+  var opts = _.defaults({}, options, {
+    delims: ['---', '---'],
+    delimsOpts: {},
+    lang: 'yaml',
+  });
 
   var metadata = {};
   var content = str;
-  var delimiters = delims(opts.delims).evaluate;
+  var delimiters = delims(opts.delims, opts.delimsOpts).evaluate;
 
   // If true, will attempt to detect and register
   // the correct parser based on the returned string
