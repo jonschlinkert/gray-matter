@@ -126,7 +126,7 @@ describe('Use custom delimiters:', function () {
 
 
 describe('Use custom delimiters:', function () {
-  it('should use custom delimiters.', function (done) {
+  xit('should use custom delimiters.', function (done) {
     var actual = matter.read('./test/fixtures/code-comments.js', {
       // /\/\*\*([\S\s]+)\*\//
 
