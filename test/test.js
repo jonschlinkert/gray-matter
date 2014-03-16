@@ -203,6 +203,19 @@ describe('autodetect language', function () {
     done();
   });
 
+  it('should detect TOML as the language.', function (done) {
+    var actual = matter.read('./test/fixtures/autodetect-toml.md', {
+      autodetect: true
+    });
+    var expected = {
+      context: {data: {user: "jonschlinkert"}},
+      content: "\nContent\n",
+      original: "--- toml\n[data]\nuser = \"jonschlinkert\"\n---\nContent\n"
+    };
+    expect(actual).to.deep.equal(expected);
+    done();
+  });
+
   it('should detect YAML as the language, although no language is defined after the first fence.', function (done) {
     var actual = matter.read('./test/fixtures/autodetect-no-lang.md', {
       autodetect: true
@@ -254,6 +267,26 @@ describe('Parse coffee:', function () {
       autodetect: true
     });
     expect(typeof actual.context).to.equal('function');
+    done();
+  });
+});
+
+describe('Parse toml:', function () {
+  var expected = {
+    context: {
+      categories: "front matter toml",
+      title: "TOML",
+      description: "Front matter",
+    },
+    content: "\n\n# This page has toml front matter!\n",
+    original: "---\ntitle = \"TOML\"\ndescription = \"Front matter\"\ncategories = \"front matter toml\"\n---\n\n# This page has toml front matter!\n"
+  };
+
+  it('should parse toml front matter.', function (done) {
+    var actual = matter.read('./test/fixtures/toml.md', {
+      lang: 'toml'
+    });
+    expect(actual).to.deep.equal(expected);
     done();
   });
 });

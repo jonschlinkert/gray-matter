@@ -29,7 +29,8 @@
   },
   "devDependencies": {
     "chai": "~1.8.1",
-    "mocha": "~1.17.1"
+    "mocha": "~1.17.1",
+    "toml": "~2.0.4"
   },
   "keywords": [
     "front-matter",
