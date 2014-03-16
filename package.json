@@ -44,5 +44,8 @@
     "coffee",
     "coffee-script",
     "yaml"
-  ]
+  ],
+  "scripts": {
+    "test": "node_modules/.bin/mocha"
+  }
 }
