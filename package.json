@@ -21,13 +21,13 @@
     "node": ">= 0.8.0"
   },
   "dependencies": {
-    "coffee-script": "~1.6.3",
     "delims": "~0.1.0",
     "fs-utils": "~0.1.6",
     "js-yaml": "~3.0.1",
     "lodash": "~2.4.1"
   },
   "devDependencies": {
+    "coffee-script": "~1.6.3",
     "chai": "~1.8.1",
     "mocha": "~1.17.1"
   },
