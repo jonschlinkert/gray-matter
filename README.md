@@ -1,4 +1,4 @@
-# gray-matter [![NPM version](https://badge.fury.io/js/gray-matter.png)](http://badge.fury.io/js/gray-matter)
+# gray-matter [![NPM version](https://badge.fury.io/js/gray-matter.png)](http://badge.fury.io/js/gray-matter) [![Build Status](https://travis-ci.org/assemble/gray-matter.png?branch=master)](https://travis-ci.org/assemble/gray-matter)
 
 > A simple-to-use Front-Matter parsing and extraction Library.
 
