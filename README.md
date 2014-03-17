@@ -3,7 +3,11 @@
 > A simple-to-use Front-Matter parsing and extraction Library.
 
 * Use custom delimiters
-* Will extract and parse YAML, JSON, or CoffeeScript.
+* Will extract and parse:
+  * [YAML](http://github.com/nodeca/js-yaml)
+  * [JSON](http://en.wikipedia.org/wiki/Json)
+  * [CoffeeScript](http://coffeescript.org)
+  * [TOML](http://github.com/mojombo/toml)
 * Easy to add additional parsers!
 
 ## Quickstart
@@ -137,7 +141,11 @@ Type: `String`
 
 Default: `yaml`
 
-The parser to use on the extracted front matter. Valid options are, `yaml`, `coffee` and `json`.
+The parser to use on the extracted front matter. Valid options include:
+* `yaml`
+* `json`
+* `coffee` requires the [`coffee-script`](https://www.npmjs.org/package/coffee-script) package
+* `toml` requires the [`toml`](https://www.npmjs.org/package/toml) package
 
 #### delims
 Type: `Object`
