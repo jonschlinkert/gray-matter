@@ -1,39 +1,44 @@
-# {%= shortname %} [![NPM version](https://badge.fury.io/js/{%= name %}.png)](http://badge.fury.io/js/{%= name %})
+# {%= name %} {%= badge('fury') %}
 
 > {%= description %}
 
-**Why another YAML Front Matter library?**
+* Use custom delimiters
+* Will extract and parse:
+  * [YAML](http://github.com/nodeca/js-yaml)
+  * [JSON](http://en.wikipedia.org/wiki/Json)
+  * [CoffeeScript](http://coffeescript.org)
+  * [TOML](http://github.com/mojombo/toml)
+* Easy to add additional parsers!
 
-Because other libraries we tried failed to meet our requirements with [Assemble](http://assemble.io). Some most of the libraries met most of the requirements, but _none had all of them_. Here are the most important:
+#### TOC
 
-* Be usable, if not simple
-* Allow custom delimiters
-* Use a dependable and well-supported library for parsing YAML
-* Don't fail if YAML front matter exists, but no content
-* Don't fail if content exists, but no YAML front matter
-* Have no problem reading YAML files directly
-* Have no problem with complex content, including fenced code blocks containing examples of YAML front matter.
-* Should return an object that contains the parsed YAML front matter and content, as well as the "original" content.
+<!-- toc -->
 
-```bash
-npm i {%= name %} --save
-```
+## Install
+{%= docs("install") %}
+
 ## Usage
-{%= _.doc("usage.md") %}
+{%= docs("usage") %}
+
+## Methods
+{%= docs("methods") %}
 
 ## Options
-{%= _.doc("options.md") %}
+{%= docs("options") %}
 
 ## Examples
-{%= _.doc("examples.md") %}
+{%= docs("examples") %}
+
+## Why?
+{%= docs("why") %}
 
 ## Authors
-{%= _.contrib("authors.md") %}
+{%= contrib("authors") %}
 
 ## License
 Copyright (c) 2014 Jon Schlinkert, Brian Woodward, contributors.
-{%= license %}
+{%= license() %}
 
 ***
 
-{%= _.include("footer.md") %}
+{%= include("footer") %}

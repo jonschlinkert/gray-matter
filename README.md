@@ -1,17 +1,41 @@
-# gray-matter [![NPM version](https://badge.fury.io/js/gray-matter.png)](http://badge.fury.io/js/gray-matter) [![Build Status](https://travis-ci.org/assemble/gray-matter.png?branch=master)](https://travis-ci.org/assemble/gray-matter)
+# gray-matter [![NPM version](https://badge.fury.io/js/gray-matter.png)](http://badge.fury.io/js/gray-matter)
 
-> A simple-to-use Front-Matter parsing and extraction Library.
+> A simple to use and extend front matter library. Supports parsing and extracting YAML, JSON, TOML or Coffee Front-Matter, with options to set custom delimiters.
 
 * Use custom delimiters
 * Will extract and parse:
-  * [YAML](http://github.com/nodeca/js-yaml)
+  * [YAML](http://github.com/nodeca/js-)
   * [JSON](http://en.wikipedia.org/wiki/Json)
   * [CoffeeScript](http://coffeescript.org)
   * [TOML](http://github.com/mojombo/toml)
 * Easy to add additional parsers!
 
-## Quickstart
+#### TOC
 
+<!-- toc -->
+* [Install](#install)
+* [Usage](#usage)
+* [Methods](#methods)
+  * [matter](#matter)
+  * [matter.read](#matterread)
+  * [matter.exists](#matterexists)
+  * [matter.extend](#matterextend)
+  * [matter.recontruct](#matterrecontruct)
+  * [matter.stringify](#matterstringify)
+  * [matter.stringifyYAML](#matterstringifyyaml)
+* [Options](#options)
+  * [lang](#lang)
+  * [delims](#delims)
+  * [autodetect](#autodetect)
+* [Examples](#examples)
+  * [matter](#matter)
+  * [matter.extend](#matterextend)
+* [Why?](#why)
+* [Authors](#authors)
+* [License](#license)
+
+<!-- toc stop -->
+## Install
 Install with [npm](npmjs.org)
 
 ```bash
@@ -23,38 +47,13 @@ Install with [bower](https://github.com/bower/bower)
 bower install gray-matter --save
 ```
 
-<!-- toc -->
-* [Quickstart](#quickstart)
-* [Usage](#usage)
-* [Methods](#methods)
-  * [matter](#matter)
-  * [matter.read](#matterread)
-  * [matter.exists](#matterexists)
-  * [matter.extend](#matterextend)
-  * [matter.recontruct](#matterrecontruct)
-  * [matter.stringify](#matterstringify)
-  * [matter.stringifyYAML](#matterstringifyyaml)
-* [Options](#options)
-    * [lang](#lang)
-    * [delims](#delims)
-    * [autodetect](#autodetect)
-* [Examples](#examples)
-  * [matter](#matter)
-  * [matter.extend](#matterextend)
-* [Authors](#authors)
-* [License](#license)
-
-<!-- toc stop -->
-
 ## Usage
-
 ```js
 var matter = require('gray-matter');
 matter(String, Object);
 ```
 
 ## Methods
-
 ### matter
 
 By default the `matter()` method expects a string. So this:
@@ -131,12 +130,10 @@ Stringify parsed front matter back to YAML.
 matter.stringifyYAML(str);
 ```
 
-
 ## Options
+> All methods will accept an options object to be passed as a second parameter
 
-> All methods will accept an options object to be passed as a second paramer
-
-#### lang
+### lang
 Type: `String`
 
 Default: `yaml`
@@ -147,7 +144,7 @@ The parser to use on the extracted front matter. Valid options include:
 * `coffee` requires the [`coffee-script`](https://www.npmjs.org/package/coffee-script) package
 * `toml` requires the [`toml`](https://www.npmjs.org/package/toml) package
 
-#### delims
+### delims
 Type: `Object`
 
 Default: `{delims: ['---', '---']}`
@@ -168,9 +165,9 @@ You may also pass an array of arrays, allowing multiple alternate delimiters to 
   ]
 }
 ```
-_Note that passing multiple delimiters will yield unpredictable results, so it is recommended that you use this option only for testing purposes._
+_Note that passing multiple delimiters will yield unpredictable results, it is recommended that you use this option only for testing purposes._
 
-#### autodetect
+### autodetect
 Type: `Boolean`
 
 Default: `undefined`
@@ -185,12 +182,12 @@ user = 'jonschlinkert'
 reverse = (src) ->
   src.split('').reverse().join('')
 ---
+
 {%= user %}
 {%= reverse(user) %}
 ```
 
 ## Examples
-
 ### matter
 
 Let's say our page, `foo.html` contains
@@ -262,6 +259,19 @@ description: A simple to use front matter lib
 Hooray!
 ```
 
+## Why?
+> Why another YAML Front Matter library?
+
+Because other libraries we tried failed to meet our requirements with [Assemble](http://assemble.io). Some most of the libraries met most of the requirements, but _none had all of them_. Here are the most important:
+
+* Be usable, if not simple
+* Allow custom delimiters
+* Use a dependable and well-supported library for parsing YAML
+* Don't fail if YAML front matter exists, but no content
+* Don't fail if content exists, but no YAML front matter
+* Have no problem reading YAML files directly
+* Have no problem with complex content, including fenced code blocks containing examples of YAML front matter.
+* Should return an object that contains the parsed YAML front matter and content, as well as the "original" content.
 
 
 ## Authors
@@ -276,15 +286,10 @@ Hooray!
 + [github/doowb](https://github.com/doowb)
 + [twitter/doowb](http://twitter.com/jonschlinkert)
 
-
 ## License
 Copyright (c) 2014 Jon Schlinkert, Brian Woodward, contributors.
 Released under the MIT license
 
 ***
 
-_This file was generated by [grunt-readme](https://github.com/assemble/grunt-readme) on Monday, January 27, 2014._
-
-[grunt]: http://gruntjs.com/
-[Getting Started]: https://github.com/gruntjs/grunt/blob/devel/docs/getting_started.md
-[package.json]: https://npmjs.org/doc/json.html
+_This file was generated by [verb-cli](https://github.com/assemble/verb-cli) on March 17, 2014._

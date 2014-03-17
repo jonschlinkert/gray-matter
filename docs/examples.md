@@ -1,3 +1,4 @@
+## matter
 
 Let's say our page, `foo.html` contains
 
@@ -12,7 +13,7 @@ description: This is a page
 then running the following in the command line:
 
 ```js
-console.log(yfm('foo.html'));
+console.log(matter('foo.html'));
 ```
 returns
 
@@ -29,11 +30,41 @@ returns
 and
 
 ```js
-console.log(yfm('foo.html').context);
+console.log(matter('foo.html').context);
 ```
 returns
 
 
 ```json
 {"title": "YAML Front matter", "description": "This is a page"}
+```
+
+## matter.extend
+
+Given this page:
+
+```html
+---
+title: Gray Matter
+---
+Hooray!
+```
+and this config:
+
+```js
+var file = require('fs').readFileSync('file.md', 'utf8');
+var obj = {
+  description: 'A simple to use front matter lib';
+};
+matter.extend(file, obj);
+```
+
+the result would be:
+
+```html
+---
+title: Gray Matter
+description: A simple to use front matter lib
+---
+Hooray!
 ```

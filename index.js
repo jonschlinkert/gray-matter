@@ -21,7 +21,7 @@ function matter(str, options) {
   var opts = _.defaults({}, options, {
     delims: ['---', '---'],
     delimsOpts: {},
-    lang: 'yaml',
+    lang: 'yaml'
   });
 
   var metadata = {};
