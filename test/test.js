@@ -274,9 +274,9 @@ describe('Parse coffee:', function () {
 describe('Parse toml:', function () {
   var expected = {
     context: {
-      categories: "front matter toml",
       title: "TOML",
       description: "Front matter",
+      categories: "front matter toml"
     },
     content: "\n\n# This page has toml front matter!\n",
     original: "---\ntitle = \"TOML\"\ndescription = \"Front matter\"\ncategories = \"front matter toml\"\n---\n\n# This page has toml front matter!\n"

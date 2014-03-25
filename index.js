@@ -9,6 +9,7 @@ const YAML = require('js-yaml');
 const delims = require('delims');
 const file = require('fs-utils');
 const _ = require('lodash');
+
 const parsers = require('./lib/parsers');
 const utils = require('./lib/utils');
 
@@ -36,8 +37,8 @@ function matter(str, options) {
   // If true, will attempt to detect and register
   // the correct parser based on the returned string
   if(opts.autodetect) {
-    opts.lang = utils.detectLang(opts.delims[0], content);
-    content = content.replace(new RegExp('^---\s*' + opts.lang), '---');
+    opts.lang = utils.detectLang(opts.delims[0], content) || 'yaml';
+    content = utils.stripLang(opts.delims[0], content);
   }
 
   // File object
