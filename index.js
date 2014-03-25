@@ -32,7 +32,7 @@ function matter(str, options) {
   // the correct parser based on the returned string
   if(opts.autodetect) {
     opts.lang = utils.detectLang(opts.delims[0], content);
-    content = content.replace(opts.lang, '');
+    content = content.replace(new RegExp('^---\s*' + opts.lang), '---');
   }
 
   // File object
