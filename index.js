@@ -1,22 +1,27 @@
 /**
- * Gray Matter
+ * gray-matter <https://github.com/assemble/gray-matter>
+ *
  * Copyright (c) 2014 Jon Schlinkert, Brian Woodward, contributors.
  * Licensed under the MIT license.
  */
 
-'use strict';
+const YAML = require('js-yaml');
+const delims = require('delims');
+const file = require('fs-utils');
+const _ = require('lodash');
+const parsers = require('./lib/parsers');
+const utils = require('./lib/utils');
 
-// node_modules
-var YAML = require('js-yaml');
-var delims = require('delims');
-var file = require('fs-utils');
-var _ = require('lodash');
 
-// Local libs
-var parsers = require('./lib/parsers');
-var utils = require('./lib/utils');
+/**
+ * Parse the given string
+ *
+ * @param   {String} the string to parse
+ * @param   {Object} object of options
+ *
+ * @return  {Object}
+ */
 
-// Parse the given string
 function matter(str, options) {
   var opts = _.defaults({}, options, {
     delims: ['---', '---'],

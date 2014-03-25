@@ -1,7 +1,7 @@
 {
   "name": "gray-matter",
   "description": "A simple to use and extend front matter library. Supports parsing and extracting YAML, JSON, TOML or Coffee Front-Matter, with options to set custom delimiters.",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "author": {
     "name": "Jon Schlinkert",
     "url": "https://github.com/jonschlinkert"
@@ -16,22 +16,6 @@
       "url": "https://github.com/assemble/gray-matter/blob/master/LICENSE-MIT"
     }
   ],
-  "main": "index.js",
-  "engines": {
-    "node": ">= 0.8.0"
-  },
-  "dependencies": {
-    "delims": "~0.1.0",
-    "fs-utils": "~0.1.6",
-    "js-yaml": "~3.0.1",
-    "lodash": "~2.4.1"
-  },
-  "devDependencies": {
-    "coffee-script": "~1.6.3",
-    "chai": "~1.8.1",
-    "mocha": "~1.17.1",
-    "toml": "~2.0.4"
-  },
   "keywords": [
     "front-matter",
     "front matter",
@@ -46,7 +30,23 @@
     "coffee-script",
     "yaml"
   ],
+  "main": "index.js",
+  "engines": {
+    "node": ">= 0.8.0"
+  },
   "scripts": {
     "test": "node_modules/.bin/mocha"
+  },
+  "dependencies": {
+    "delims": "~0.1.2",
+    "fs-utils": "~0.3.8",
+    "js-yaml": "~3.0.2",
+    "lodash": "~2.4.1"
+  },
+  "devDependencies": {
+    "coffee-script": "~1.6.3",
+    "chai": "~1.8.1",
+    "mocha": "~1.17.1",
+    "toml": "~2.0.4"
   }
 }
