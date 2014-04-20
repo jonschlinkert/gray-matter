@@ -55,10 +55,10 @@ function matter(str, options) {
 
   return {
     context: metadata,
-    content: content,
-    original: str
+    content: file.normalizeNL(content),
+    original: file.normalizeNL(str)
   };
-};
+}
 
 // Read the file, then parse
 matter.read = function(src, options) {
