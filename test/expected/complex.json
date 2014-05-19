@@ -1,5 +1,5 @@
 {
-  "context": {
+  "data": {
     "root": "_gh_pages",
     "dest": "<%= site.root %>",
     "assets": "<%= site.dest %>/assets",

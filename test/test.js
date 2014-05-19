@@ -22,7 +22,7 @@ var matter = require('../');
  */
 
 var expected = {
-  context: {
+  data: {
     foo: 'bar'
   },
   content: '',
@@ -30,7 +30,7 @@ var expected = {
 };
 
 var complexExpected = {
-  context: {
+  data: {
     foo: 'bar',
     version: 2
   },
@@ -39,7 +39,7 @@ var complexExpected = {
 };
 
 var customDelims = {
-  context: {
+  data: {
     foo: 'bar',
     version: 2
   },
@@ -48,13 +48,13 @@ var customDelims = {
 };
 
 var empty = {
-  context: {},
+  data: {},
   content: "",
   original: ""
 };
 
 var contentOnly = {
-  context: {},
+  data: {},
   content: "# This file doesn't have matter!",
   original: "# This file doesn't have matter!"
 };
@@ -92,7 +92,7 @@ describe('Stringify YAML:', function () {
 
   it('should stringify YAML.', function (done) {
     var fixture = matter.read('./test/fixtures/alpha.hbs');
-    var actual = matter.stringifyYAML(fixture.context);
+    var actual = matter.stringifyYAML(fixture.data);
     expect(actual).to.deep.equal('foo: bar\nversion: 2\n');
     done();
   });
@@ -144,7 +144,7 @@ describe('Use custom delimiters:', function () {
 
 describe('Parse JSON:', function () {
   var expected = {
-    context: {
+    data: {
       title: "JSON",
       "description": "Front Matter"
     },
@@ -172,7 +172,7 @@ describe('Parse JSON:', function () {
 
 describe('autodetect language', function () {
   var expected = {
-    context: {
+    data: {
       title: "JSON",
       description: "Front Matter"
     },
@@ -195,7 +195,7 @@ describe('autodetect language', function () {
       autodetect: true
     });
     var expected = {
-      context: {user: "jonschlinkert"},
+      data: {user: "jonschlinkert"},
       content: "\nContent",
       original: "--- coffee\ndata =\n  user: 'jonschlinkert'\n---\nContent"
     };
@@ -208,7 +208,7 @@ describe('autodetect language', function () {
       autodetect: true
     });
     var expected = {
-      context: {data: {user: "jonschlinkert"}},
+      data: {data: {user: "jonschlinkert"}},
       content: "\nContent\n",
       original: "--- toml\n[data]\nuser = \"jonschlinkert\"\n---\nContent\n"
     };
@@ -221,7 +221,7 @@ describe('autodetect language', function () {
       autodetect: true
     });
     var expected = {
-      context: {user: "jonschlinkert"},
+      data: {user: "jonschlinkert"},
       content: "\nContent",
       original: "---\nuser: jonschlinkert\n---\nContent"
     };
@@ -234,7 +234,7 @@ describe('autodetect language', function () {
       autodetect: true
     });
     var expected = {
-      context: {user: "jonschlinkert"},
+      data: {user: "jonschlinkert"},
       content: "\nContent",
       original: "---yaml\nuser: jonschlinkert\n---\nContent"
     };
@@ -246,7 +246,7 @@ describe('autodetect language', function () {
 
 describe('Parse coffee:', function () {
   var expected = {
-    context: {
+    data: {
       categories: "front matter coffee coffee-script",
       title: "Coffee",
       description: "Front matter",
@@ -266,14 +266,14 @@ describe('Parse coffee:', function () {
     var actual = matter.read('./test/fixtures/coffee-fn.md', {
       autodetect: true
     });
-    expect(typeof actual.context).to.equal('function');
+    expect(typeof actual.data).to.equal('function');
     done();
   });
 });
 
 describe('Parse toml:', function () {
   var expected = {
-    context: {
+    data: {
       title: "TOML",
       description: "Front matter",
       categories: "front matter toml"

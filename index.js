@@ -54,7 +54,7 @@ function matter(str, options) {
   }
 
   return {
-    context: metadata,
+    data: metadata,
     content: file.normalizeNL(content),
     original: file.normalizeNL(str)
   };
@@ -67,15 +67,15 @@ matter.read = function(src, options) {
 
 // Does YAML front matter exist?
 matter.exists = function(str, options) {
-  var obj = matter(str, options).context;
+  var obj = matter(str, options).data;
   return _.keys(obj).length > 0;
 };
 
 // Extend and stringify YAML.
 matter.extend = function(str, obj) {
   if(matter.exists(str)) {
-    var context = _.extend({}, matter(str).context, obj);
-    var yaml = matter.stringifyYAML(context);
+    var data = _.extend({}, matter(str).data, obj);
+    var yaml = matter.stringifyYAML(data);
     return '---\n' + yaml + '---';
   } else {
     return '';
@@ -91,7 +91,7 @@ matter.reconstruct = function(str, obj) {
 
 // Stringify to jSON
 matter.stringify = function(str, options) {
-  return matter(str, options).context;
+  return matter(str, options).data;
 };
 
 // Stringify to YAML

@@ -10,7 +10,7 @@ results in something like:
 
 ```json
 {
-  "context": {"foo": "bar"},
+  "data": {"foo": "bar"},
   "content": "baz",
   "original": "---\nfoo: bar\n---\nbaz"
 }
@@ -27,7 +27,7 @@ Returns:
 
 ```json
 {
-  "context": {"foo": "bar"},
+  "data": {"foo": "bar"},
   "content": "baz",
   "original": "---\nfoo: bar\n---\nbaz"
 }
@@ -59,7 +59,7 @@ matter.recontruct(str, obj);
 
 ## matter.stringify
 
-A convenience wrapper around the `matter(str).context` method.
+A convenience wrapper around the `matter(str).data` method.
 
 ```js
 matter.stringify(str);

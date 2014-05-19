@@ -19,7 +19,7 @@ returns
 
 ```json
 {
-  "context": {
+  "data": {
     "title": "YAML Front matter",
     "description": "This is a page"
   },
@@ -30,7 +30,7 @@ returns
 and
 
 ```js
-console.log(matter('foo.html').context);
+console.log(matter('foo.html').data);
 ```
 returns
 
