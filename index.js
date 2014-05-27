@@ -8,6 +8,7 @@
 const YAML = require('js-yaml');
 const delims = require('delims');
 const file = require('fs-utils');
+const log = require('verbalize');
 const _ = require('lodash');
 
 const parsers = require('./lib/parsers');
@@ -48,7 +49,7 @@ function matter(str, options) {
       metadata = parsers[opts.lang](fileObject[1]);
     } catch(e) {
       e.origin = __filename;
-      console.warn('Front-matter language not detected by gray-matter', e);
+      log.warn('Front-matter language not detected by gray-matter', e);
     }
     content = fileObject[2];
   }
