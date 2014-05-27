@@ -124,24 +124,6 @@ describe('Use custom delimiters:', function () {
   });
 });
 
-
-describe('Use custom delimiters:', function () {
-  xit('should use custom delimiters.', function (done) {
-    var actual = matter.read('./test/fixtures/code-comments.js', {
-      // /\/\*\*([\S\s]+)\*\//
-
-      delims: ['\/\*\*', '\*\/'],
-      delimsOpts: {
-        body: '\\s+\\*\\s*([\\s\\S]+?)',
-        escape: true
-      }
-    });
-    expect(actual).to.deep.equal(customDelims);
-    done();
-  });
-});
-
-
 describe('Parse JSON:', function () {
   var expected = {
     data: {
