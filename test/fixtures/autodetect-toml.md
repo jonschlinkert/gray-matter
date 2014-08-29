@@ -1,5 +1,7 @@
 --- toml
-[data]
+title = "autodetect-TOML"
+
+[props]
 user = "jonschlinkert"
 ---
 Content

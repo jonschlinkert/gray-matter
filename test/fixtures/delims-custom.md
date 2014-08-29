@@ -1,4 +1,5 @@
 ~~~
+title: custom-delims
 foo: bar
 version: 2
 ~~~

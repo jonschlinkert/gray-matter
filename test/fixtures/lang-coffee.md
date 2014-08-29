@@ -1,5 +1,5 @@
 ---
-title: 'Coffee'
+title: 'coffee'
 description: '''
   Front matter
   '''
