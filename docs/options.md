@@ -1,17 +1,27 @@
 > All methods will accept an options object to be passed as a second parameter
 
-## lang
+## options.eval
+Type: `Boolean`
+
+Default: `false`
+
+Evaluate coffee-script, CSON or JavaScript in front-matter. If you aren't aware of the dangers, google is your friend.
+
+## options.lang
 Type: `String`
 
 Default: `yaml`
 
 The parser to use on the extracted front matter. Valid options include:
+
 * `yaml`
 * `json`
-* `coffee` requires the [`coffee-script`](https://www.npmjs.org/package/coffee-script) package
-* `toml` requires the [`toml`](https://www.npmjs.org/package/toml) package
+* `coffee` 
+* `cson` 
+* `toml` 
+* `js`|`javascript`
 
-## delims
+## options.delims
 Type: `Object`
 
 Default: `{delims: ['---', '---']}`
@@ -34,7 +44,8 @@ You may also pass an array of arrays, allowing multiple alternate delimiters to 
 ```
 _Note that passing multiple delimiters will yield unpredictable results, it is recommended that you use this option only for testing purposes._
 
-## autodetect
+
+## options.autodetect
 Type: `Boolean`
 
 Default: `undefined`
@@ -50,6 +61,6 @@ reverse = (src) ->
   src.split('').reverse().join('')
 ---
 
-[%= user %]
-[%= reverse(user) %]
+{%%= user %}
+{%%= reverse(user) %}
 ```

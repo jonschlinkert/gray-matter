@@ -1,4 +1,3 @@
-## matter
 
 Let's say our page, `foo.html` contains
 
@@ -39,7 +38,7 @@ returns
 {"title": "YAML Front matter", "description": "This is a page"}
 ```
 
-## matter.extend
+## .extend
 
 Given this page:
 

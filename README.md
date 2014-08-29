@@ -1,64 +1,84 @@
-# gray-matter [![NPM version](https://badge.fury.io/js/gray-matter.png)](http://badge.fury.io/js/gray-matter)
+# gray-matter [![NPM version](https://badge.fury.io/js/gray-matter.svg)](http://badge.fury.io/js/gray-matter)
+
 
 > A simple to use and extend front matter library. Supports parsing and extracting YAML, JSON, TOML or Coffee Front-Matter, with options to set custom delimiters.
 
-v0.4.0 has breaking changes! `context` has been changed to `data`.
+Used by [assemble](https://github.com/assemble/assemble), [verb](https://github.com/assemble/verb), and thousands of other projects!
 
-* Use custom delimiters
+**v0.5.0 has breaking changes!**
+
+* YAML is now parsed using the `.safeLoad()` method from [js-yaml](http://github.com/nodeca/js-yaml).
+* To parse coffee, CSON or javascript front matter, you must set `options.eval` to true.
+* `stringify()` has been renamed to `toJSON()`
+* `stringifyYAML()` has been renamed to `toYAML()`
+
+
+## Highlights
+
+* Reliable and battle-tested. 
 * Will extract and parse:
   * [YAML](http://github.com/nodeca/js-yaml)
   * [JSON](http://en.wikipedia.org/wiki/Json)
-  * [CoffeeScript](http://coffeescript.org)
   * [TOML](http://github.com/mojombo/toml)
-* Easy to add additional parsers!
+  * [CoffeeScript](http://coffeescript.org) when `options.eval` is set to `true`
+  * [CSON](https://github.com/bevry/cson) when `options.eval` is set to `true`
+  * JavaScript: when `options.eval` is set to `true`
+* Easy to add additional parsers! pull requests welcome!
 
 #### TOC
 
+
+
 <!-- toc -->
+
+* [Highlights](#highlights)
 * [Install](#install)
 * [Usage](#usage)
-* [Methods](#methods)
-  * [matter](#matter)
-  * [matter.read](#matterread)
-  * [matter.exists](#matterexists)
-  * [matter.extend](#matterextend)
-  * [matter.recontruct](#matterrecontruct)
-  * [matter.stringify](#matterstringify)
-  * [matter.stringifyYAML](#matterstringifyyaml)
+* [API](#api)
+  * [.read](#read)
+  * [.exists](#exists)
+  * [.extend](#extend)
+  * [.reconstruct](#reconstruct)
+  * [.toJSON](#tojson)
+  * [.toYAML](#toyaml)
 * [Options](#options)
-  * [lang](#lang)
-  * [delims](#delims)
-  * [autodetect](#autodetect)
+  * [options.eval](#optionseval)
+  * [options.lang](#optionslang)
+  * [options.delims](#optionsdelims)
+  * [options.autodetect](#optionsautodetect)
 * [Examples](#examples)
-  * [matter](#matter)
-  * [matter.extend](#matterextend)
+  * [.extend](#extend)
 * [Why?](#why)
 * [Authors](#authors)
 * [License](#license)
 
 <!-- toc stop -->
+
+
 ## Install
-Install with [npm](npmjs.org)
+#### Install with [npm](npmjs.org)
 
 ```bash
 npm i gray-matter --save
 ```
-Install with [bower](https://github.com/bower/bower)
+#### Install with [bower](https://github.com/bower/bower)
 
 ```bash
 bower install gray-matter --save
 ```
 
 ## Usage
+
 ```js
 var matter = require('gray-matter');
-matter(String, Object);
+console.log(matter('---\ntitle: foo\n---\nbar');
+//=> {data: {title: 'foo'}, content: 'bar', orig: '---\ntitle: foo\n---\nbar'}
 ```
 
-## Methods
-### matter
 
-By default the `matter()` method expects a string. So this:
+## API
+
+`matter()` method expects a string and returns and object:
 
 ```js
 matter(str);
@@ -74,7 +94,7 @@ results in something like:
 }
 ```
 
-### matter.read
+### .read
 
 Read a file from the file system before parsing.
 
@@ -91,7 +111,7 @@ Returns:
 }
 ```
 
-### matter.exists
+### .exists
 
 Returns `true` or `false` if front matter exists:
 
@@ -99,7 +119,7 @@ Returns `true` or `false` if front matter exists:
 matter.exists(str);
 ```
 
-### matter.extend
+### .extend
 
 Extend and stringify **YAML** front matter. Takes an object as the second parameter, and returns either the extended, stringified object (YAML), or if no front matter is found an empty string is returned.
 
@@ -107,46 +127,57 @@ Extend and stringify **YAML** front matter. Takes an object as the second parame
 matter.extend(str, obj);
 ```
 
-### matter.recontruct
+### .reconstruct
 
 A convenience wrapper around the `matter` and `matter.extend`. Extends YAML front matter, then re-assembles front matter with the content of the file.
 
 ```js
-matter.recontruct(str, obj);
+matter.reconstruct(str, obj);
 ```
 
-### matter.stringify
+### .toJSON
 
 A convenience wrapper around the `matter(str).data` method.
 
 ```js
-matter.stringify(str);
+matter.toJSON(str);
 ```
 
 
-### matter.stringifyYAML
+### .toYAML
 
 Stringify parsed front matter back to YAML.
 
 ```js
-matter.stringifyYAML(str);
+matter.toYAML(str);
 ```
+
 
 ## Options
 > All methods will accept an options object to be passed as a second parameter
 
-### lang
+### options.eval
+Type: `Boolean`
+
+Default: `false`
+
+Evaluate coffee-script, CSON or JavaScript in front-matter. If you aren't aware of the dangers, google is your friend.
+
+### options.lang
 Type: `String`
 
 Default: `yaml`
 
 The parser to use on the extracted front matter. Valid options include:
+
 * `yaml`
 * `json`
-* `coffee` requires the [`coffee-script`](https://www.npmjs.org/package/coffee-script) package
-* `toml` requires the [`toml`](https://www.npmjs.org/package/toml) package
+* `coffee` 
+* `cson` 
+* `toml` 
+* `js`|`javascript`
 
-### delims
+### options.delims
 Type: `Object`
 
 Default: `{delims: ['---', '---']}`
@@ -169,7 +200,8 @@ You may also pass an array of arrays, allowing multiple alternate delimiters to 
 ```
 _Note that passing multiple delimiters will yield unpredictable results, it is recommended that you use this option only for testing purposes._
 
-### autodetect
+
+### options.autodetect
 Type: `Boolean`
 
 Default: `undefined`
@@ -185,12 +217,12 @@ reverse = (src) ->
   src.split('').reverse().join('')
 ---
 
-[%= user %]
-[%= reverse(user) %]
+{%= user %}
+{%= reverse(user) %}
 ```
 
+
 ## Examples
-### matter
 
 Let's say our page, `foo.html` contains
 
@@ -231,7 +263,7 @@ returns
 {"title": "YAML Front matter", "description": "This is a page"}
 ```
 
-### matter.extend
+### .extend
 
 Given this page:
 
@@ -261,6 +293,7 @@ description: A simple to use front matter lib
 Hooray!
 ```
 
+
 ## Why?
 > Why another YAML Front Matter library?
 
@@ -268,31 +301,31 @@ Because other libraries we tried failed to meet our requirements with [Assemble]
 
 * Be usable, if not simple
 * Allow custom delimiters
-* Use a dependable and well-supported library for parsing YAML
-* Don't fail if YAML front matter exists, but no content
-* Don't fail if content exists, but no YAML front matter
+* Use a dependable and well-supported library for parsing YAML and other languages
+* Don't fail when no content exists
+* Don't fail when no front matter exists
 * Have no problem reading YAML files directly
-* Have no problem with complex content, including fenced code blocks containing examples of YAML front matter.
+* Have no problem with complex content, including fenced code blocks that contain examples of YAML front matter. Other parsers fail on this.
 * Should return an object that contains the parsed YAML front matter and content, as well as the "original" content.
+
 
 
 ## Authors
 
 **Jon Schlinkert**
-
-+ [github/jonschlinkert](https://github.com/jonschlinkert)
-+ [twitter/jonschlinkert](http://twitter.com/jonschlinkert)
-
-**Brian Woodward**
-
-+ [github/doowb](https://github.com/doowb)
-+ [twitter/doowb](http://twitter.com/doowb)
-
+ 
++ [github/assemble](https://github.com/assemble)
++ [twitter/assemble](http://twitter.com/assemble) 
 
 ## License
-Copyright (c) 2014 Jon Schlinkert, Brian Woodward, contributors.
+Copyright (c) 2014 Jon Schlinkert, contributors.  
 Released under the MIT license
 
 ***
 
-_This file was generated by [verb-cli](https://github.com/assemble/verb-cli) on May 19, 2014._
+_This file was generated by [verb-cli](https://github.com/assemble/verb-cli) on August 29, 2014._
+
+
+[js-yaml]: https://github.com/nodeca/js-yaml
+[coffee-script]: https://github.com/jashkenas/coffeescript
+[toml-node]: https://github.com/BinaryMuse/toml-node

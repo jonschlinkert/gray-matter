@@ -4,9 +4,9 @@ Because other libraries we tried failed to meet our requirements with [Assemble]
 
 * Be usable, if not simple
 * Allow custom delimiters
-* Use a dependable and well-supported library for parsing YAML
-* Don't fail if YAML front matter exists, but no content
-* Don't fail if content exists, but no YAML front matter
+* Use a dependable and well-supported library for parsing YAML and other languages
+* Don't fail when no content exists
+* Don't fail when no front matter exists
 * Have no problem reading YAML files directly
-* Have no problem with complex content, including fenced code blocks containing examples of YAML front matter.
+* Have no problem with complex content, including fenced code blocks that contain examples of YAML front matter. Other parsers fail on this.
 * Should return an object that contains the parsed YAML front matter and content, as well as the "original" content.
