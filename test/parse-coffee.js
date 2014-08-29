@@ -16,7 +16,8 @@ var matter = require('..');
 describe('parse coffee:', function () {
   it('should parse coffee front matter.', function () {
     var actual = matter.read('./test/fixtures/lang-coffee.md', {
-      lang: 'coffee'
+      lang: 'coffee',
+      eval: true
     });
     actual.data.title.should.equal('coffee');
     actual.should.have.property('data');
@@ -26,7 +27,8 @@ describe('parse coffee:', function () {
 
   it('should evaluate functions in coffee front matter.', function () {
     var actual = matter.read('./test/fixtures/lang-coffee-fn.md', {
-      lang: 'coffee'
+      lang: 'coffee',
+      eval: true
     });
     actual.data.fn.should.be.a.function;
     actual.data.title.should.equal('coffee functions');
@@ -37,7 +39,8 @@ describe('parse coffee:', function () {
 
   it('should evaluate functions in auto-detected coffee front matter.', function () {
     var actual = matter.read('./test/fixtures/autodetect-coffee-fn.md', {
-      autodetect: true
+      autodetect: true,
+      eval: true
     });
     actual.data.fn.should.be.a.function;
     actual.data.title.should.equal('coffee functions');
@@ -48,7 +51,8 @@ describe('parse coffee:', function () {
 
   it('should auto-detect CoffeeScript as the language.', function () {
     var actual = matter.read('./test/fixtures/autodetect-coffee.md', {
-      autodetect: true
+      autodetect: true,
+      eval: true
     });
 
     actual.data.title.should.equal('autodetect-coffee');

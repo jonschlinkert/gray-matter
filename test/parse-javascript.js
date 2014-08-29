@@ -16,7 +16,8 @@ var matter = require('..');
 describe('parse javascript:', function () {
   it('should parse javascript front matter.', function () {
     var actual = matter.read('./test/fixtures/lang-javascript-fn.md', {
-      lang: 'javascript'
+      lang: 'javascript',
+      eval: true
     });
 
     actual.data.title.should.equal('javascript front matter');
@@ -27,7 +28,8 @@ describe('parse javascript:', function () {
 
   it('should auto-detect javascript front matter.', function () {
     var actual = matter.read('./test/fixtures/autodetect-javascript.md', {
-      autodetect: true
+      autodetect: true,
+      eval: true
     });
 
     actual.data.fn.should.be.a.function;
@@ -39,7 +41,8 @@ describe('parse javascript:', function () {
 
   it('should evaluate functions in javascript front matter.', function () {
     var actual = matter.read('./test/fixtures/autodetect-javascript.md', {
-      autodetect: true
+      autodetect: true,
+      eval: true
     });
 
     actual.data.fn.should.be.a.function;

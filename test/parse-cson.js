@@ -16,7 +16,8 @@ var matter = require('..');
 describe('parse cson:', function () {
   it('should parse CSON front matter.', function () {
     var actual = matter.read('./test/fixtures/lang-cson.md', {
-      lang: 'cson'
+      lang: 'cson',
+      eval: true
     });
 
     actual.data.title.should.equal('CSON');
@@ -27,7 +28,8 @@ describe('parse cson:', function () {
 
   it('should evaluate functions in CSON front matter.', function () {
     var actual = matter.read('./test/fixtures/lang-cson-fn.md', {
-      lang: 'cson'
+      lang: 'cson',
+      eval: true
     });
 
     actual.data.fn.should.be.a.function;
@@ -39,7 +41,8 @@ describe('parse cson:', function () {
 
   it('should evaluate functions in auto-detected CSON front matter.', function () {
     var actual = matter.read('./test/fixtures/autodetect-cson-fn.md', {
-      autodetect: true
+      autodetect: true,
+      eval: true
     });
 
     actual.data.fn.should.be.a.function;
@@ -51,7 +54,8 @@ describe('parse cson:', function () {
 
   it('should auto-detect cson as the language.', function () {
     var actual = matter.read('./test/fixtures/autodetect-cson.md', {
-      autodetect: true
+      autodetect: true,
+      eval: true
     });
 
     actual.data.title.should.equal('autodetect-CSON');

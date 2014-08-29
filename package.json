@@ -1,7 +1,7 @@
 {
   "name": "gray-matter",
   "description": "A simple to use and extend front matter library. Supports parsing and extracting YAML, JSON, TOML or Coffee Front-Matter, with options to set custom delimiters.",
-  "version": "0.4.2",
+  "version": "0.5.0",
   "author": {
     "name": "Jon Schlinkert",
     "url": "https://github.com/jonschlinkert"
@@ -17,18 +17,27 @@
     }
   ],
   "keywords": [
-    "front-matter",
-    "front matter",
-    "frontmatter",
-    "yaml front matter",
-    "matter",
-    "parse",
-    "parser",
-    "yfm",
     "JSON",
     "coffee",
     "coffee-script",
-    "yaml"
+    "data",
+    "docs",
+    "documentation",
+    "front",
+    "front-matter",
+    "frontmatter",
+    "generator",
+    "javascript",
+    "js",
+    "markdown",
+    "matter",
+    "parse",
+    "parser",
+    "site",
+    "static",
+    "toml",
+    "yaml",
+    "yfm"
   ],
   "main": "index.js",
   "engines": {
@@ -38,18 +47,20 @@
     "test": "node_modules/.bin/mocha"
   },
   "dependencies": {
-    "delims": "^0.1.4",
-    "fs-utils": "^0.4.3",
-    "js-yaml": "^3.0.2",
+    "coffee-script": "^1.8.0",
+    "delims": "^0.3.0",
+    "js-yaml": "^3.2.1",
     "lodash": "^2.4.1",
+    "toml": "^2.0.6",
     "verbalize": "^0.1.2"
   },
   "devDependencies": {
-    "chai": "^1.9.1",
-    "coffee-script": "^1.7.1",
-    "cson-safe": "^0.1.1",
     "mocha": "^1.19.0",
-    "toml": "^2.0.5",
-    "verb": "^0.2.7"
+    "should": "^4.0.4",
+    "verb": "^0.2.15",
+    "verb-tag-jscomments": "^0.2.2"
+  },
+  "bugs": {
+    "url": ""
   }
 }
