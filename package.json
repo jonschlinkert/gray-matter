@@ -1,7 +1,7 @@
 {
   "name": "gray-matter",
   "description": "A simple to use and extend front matter library. Supports parsing and extracting YAML, JSON, TOML or Coffee Front-Matter, with options to set custom delimiters.",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "author": {
     "name": "Jon Schlinkert",
     "url": "https://github.com/jonschlinkert"
@@ -9,6 +9,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/assemble/gray-matter.git"
+  },
+  "bugs": {
+    "url": "https://github.com/assemble/gray-matter/issues"
   },
   "licenses": [
     {
@@ -23,6 +26,8 @@
     "data",
     "docs",
     "documentation",
+    "extract",
+    "extracting",
     "front",
     "front-matter",
     "frontmatter",
@@ -33,6 +38,7 @@
     "matter",
     "parse",
     "parser",
+    "parsing",
     "site",
     "static",
     "toml",
@@ -51,6 +57,7 @@
     "delims": "^0.3.0",
     "js-yaml": "^3.2.1",
     "lodash": "^2.4.1",
+    "mixin-deep": "^0.1.0",
     "toml": "^2.0.6",
     "verbalize": "^0.1.2"
   },
@@ -59,8 +66,5 @@
     "should": "^4.0.4",
     "verb": "^0.2.15",
     "verb-tag-jscomments": "^0.2.2"
-  },
-  "bugs": {
-    "url": ""
   }
 }

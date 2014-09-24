@@ -7,23 +7,17 @@
 
 'use strict';
 
-var should = require('should');
 var fs = require('fs');
-var _ = require('lodash');
+var should = require('should');
 var matter = require('..');
-
 
 describe('Read from file system:', function () {
   it('should extract YAML front matter from files with content.', function () {
     var actual = matter.read('./test/fixtures/basic.txt');
 
     actual.should.have.property('path');
-    actual.should.have.property('data');
-    actual.should.have.property('content');
-    actual.should.have.property('orig');
-    actual.data.should.have.property('title');
-    actual.data.title.should.equal('Basic');
-    actual.content.should.equal('this is content.');
+    actual.should.have.property('data', {title: 'Basic'});
+    actual.should.have.property('content', 'this is content.');
   });
 
   it('should parse complex YAML front matter.', function () {

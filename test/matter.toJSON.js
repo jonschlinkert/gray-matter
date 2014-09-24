@@ -7,11 +7,9 @@
 
 'use strict';
 
-var should = require('should');
 var fs = require('fs');
-var _ = require('lodash');
+var should = require('should');
 var matter = require('..');
-
 
 
 describe('stringify to JSON:', function () {
