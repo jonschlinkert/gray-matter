@@ -11,6 +11,7 @@ var should = require('should');
 var fs = require('fs');
 var _ = require('lodash');
 var matter = require('..');
+// var matter = require('../benchmark/code/while.js');
 var pkg = require('../package');
 
 describe('.reconstruct()', function () {

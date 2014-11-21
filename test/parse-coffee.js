@@ -9,7 +9,8 @@
 
 var fs = require('fs');
 var should = require('should');
-var matter = require('..');
+// var matter = require('..');
+var matter = require('../benchmark/code/while.js');
 
 
 describe('parse coffee:', function () {

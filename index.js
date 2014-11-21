@@ -11,8 +11,7 @@ var fs = require('fs');
 var YAML = require('js-yaml');
 var log = require('verbalize');
 var Delims = require('delims');
-var extend = require('mixin-deep');
-
+var extend = require('extend-shallow');
 var parsers = require('./lib/parsers');
 var utils = require('./lib/utils');
 
@@ -46,16 +45,20 @@ var utils = require('./lib/utils');
  */
 
 function matter(str, options) {
+  if (typeof str !== 'string') {
+    throw new Error('gray-matter expects a string');
+  }
+
   str = str.replace(/^\uFEFF/, '').replace(/\r/g, '');
-  var orig = str,
-    data = {};
+  var orig = str;
+  var data = {};
 
-  var defaults = {
-    delims: ['---', '---'],
-    delimsOpts: {}
-  };
-
+  var defaults = {delims: ['---', '---'], delimsOpts: {}};
   var opts = extend({}, defaults, options);
+
+  if (str.indexOf(opts.delims[0]) !== 0) {
+    return {data: {}, content: str, orig: str};
+  }
 
   var delimiters = createDelims(opts.delims, opts.delimsOpts);
   var lang;
@@ -78,13 +81,8 @@ function matter(str, options) {
     str = file[2];
   }
 
-  return {
-    data: data,
-    content: str.trim(),
-    orig: orig
-  };
+  return {data: data, content: str.trim(), orig: orig};
 }
-
 
 /**
  * Read a file then pass the string and `options` to `matter()` for parsing:
@@ -109,11 +107,9 @@ function matter(str, options) {
  * @api public
  */
 
-matter.read = function (filepath, options) {
-  var opts = extend({
-    enc: 'utf8'
-  }, options);
-  var obj = matter(fs.readFileSync(filepath, opts.enc), opts);
+matter.read = function(filepath, options) {
+  var str = fs.readFileSync(filepath, 'utf8');
+  var obj = matter(str, options);
   return extend(obj, {
     path: filepath
   });
@@ -184,11 +180,11 @@ matter.reconstruct = function (str, obj) {
 };
 
 /**
- * Convenience wrapper around the `matter(str).data()` method.
+ * Exposes the `data` property that is returned from the `matter(str)` method.
  *
  * @param  {String} `str`
  * @param  {Object} `options`
- * @return {Object} Parsed front matter as JSON.
+ * @return {Object}
  * @api public
  */
 
@@ -217,7 +213,8 @@ matter.toYAML = function (obj) {
 
 function createDelims(arr, options) {
   var delims = new Delims();
-  return delims.create(arr, options).evaluate;
+  var o = delims.matter(arr, options);
+  return o;
 }
 
 /**

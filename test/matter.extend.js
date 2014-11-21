@@ -14,18 +14,13 @@ var pkg = require('../package');
 
 describe('.extend()', function () {
   it('should extract front matter, extend it, and convert it back to front matter.', function () {
-    var yfm = '---\ntitle: ABC\n---\nThis is content.';
-    var actual = matter.extend(yfm, pkg.author);
-
-    var expected = [
+    matter.extend('---\ntitle: ABC\n---\nThis is content.', pkg.author).should.equal([
       '---',
       'title: ABC',
       'name: Jon Schlinkert',
       'url: "https://github.com/jonschlinkert"',
       '---'
-    ].join('\n')
-
-    expected.should.equal(actual);
+    ].join('\n'));
   });
 });
 
