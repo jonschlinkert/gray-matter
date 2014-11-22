@@ -1,7 +1,7 @@
 {
   "name": "gray-matter",
   "description": "A simple to use and extend front matter library. Supports parsing and extracting YAML, JSON, TOML or Coffee Front-Matter, with options to set custom delimiters.",
-  "version": "0.5.3",
+  "version": "0.6.0",
   "author": {
     "name": "Jon Schlinkert",
     "url": "https://github.com/jonschlinkert"
