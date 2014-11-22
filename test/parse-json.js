@@ -11,7 +11,6 @@ var fs = require('fs');
 var should = require('should');
 var matter = require('..');
 
-
 describe('parse json:', function () {
   it('should parse JSON front matter.', function () {
     var actual = matter.read('./test/fixtures/lang-json.md', {

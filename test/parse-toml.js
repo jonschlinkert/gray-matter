@@ -11,7 +11,6 @@ var fs = require('fs');
 var should = require('should');
 var matter = require('..');
 
-
 describe('parse TOML:', function () {
   it('should parse toml front matter.', function () {
     var actual = matter.read('./test/fixtures/lang-toml.md', {

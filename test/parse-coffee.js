@@ -9,9 +9,7 @@
 
 var fs = require('fs');
 var should = require('should');
-// var matter = require('..');
-var matter = require('../benchmark/code/while.js');
-
+var matter = require('..');
 
 describe('parse coffee:', function () {
   it('should parse coffee front matter.', function () {

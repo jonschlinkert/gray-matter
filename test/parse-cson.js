@@ -11,7 +11,6 @@ var fs = require('fs');
 var should = require('should');
 var matter = require('..');
 
-
 describe('parse cson:', function () {
   it('should parse CSON front matter.', function () {
     var actual = matter.read('./test/fixtures/lang-cson.md', {
