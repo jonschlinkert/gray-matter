@@ -11,7 +11,6 @@ var fs = require('fs');
 var should = require('should');
 var matter = require('..');
 
-
 describe('parse javascript:', function () {
   it('should parse javascript front matter.', function () {
     var actual = matter.read('./test/fixtures/lang-javascript-fn.md', {

@@ -13,17 +13,16 @@ var _ = require('lodash');
 var matter = require('..');
 var pkg = require('../package');
 
-describe('.reconstruct()', function () {
-  it('should extract front matter, extend it, and put it back.', function () {
-    var yfm = '---\ntitle: ABC\n---\nThis is content.';
+describe('.stringify()', function () {
 
-    matter.reconstruct(yfm, pkg.author).should.equal([
+  it('should extract front matter, extend it, and convert it back to front matter.', function () {
+    var res = matter.stringify('Name: {{author.name}}', pkg.author);
+    res.should.equal([
       '---',
-      'title: ABC',
       'name: Jon Schlinkert',
       'url: "https://github.com/jonschlinkert"',
       '---',
-      'This is content.'
+      'Name: {{author.name}}\n'
     ].join('\n'));
   });
 });

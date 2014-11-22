@@ -11,7 +11,6 @@ var fs = require('fs');
 var should = require('should');
 var matter = require('..');
 
-
 describe('parse coffee:', function () {
   it('should parse coffee front matter.', function () {
     var actual = matter.read('./test/fixtures/lang-coffee.md', {
