@@ -45,8 +45,11 @@ function matter(str, options) {
     throw new Error('gray-matter cannot parse: ' + str);
   }
 
-  o.content = str.substr(to + len2).trim();
-  return o;
+  return {
+    orig: o.orig,
+    data: o.data,
+    content: str.substr(to + len2).trim()
+  };
 }
 
 matter.read = function(fp, options) {
