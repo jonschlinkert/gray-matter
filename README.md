@@ -1,20 +1,10 @@
 # gray-matter [![NPM version](https://badge.fury.io/js/gray-matter.svg)](http://badge.fury.io/js/gray-matter)
 
-> A simple to use and extend front matter library. Supports parsing and extracting YAML, JSON, TOML or Coffee Front-Matter, with options to set custom delimiters.
-
-Used by [assemble](https://github.com/assemble/assemble), [verb](https://github.com/assemble/verb), and thousands of other projects!
-
-**v0.5.0 has breaking changes!**
-
-* YAML is now parsed using the `.safeLoad()` method from [js-yaml](http://github.com/nodeca/js-yaml).
-* To parse coffee, CSON or javascript front matter, you must set `options.eval` to true.
-* `stringify()` has been renamed to `toJSON()`
-* `stringifyYAML()` has been renamed to `toYAML()`
-
+> Front-matter parsing done right. Fast, reliable and easy to use. Parses YAML front matter by default, but also has support for YAML, JSON, TOML or Coffee Front-Matter, with options to set custom delimiters.
 
 ## Highlights
 
-* Reliable and battle-tested. 
+* Reliable and battle-tested with [assemble](https://github.com/assemble/assemble), [verb](https://github.com/assemble/verb), and many other projects!
 * Will extract and parse:
   * [YAML](http://github.com/nodeca/js-yaml)
   * [JSON](http://en.wikipedia.org/wiki/Json)
@@ -24,11 +14,11 @@ Used by [assemble](https://github.com/assemble/assemble), [verb](https://github.
   * JavaScript: when `options.eval` is set to `true`
 * Easy to add additional parsers! pull requests welcome!
 
+
 #### TOC
 <!-- toc -->
 
-## Install
-### Install with [npm](npmjs.org)
+## Install with [npm](npmjs.org)
 
 ```bash
 npm i gray-matter --save
@@ -36,121 +26,189 @@ npm i gray-matter --save
 ### Install with [bower](https://github.com/bower/bower)
 
 ```bash
-bower install gray-matter --save-dev
+bower install gray-matter --save
 ```
 
 ## Usage
 
 ```js
 var matter = require('gray-matter');
-console.log(matter('---\ntitle: foo\n---\nbar');
-//=> {data: {title: 'foo'}, content: 'bar', orig: '---\ntitle: foo\n---\nbar'}
+matter('---\ntitle: Front Matter\n---\nThis is content.');
+```
+
+## Run tests
+
+```bash
+npm test
 ```
 
 ## API
-## [matter](index.js#L47)
+### [matter](index.js#L31)
 
-Expects a string and returns and object:
+Parses a `string` of front-matter with the given `options`, and returns an object.
 
-* `str` **{String}**: The string to parse    
-* `options` **{Object}**: Object of options    
-* `returns` **{Object}** `file`: Object with the following properties.  
-
-```js
-matter('---\ntitle: Blog\n---\nThis is content.');
-```
-
-Returns:
-
-```json
-{
-  "data": {"title": "Blog"},
-  "content": "This is content.",
-  "original": "---\ntitle: Blog\n---\nThis is content."
-}
-```
-
-## [.read](index.js#L109)
-
-Read a file then pass the string and `options` to `matter()` for parsing:
-
-* `filepath` **{String}**    
-* `options` **{Object}**    
-* `returns` **{Object}** `file`: Same object as `matter()`, with an additional `path` property  
+* `string` **{String}**: The string to parse.    
+* `options` **{Object}**  
+    - `delims` **{Array}**: Custom delimiters formatted as an array. The default is `['---', '---']`.
+    - `parser` **{Function}**: Parser function to use. [js-yaml] is the default.
+      
+* `returns` **{Object}**: Valid JSON  
 
 ```js
-matter.read('file.md');
+matter('---\ntitle: foo\n---\nbar');
+//=> {data: {title: 'foo'}, content: 'bar', orig: '---\ntitle: foo\n---\nbar'}
 ```
 
-Returns something like:
+### [.read](index.js#L96)
 
-```json
-{
-  "data": {"title": "Blog"},
-  "content": "This is content.",
-  "original": "---\ntitle: Blog\n---\nThis is content."
-}
-```
+Read a file and parse front matter. Returns the same object as `matter()`.
 
-## [.exists](index.js#L130)
-
-Return `true` if front-matter exists.
-
-* `str` **{String}**: The string to parse    
-* `options` **{Object}**: Options to pass to `matter()`    
-* `returns` **{Boolean}** `true`: or `false`  
+* `fp` **{String}**: file path of the file to read.    
+* `options` **{Object}**: Options to pass to gray-matter.    
+* `returns`: {Object}  
 
 ```js
-matter.exists(str);
+matter.read('home.md');
 ```
 
-## [.extend](index.js#L150)
+### [.stringify](index.js#L127)
 
-Extend and stringify **YAML** front matter. Takes an object as the second parameter, and returns either the extended, stringified object (YAML), or if no front matter is found an empty string is returned.
+Stringify an object to front-matter-formatted YAML, and concatenate it to the given string.
 
-* `str` **{String}**: The string to parse    
-* `obj` **{Object}**: The object to use to extend the front matter.    
-* `returns` **{String}**: String with extended YAML front matter.  
+* `str` **{String}**: The content string to append to stringified front-matter.    
+* `data` **{Object}**: Front matter to stringify.    
+* `options` **{Object}**: Options to pass to js-yaml    
+* `returns`: {String}  
 
 ```js
-matter.extend(str, obj);
+matter.stringify('foo bar baz', {title: 'Home'});
 ```
 
-## [.reconstruct](index.js#L175)
+Results in:
 
-A convenience wrapper around the `matter()` and `matter.extend()` methods.
-
-* `str` **{String}**: The string to parse    
-* `obj` **{Object}**: The object to use to extend the front matter.    
-* `returns` **{String}**: Original string with extended front matter.  
-
-Extends YAML front matter, then re-assembles front matter with
-the content of the file.
-
-```js
-matter.reconstruct(str, obj);
+```yaml
+---
+title: Home
+---
+foo bar baz
 ```
 
-## [.toJSON](index.js#L190)
-
-* `str` **{String}**    
-* `options` **{Object}**    
-* `returns` **{Object}**: Parsed front matter as JSON.  
-
-Convenience wrapper around the `matter(str).data()` method.
-
-## [.toYAML](index.js#L203)
-
-* `str` **{String}**    
-* `options` **{Object}**    
-* `returns` **{String}**: Stringified YAML.  
-
-Stringify parsed front matter back to YAML.
 
 
 ## Options
-__async_helper_id__wnyS0VRoq9lszTfEFhYyEHJkzUbnN0NnP7jzbFY7lk__
 
+> All methods accept an options object passed as the last argument
+
+## options.eval
+Type: `Boolean`
+
+Default: `false`
+
+Evaluate coffee-script, CSON or JavaScript in front-matter. If you aren't aware of the dangers, google is your friend.
+
+
+## options.lang
+Type: `String`
+
+Default: `yaml`
+
+The parser to use on the extracted front matter. 
+
+YAML is parsed by default, and the languages listed below are parsed automatically if the language is specified after the first delimiter (e.g. `---`). 
+
+Valid languages are:
+
+* `yaml`
+* `json`
+* `coffee` 
+* `cson` 
+* `toml` 
+* `js`|`javascript`
+
+**Example**
+
+To parse coffee front matter, you would define it as follows:
+
+```js
+---coffee
+title: 'coffee functions'
+user: 'jonschlinkert'
+fn:
+  reverse = (src) ->
+    src.split('').reverse().join('')
+---
+
+<%= description %>
+<%= reverse(user) %>
+```
+
+## options.delims
+Type: `Object`
+
+Default: `{delims: ['---', '---']}`
+
+Open and close delimiters can be passed in as an array of strings. 
+
+**Example:**
+
+```js
+matter.read('file.md', {delims: ['~~~', '~~~']});
+```
+would parse:
+
+```html
+~~~
+title: Home
+~~~
+This is the {{title}} page.
+```
+
+
+## Example
+
+Given we have a page, `abc.html`, containing:
+
+```html
+---
+title: YAML Front matter
+description: This is a page
+---
+<h1>{{title}}</h1>
+```
+
+then running the following in the command line:
+
+```js
+matter('abc.html');
+```
+returns
+
+```json
+{
+  "data": {
+    "title": "YAML Front matter",
+    "description": "This is a page"
+  },
+  "content": "<h1>{{title}}</h1>",
+  "original": "---\ntitle: YAML Front matter\n---\n<h1>{{title}}</h1>"
+}
+```
+
+
+## Why?
+
+> Why another YAML Front Matter library?
+
+Because other libraries we tried failed to meet our requirements with [Assemble](http://assemble.io). Some most of the libraries met most of the requirements, but _none had all of them_. Here are the most important:
+
+* Be usable, if not simple
+* Allow custom delimiters
+* Use a dependable and well-supported library for parsing YAML and other languages
+* Don't fail when no content exists
+* Don't fail when no front matter exists
+* Have no problem reading YAML files directly
+* Have no problem with complex content, including fenced code blocks that contain examples of YAML front matter. Other parsers fail on this.
+* Should return an object that contains the parsed YAML front matter and content, as well as the "original" content.
 
 
 ## Authors
@@ -166,7 +224,7 @@ Released under the MIT license
 
 ***
 
-_This file was generated by [verb](https://github.com/jonschlinkert/verb) on November 11, 2014._
+_This file was generated by [verb](https://github.com/assemble/verb) on December 05, 2014._
 
 
 [js-yaml]: https://github.com/nodeca/js-yaml

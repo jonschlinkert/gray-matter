@@ -1,7 +1,13 @@
 {
   "name": "gray-matter",
-  "version": "0.5.3",
+  "version": "1.0.0",
   "main": [
     "index.js"
+  ],
+  "authors": [
+    {
+      "name": "Jon Schlinkert",
+      "homepage": "https://github.com/jonschlinkert"
+    }
   ]
 }
