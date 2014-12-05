@@ -40,8 +40,8 @@ function matter(str, options) {
 
   var i = str.indexOf(delims[0]);
   if (i !== 0) {
-    o.lang = '';
     o.content = str;
+    delete o.lang;
     return o;
   }
 
