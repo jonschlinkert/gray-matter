@@ -2,9 +2,31 @@
 
 var fs = require('fs');
 var extend = require('extend-shallow');
-var parsers = require('./lib/parsers');
+
+/**
+ * Expose `matter()`
+ *
+ * @type {Function}
+ */
 
 module.exports = matter;
+
+/**
+ * Parses a `string` of front-matter with the given `options`,
+ * and returns an object.
+ *
+ * ```js
+ * matter('---\ntitle: foo\n---\nbar');
+ * //=> {data: {title: 'foo'}, content: 'bar', orig: '---\ntitle: foo\n---\nbar'}
+ * ```
+ *
+ * @param {String} `string` The string to parse.
+ * @param {Object} `options`
+ *   @option {Array} [options] `delims` Custom delimiters formatted as an array. The default is `['---', '---']`.
+ *   @option {Function} [options] `parser` Parser function to use. [js-yaml] is the default.
+ * @return {Object} Valid JSON
+ * @api public
+ */
 
 function matter(str, options) {
   if (typeof str !== 'string') {
@@ -34,15 +56,12 @@ function matter(str, options) {
   var ll = o.lang.length;
   var to = str.indexOf(delims[1], len1);
   o.lang = (o.lang || opts.lang).trim();
-  var fn = parsers[o.lang];
+  var fn = opts.parser || parsers[o.lang];
+
   if (fn) {
     o.data = fn(str.substr(len1 + ll, to - ll - len2), opts);
   } else {
-    o.data = str.substr(len1 + ll, to - ll - len2);
-  }
-
-  if (typeof o.data === 'string') {
-    throw new Error('gray-matter cannot parse: ' + str);
+    throw new Error('gray-matter cannot find a parser for: ' + str);
   }
 
   return {
@@ -52,6 +71,28 @@ function matter(str, options) {
   };
 }
 
+/**
+ * Expose `parsers`
+ *
+ * @type {Object}
+ */
+
+var parsers = matter.parsers = require('./lib/parsers');
+
+/**
+ * Read a file and parse front matter. Returns the same object
+ * as `matter()`.
+ *
+ * ```js
+ * matter.read('home.md');
+ * ```
+ *
+ * @param {String} `fp` file path of the file to read.
+ * @param {Object} `options` Options to pass to gray-matter.
+ * @return {Object}
+ * @api public
+ */
+
 matter.read = function(fp, options) {
   var str = fs.readFileSync(fp, 'utf8');
   var obj = matter(str, options);
@@ -60,11 +101,34 @@ matter.read = function(fp, options) {
   });
 };
 
+/**
+ * Stringify an object to front-matter-formatted YAML, and
+ * concatenate it to the given string.
+ *
+ * ```js
+ * matter.stringify('foo bar baz', {title: 'Home'});
+ * ```
+ * Results in:
+ *
+ * ```yaml
+ * ---
+ * title: Home
+ * ---
+ * foo bar baz
+ * ```
+ *
+ * @param {String} `str` The content string to append to stringified front-matter.
+ * @param {Object} `data` Front matter to stringify.
+ * @param {Object} `options` Options to pass to js-yaml
+ * @return {String}
+ * @api public
+ */
+
 matter.stringify = function(str, data, options) {
-  var yaml = require('js-yaml');
+  var YAML = matter.parsers.requires.yaml || (matter.parsers.requires.yaml = require('js-yaml'));
   var res = '';
   res += '---\n';
-  res += yaml.safeDump(data, options);
+  res += YAML.safeDump(data, options);
   res += '---\n';
   res += str;
   res += '\n';
