@@ -25,3 +25,7 @@ test/actual
 test/yfm
 /*.log
 reg.js
+
+
+# npmignore
+test
