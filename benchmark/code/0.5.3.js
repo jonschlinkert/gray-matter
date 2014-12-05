@@ -2,7 +2,6 @@
 
 var fs = require('fs');
 var YAML = require('js-yaml');
-var log = require('verbalize');
 var Delims = require('delims');
 var extend = require('extend-shallow');
 var parsers = require('../../lib/parsers');
@@ -42,7 +41,7 @@ function matter(str, options) {
       data = parsers[opts.lang](file[1], opts);
     } catch (e) {
       e.origin = __filename;
-      log.warn('Front-matter language not detected by gray-matter', e);
+      console.log('Front-matter language not detected by gray-matter', e);
     }
     str = file[2];
   }

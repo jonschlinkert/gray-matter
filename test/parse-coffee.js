@@ -12,6 +12,18 @@ var should = require('should');
 var matter = require('..');
 
 describe('parse coffee:', function () {
+  it('should throw an error when `eval` is not defined as `true` on the options.', function() {
+    (function() {
+      matter.read('./test/fixtures/lang-coffee.md', {lang: 'coffee'});
+    }).should.throw('gray-matter: to parse coffee set `options.eval` to `true`');
+  });
+
+  it('should throw an error when coffee cannot be parsed:', function() {
+    (function() {
+      matter.read('./test/fixtures/lang-coffee-bad.md', {lang: 'coffee', eval: true});
+    }).should.throw('gray-matter parser [coffee-script]:ReferenceError: evalmachine.<anonymous>:1\ndata({\n^\ndata is not defined');
+  });
+
   it('should parse coffee front matter.', function () {
     var actual = matter.read('./test/fixtures/lang-coffee.md', {
       lang: 'coffee',

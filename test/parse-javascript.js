@@ -12,6 +12,12 @@ var should = require('should');
 var matter = require('..');
 
 describe('parse javascript:', function () {
+  it('should throw an error when `eval` is not defined as `true` on the options.', function() {
+    (function() {
+      matter.read('./test/fixtures/lang-javascript-fn.md', {lang: 'javascript'});
+    }).should.throw('gray-matter: to parse javascript set `options.eval` to `true`');
+  });
+
   it('should parse javascript front matter.', function () {
     var actual = matter.read('./test/fixtures/lang-javascript-fn.md', {
       lang: 'javascript',
