@@ -80,6 +80,12 @@ function matter(str, options) {
 var parsers = matter.parsers = require('./lib/parsers');
 
 /**
+ * Requires cache
+ */
+
+var YAML = matter.parsers.requires.yaml || (matter.parsers.requires.yaml = require('js-yaml'));
+
+/**
  * Read a file and parse front matter. Returns the same object
  * as `matter()`.
  *
@@ -125,7 +131,6 @@ matter.read = function(fp, options) {
  */
 
 matter.stringify = function(str, data, options) {
-  var YAML = matter.parsers.requires.yaml || (matter.parsers.requires.yaml = require('js-yaml'));
   var res = '';
   res += '---\n';
   res += YAML.safeDump(data, options);
