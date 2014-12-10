@@ -1,5 +1,6 @@
 {
   "esnext": true,
+  "indent": 2,
   "boss": true,
   "curly": true,
   "eqeqeq": true,
