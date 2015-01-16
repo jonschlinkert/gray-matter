@@ -2,11 +2,10 @@
 
 var fs = require('fs');
 var extend = require('extend-shallow');
+var parsers = require('./lib/parsers');
 
 /**
  * Expose `matter()`
- *
- * @type {Function}
  */
 
 module.exports = matter;
@@ -33,42 +32,63 @@ function matter(str, options) {
     throw new Error('gray-matter expects a string');
   }
 
-  str = str.replace(/^\uFEFF/, '').replace(/\r/g, '');
-  var o = {lang: '', data: {}, content: '', orig: str};
-  var opts = extend({lang: 'yaml'}, options);
-  var delims = opts.delims || ['---', '---'];
-
-  var i = str.indexOf(delims[0]);
-  if (i !== 0) {
-    o.content = str;
-    delete o.lang;
-    return o;
+  if (str === '') {
+    return {orig: '', data: {}, content: ''};
   }
 
-  var len1 = delims[0].length;
-  var len2 = delims[1].length;
-  var ch = len1;
-  var lang;
-
-  while ((lang = str.charAt(ch++)) !== '\n') {
-    o.lang += lang;
-  }
-  var ll = o.lang.length;
-  var to = str.indexOf(delims[1], len1);
-  o.lang = (o.lang || opts.lang).trim();
-  var fn = opts.parser || parsers[o.lang];
-
-  if (fn) {
-    o.data = fn(str.substr(len1 + ll, to - ll - len2), opts);
-  } else {
-    throw new Error('gray-matter cannot find a parser for: ' + str);
+  if (str.charCodeAt(0) === 65279 && str.charCodeAt(1) === 116 && str.charCodeAt(2) === 104) {
+    str = str.slice(1);
   }
 
-  return {
-    orig: o.orig,
-    data: o.data,
-    content: str.substr(to + len2).trim()
-  };
+  var opts = extend({lang: 'yaml', delims: ['---', '---']}, options);
+  var res = {orig: str, data: {}, content: str};
+
+  var first = str.slice(0, opts.delims[0].length);
+  if (first !== opts.delims[0]) {
+    return res;
+  }
+
+  var delims = opts.delims;
+  var d1len = delims[0].length;
+  var d2len = delims[1].length;
+  var len = str.length;
+
+  // start the character search after the first fence
+  var ch = d1len;
+  var language = '', lang = '';
+
+  // detect the language, if any, after the first fence
+  while ((language = str.charAt(ch++)) !== '\n') {
+    lang += language;
+
+    if (ch === len) {
+      throw new Error('[gray-matter]: bad formatting, no newlines detected.');
+    }
+  }
+
+  // find the index of the next fence
+  var end = str.indexOf(delims[1], d1len);
+
+  // get the length of the actual string following the fence
+  var ll = lang.length;
+
+  // format the language to use for parsing
+  lang = (lang ? lang.trim() : opts.lang).toLowerCase();
+
+  // if it exists, `data` is a string at this point
+  var data = str.slice(d1len + ll, end).trim();
+  if (data.length > 0) {
+    // if data exists, see if we have a matching parser
+    var fn = opts.parser || parsers[lang];
+    if (typeof fn === 'function') {
+      res.data = fn(data, opts);
+    } else {
+      throw new Error('gray-matter cannot find a parser for: ' + str);
+    }
+  }
+
+  res.content = str.substr(end + d2len).trim();
+  return res;
 }
 
 /**
@@ -77,7 +97,7 @@ function matter(str, options) {
  * @type {Object}
  */
 
-var parsers = matter.parsers = require('./lib/parsers');
+matter.parsers = parsers;
 
 /**
  * Requires cache
