@@ -153,12 +153,12 @@ matter.read('file.md', {delim: '~~~'});
 ```
 would parse:
 
-```html
+<pre>
 ~~~
 title: Home
 ~~~
 This is the {{title}} page.
-```
+</pre>
 
 
 ## Example
