@@ -32,3 +32,5 @@ reg.js
 test
 gulp*
 bower.json
+example.js
+blocks.js
