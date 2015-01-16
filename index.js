@@ -156,11 +156,22 @@ matter.stringify = function(str, data, options) {
   return res;
 };
 
+/**
+ * Return true if the given `string` has front matter.
+ *
+ * @param  {String} `string`
+ * @param  {Object} `options`
+ * @return {Boolean} True if front matter exists.
+ */
+
 matter.test = function(str, options) {
   var delim = options && options.delim || '---';
   return str.slice(0, delim.length) === delim;
 };
 
+/**
+ * Utility to strip byte order marks
+ */
 
 function stripBom(str) {
   var hasBom = str.charCodeAt(0) === 65279
