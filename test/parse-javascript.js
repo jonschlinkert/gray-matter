@@ -1,7 +1,7 @@
 /*!
  * gray-matter <https://github.com/assemble/gray-matter>
  *
- * Copyright (c) 2014 Jon Schlinkert, contributors.
+ * Copyright (c) 2014-2015, Jon Schlinkert.
  * Licensed under the MIT license.
  */
 
@@ -14,8 +14,8 @@ var matter = require('..');
 describe('parse javascript:', function () {
   it('should throw an error when `eval` is not defined as `true` on the options.', function() {
     (function() {
-      matter.read('./test/fixtures/lang-javascript-fn.md', {lang: 'javascript'});
-    }).should.throw('gray-matter: to parse javascript set `options.eval` to `true`');
+      matter.read('./test/fixtures/lang-javascript-fn.md', {lang: 'javascript', strict: true});
+    }).should.throw('[gray-matter]: to parse javascript set `options.eval` to `true`');
   });
 
   it('should parse javascript front matter.', function () {

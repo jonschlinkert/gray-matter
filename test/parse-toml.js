@@ -1,7 +1,7 @@
 /*!
  * gray-matter <https://github.com/assemble/gray-matter>
  *
- * Copyright (c) 2014 Jon Schlinkert, contributors.
+ * Copyright (c) 2014-2015, Jon Schlinkert.
  * Licensed under the MIT license.
  */
 
@@ -16,7 +16,6 @@ describe('parse TOML:', function () {
     var actual = matter.read('./test/fixtures/lang-toml.md', {
       lang: 'toml'
     });
-
     actual.data.title.should.equal('TOML');
     actual.should.have.property('data');
     actual.should.have.property('content');
@@ -24,10 +23,7 @@ describe('parse TOML:', function () {
   });
 
   it('should auto-detect TOML as the language.', function () {
-    var actual = matter.read('./test/fixtures/autodetect-toml.md', {
-      autodetect: true
-    });
-
+    var actual = matter.read('./test/fixtures/autodetect-toml.md');
     actual.data.title.should.equal('autodetect-TOML');
     actual.should.have.property('data');
     actual.should.have.property('content');

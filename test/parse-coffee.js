@@ -1,7 +1,7 @@
 /*!
  * gray-matter <https://github.com/assemble/gray-matter>
  *
- * Copyright (c) 2014 Jon Schlinkert, contributors.
+ * Copyright (c) 2014-2015, Jon Schlinkert.
  * Licensed under the MIT license.
  */
 
@@ -14,14 +14,14 @@ var matter = require('..');
 describe('parse coffee:', function () {
   it('should throw an error when `eval` is not defined as `true` on the options.', function() {
     (function() {
-      matter.read('./test/fixtures/lang-coffee.md', {lang: 'coffee'});
-    }).should.throw('gray-matter: to parse coffee set `options.eval` to `true`');
+      matter.read('./test/fixtures/lang-coffee.md', {lang: 'coffee', strict: true});
+    }).should.throw('[gray-matter]: to parse coffee set `options.eval` to `true`');
   });
 
   it('should throw an error when coffee cannot be parsed:', function() {
     (function() {
       matter.read('./test/fixtures/lang-coffee-bad.md', {lang: 'coffee', eval: true});
-    }).should.throw('gray-matter parser [coffee-script]:ReferenceError: evalmachine.<anonymous>:1\ndata({\n^\ndata is not defined');
+    }).should.throw('gray-matter parser [coffee-script]: ReferenceError: data is not defined');
   });
 
   it('should parse coffee front matter.', function () {
