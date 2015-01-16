@@ -54,7 +54,7 @@ describe('Read from strings:', function () {
 
   it('should use custom delimiters.', function () {
     var fixture = '~~~\nabc: xyz\nversion: 2\n~~~\n\n<span class="alert alert-info">This is an alert</span>\n';
-    var actual = matter(fixture, {delims: ['~~~', '~~~']});
+    var actual = matter(fixture, {delim: '~~~'});
     actual.should.have.property('data', {abc: 'xyz', version: 2});
     actual.should.have.property('content', '<span class="alert alert-info">This is an alert</span>');
     actual.should.have.property('orig');

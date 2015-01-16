@@ -21,7 +21,7 @@ module.exports = matter;
  *
  * @param {String} `string` The string to parse.
  * @param {Object} `options`
- *   @option {Array} [options] `delims` Custom delimiters formatted as an array. The default is `['---', '---']`.
+ *   @option {Array} [options] `delim` Custom delimiters formatted as an array. The default is `['---', '---']`.
  *   @option {Function} [options] `parser` Parser function to use. [js-yaml] is the default.
  * @return {Object} Valid JSON
  * @api public
@@ -32,51 +32,47 @@ function matter(str, options) {
     throw new Error('gray-matter expects a string');
   }
 
-  if (str === '') {
-    return {orig: '', data: {}, content: ''};
-  }
+  var delim = options && options.delim || '---';
+  str = stripBom(str);
 
-  if (str.charCodeAt(0) === 65279 && str.charCodeAt(1) === 116 && str.charCodeAt(2) === 104) {
-    str = str.slice(1);
-  }
-
-  var opts = extend({lang: 'yaml', delims: ['---', '---']}, options);
   var res = {orig: str, data: {}, content: str};
-
-  var first = str.slice(0, opts.delims[0].length);
-  if (first !== opts.delims[0]) {
+  if (str === '' || str.indexOf(delim) !== 0) {
     return res;
   }
 
-  var delims = opts.delims;
-  var d1len = delims[0].length;
-  var d2len = delims[1].length;
-  var len = str.length;
+  var opts = options || {};
+  opts.lang = opts.lang || 'yaml';
+  var delimLen = delim.length;
+
+  // find the index of the next fence
+  var end = str.indexOf(delim, delimLen);
+  if (end === -1) {
+    return res;
+  }
 
   // start the character search after the first fence
-  var ch = d1len;
-  var language = '', lang = '';
+  var ch = delimLen, l = '', lang = '';
+  var len = str.length;
 
   // detect the language, if any, after the first fence
-  while ((language = str.charAt(ch++)) !== '\n') {
-    lang += language;
+  while ((l = str.charAt(ch++)) !== '\n') {
+    lang += l;
 
-    if (ch === len) {
+    if (ch === end) {
       throw new Error('[gray-matter]: bad formatting, no newlines detected.');
     }
   }
 
-  // find the index of the next fence
-  var end = str.indexOf(delims[1], d1len);
-
-  // get the length of the actual string following the fence
-  var ll = lang.length;
+  // store the length of the actual string following the fence,
+  // since we need this to continue on to the data block
+  var langLength = lang.length;
 
   // format the language to use for parsing
-  lang = (lang ? lang.trim() : opts.lang).toLowerCase();
+  lang = lang.trim();
+  lang = (lang ? lang : opts.lang).toLowerCase();
 
   // if it exists, `data` is a string at this point
-  var data = str.slice(d1len + ll, end).trim();
+  var data = str.slice(delimLen + langLength, end).trim();
   if (data.length > 0) {
     // if data exists, see if we have a matching parser
     var fn = opts.parser || parsers[lang];
@@ -87,7 +83,7 @@ function matter(str, options) {
     }
   }
 
-  res.content = str.substr(end + d2len).trim();
+  res.content = str.substr(end + delimLen).trim();
   return res;
 }
 
@@ -159,3 +155,19 @@ matter.stringify = function(str, data, options) {
   res += '\n';
   return res;
 };
+
+matter.test = function(str, options) {
+  var delim = options && options.delim || '---';
+  return str.slice(0, delim.length) === delim;
+};
+
+
+function stripBom(str) {
+  var hasBom = str.charCodeAt(0) === 65279
+    && str.charCodeAt(1) === 116
+    && str.charCodeAt(2) === 104;
+
+  if (hasBom) return str.slice(1);
+  return str;
+}
+
