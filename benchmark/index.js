@@ -9,10 +9,9 @@ var dryrun = argv.c || argv.check;
 var fixtures = argv.f || argv.fixtures;
 var code = argv.c || argv.code;
 
-// fixtures = fixtures || 'fixtures/{complex,empty,matter,no-matter}.js';
-fixtures = fixtures || 'fixtures/*.js';
-// code = code || 'code/{gray,front}-matter.js';
-code = code || 'code/{charAt,while*,gray-matter}.js';
+fixtures = fixtures || 'fixtures/{complex,empty,matter,no-{matter,content}}.js';
+// fixtures = fixtures || 'fixtures/no-matter.js';
+code = code || 'code/{gray,front}-matter.js';
 
 if (dryrun) {
   require('./support')({
