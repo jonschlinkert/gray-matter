@@ -25,13 +25,23 @@ describe('Read from strings:', function () {
   it('should throw an error when front-matter cannot be parsed:', function () {
     (function() {
       matter('---whatever\nabc: xyz\n---')
-    }).should.throw('gray-matter cannot find a parser for: ---whatever\nabc: xyz\n---')
+    }).should.throw('gray-matter cannot find a parser for: ---whatever\nabc: xyz\n---');
+  });
+
+  it('should throw an error when the formatting is bad (e.g. no newlines).', function() {
+    (function() {
+      matter('--- title: "coffee"--- # This page has coffee front matter!', {lang: 'coffee', strict: true});
+    }).should.throw('[gray-matter]: bad formatting, no newlines detected.');
   });
 
   it('should throw an error when a string is not passed:', function () {
     (function() {
       matter()
-    }).should.throw('gray-matter expects a string')
+    }).should.throw('gray-matter expects a string');
+  });
+
+  it('should return an object when the string is 0 length:', function () {
+    matter('').should.eql({orig: '', data: {}, content: ''});
   });
 
   it('should extract YAML front matter and content', function () {

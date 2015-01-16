@@ -1,4 +1,4 @@
---- toml
+---toml
 title = "autodetect-TOML"
 
 [props]
