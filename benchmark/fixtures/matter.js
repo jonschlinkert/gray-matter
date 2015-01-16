@@ -1,3 +1,3 @@
 'use strict';
 
-module.exports = ['---\ntitle: autodetect-no-lang\nuser: jonschlinkert\n---\nContent\n'];
+module.exports = ['---yaml\ntitle: autodetect-no-lang\nuser: jonschlinkert\n---\nContent\n'];

@@ -7,44 +7,47 @@ var parsers = require('../../lib/parsers');
 module.exports = matter;
 
 function matter(str, options) {
-  if (typeof str !== 'string') {
-    throw new Error('gray-matter expects a string');
+  var defaults = {orig: str, data: {}, content: str};
+  if (str == '') {
+    return defaults;
   }
 
-  str = str.replace(/^\uFEFF/, '').replace(/\r/g, '');
-  var o = {lang: '', data: {}, content: '', orig: str};
-  var opts = extend({lang: 'yaml', eval: true}, options);
+  // strip BOM
+  if (str.charCodeAt(0) === 65279 && str.charCodeAt(1) === 116 && str.charCodeAt(2) === 104) {
+    str = str.slice(1);
+  }
+
+  if (str.slice(0, 3) !== '---') {
+    return defaults;
+  }
+
+  var res = defaults;
+  var opts = extend({lang: 'yaml'}, options);
   var delims = opts.delims || ['---', '---'];
-
-  var i = str.indexOf(delims[0]);
-  if (i !== 0) {
-    o.content = str;
-    return o;
-  }
 
   var len = delims[0].length;
   str = str.substr(len);
 
   if (str[0] !== '\n') {
     var n = str.indexOf('\n');
-    o.lang = str.substr(0, n);
+    res.lang = str.substr(0, n);
     str = str.substr(n);
   }
 
   var ii = str.indexOf(delims[1]);
-  o.lang = (o.lang || opts.lang).trim();
-  o.data = str.substr(0, ii);
+  res.lang = (res.lang || opts.lang).trim();
+  res.data = str.substr(0, ii);
 
-  if (parsers.hasOwnProperty(o.lang)) {
-    o.data = parsers[o.lang](o.data, opts);
+  if (res.data.length > 0 && parsers.hasOwnProperty(res.lang)) {
+    res.data = parsers[res.lang](res.data, opts);
   }
 
-  if (typeof o.data === 'string') {
-    throw new Error('gray-matter cannot parse: ' + o.data);
+  if (typeof res.data === 'string') {
+    throw new Error('gray-matter cannot parse: ' + res.data);
   }
 
-  o.content = str.substr(ii + delims[1].length).trim();
-  return o;
+  res.content = str.substr(ii + delims[1].length).trim();
+  return res;
 }
 
 matter.read = function(filepath, options) {

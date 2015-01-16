@@ -7,52 +7,116 @@ var parsers = require('../../lib/parsers');
 module.exports = matter;
 
 function matter(str, options) {
-  if (typeof str !== 'string') {
-    throw new Error('gray-matter expects a string');
+  if (str.length === 0) {
+    return {orig: '', data: {}, content: ''};
   }
 
-  str = str.replace(/^\uFEFF/, '').replace(/\r/g, '');
+  if (str.charCodeAt(0) === 65279 && str.charCodeAt(1) === 116 && str.charCodeAt(2) === 104) {
+    str = str.slice(1);
+  }
+
   var o = {lang: '', data: {}, content: '', orig: str};
   var opts = extend({lang: 'yaml', eval: true}, options);
-  var delims = opts.delims || ['---', '---'];
+  var delim = opts.delims || ['---', '---'];
 
-  var i = str.indexOf(delims[0]);
-  if (i !== 0) {
-    o.lang = '';
-    o.content = str;
-    return o;
+  // make sure the starting delim is first thing
+  if (str.slice(0, delim[0].length) !== delim[0]) {
+    return {orig: str, data: {}, content: str};
   }
 
-  var len1 = delims[0].length;
-  var len2 = delims[1].length;
-  var ch = len1;
+  var len = delim[0].length;
+  var ch = len;
   var lang;
 
   while ((lang = str.charAt(ch++)) !== '\n') {
     o.lang += lang;
   }
+
   var ll = o.lang.length;
-  var to = str.indexOf(delims[1], len1);
+  var to = str.indexOf(delim[0], len);
   o.lang = (o.lang || opts.lang).trim();
+
   var fn = parsers[o.lang];
-  if (fn) {
-    o.data = fn(str.substr(len1 + ll, to - ll - len2), opts);
+  var data = str.substr(len + ll, to - ll - len);
+  if (fn && data.length > 0) {
+    o.data = fn(data, opts);
   } else {
-    o.data = str.substr(len1 + ll, to - ll - len2);
+    o.data = str.substr(len + ll, to - ll - len);
   }
 
-  if (typeof o.data === 'string') {
+  if (typeof o.data !== 'object') {
     throw new Error('gray-matter cannot parse: ' + o.data);
   }
 
-  o.content = str.substr(to + len2).trim();
+  o.content = str.substr(to + len).trim();
   return o;
 }
 
-matter.read = function(filepath, options) {
-  var str = fs.readFileSync(filepath, 'utf8');
+/**
+ * Expose `parsers`
+ *
+ * @type {Object}
+ */
+
+matter.parsers = parsers;
+
+/**
+ * Requires cache
+ */
+
+var YAML = matter.parsers.requires.yaml || (matter.parsers.requires.yaml = require('js-yaml'));
+
+/**
+ * Read a file and parse front matter. Returns the same object
+ * as `matter()`.
+ *
+ * ```js
+ * matter.read('home.md');
+ * ```
+ *
+ * @param {String} `fp` file path of the file to read.
+ * @param {Object} `options` Options to pass to gray-matter.
+ * @return {Object}
+ * @api public
+ */
+
+matter.read = function(fp, options) {
+  var str = fs.readFileSync(fp, 'utf8');
   var obj = matter(str, options);
   return extend(obj, {
-    path: filepath
+    path: fp
   });
+};
+
+/**
+ * Stringify an object to front-matter-formatted YAML, and
+ * concatenate it to the given string.
+ *
+ * ```js
+ * matter.stringify('foo bar baz', {title: 'Home'});
+ * ```
+ * Results in:
+ *
+ * ```yaml
+ * ---
+ * title: Home
+ * ---
+ * foo bar baz
+ * ```
+ *
+ * @param {String} `str` The content string to append to stringified front-matter.
+ * @param {Object} `data` Front matter to stringify.
+ * @param {Object} `options` Options to pass to js-yaml
+ * @return {String}
+ * @api public
+ */
+
+matter.stringify = function(str, data, options) {
+  var res = '';
+  res += '---\n';
+  res += YAML.safeDump(data, options);
+  res += '---\n';
+  res += str;
+  res += '\n';
+  return res;
 };

@@ -2,7 +2,7 @@
 
 var fs = require('fs');
 var YAML = require('js-yaml');
-var Delims = require('delims');
+var delims = require('delimiter-regex');
 var extend = require('extend-shallow');
 var parsers = require('../../lib/parsers');
 var utils = require('../../lib/utils');
@@ -10,61 +10,42 @@ var utils = require('../../lib/utils');
 module.exports = matter;
 
 function matter(str, options) {
-  if (typeof str !== 'string') {
-    throw new Error('gray-matter expects a string');
+  if (str.length === 0) {
+    return {orig: '', data: {}, content: ''};
   }
 
-  str = str.replace(/^\uFEFF/, '').replace(/\r/g, '');
-  var orig = str;
-  var data = {};
-
-  var defaults = {delims: ['---', '---'], delimsOpts: {}};
-  var opts = extend({autodetect: true, eval: true}, defaults, options);
-
-  if (str.indexOf(opts.delims[0]) !== 0) {
-    return {data: {}, content: str, orig: str};
+  if (str.charCodeAt(0) === 65279 && str.charCodeAt(1) === 116 && str.charCodeAt(2) === 104) {
+    str = str.slice(1);
   }
 
-  var delimiters = createDelims(opts.delims, opts.delimsOpts);
-  var lang;
-
-  if (opts.autodetect) {
-    lang = utils.detectLang(opts.delims[0], str);
-    str = utils.stripLang(opts.delims[0], str);
+  var opts = extend({}, options);
+  if (str.slice(0, 3) !== '---') {
+    return {orig: str, data: {}, content: str};
   }
 
-  opts.lang = String(opts.lang || lang || 'yaml');
+  var delimiters = delims(['---([^\\n]*)', '---\s*([\\s\\S]*)']);
   var file = str.match(delimiters);
+  var res = {orig: str, data: {}, content: str};
 
-  if (file && file.length === 3) {
+  if (file) {
+    var lang = (file[1] !== '' ? file[1].trim() : opts.lang) || 'yaml';
     try {
-      data = parsers[opts.lang](file[1], opts);
-    } catch (e) {
-      e.origin = __filename;
-      console.log('Front-matter language not detected by gray-matter', e);
+      res.data = parsers[lang](file[2].trim(), opts);
+    } catch (err) {
+      err.origin = __filename;
+      console.log('Front-matter language not detected by gray-matter', err);
     }
-    str = file[2];
+    res.content = file[3].trim();
   }
 
-  return {data: data, content: str.trim(), orig: orig};
+  return res;
 }
 
-matter.read = function(filepath, options) {
-  var str = fs.readFileSync(filepath, 'utf8');
-  var obj = matter(str, options);
+matter.read = function(fp, opts) {
+  var str = fs.readFileSync(fp, 'utf8');
+  var obj = matter(str, opts);
   return extend(obj, {
-    path: filepath
+    path: fp
   });
 };
 
-/**
- * Utility method to create delimiters
- *
- * @api private
- */
-
-function createDelims(arr, options) {
-  var delims = new Delims();
-  var o = delims.matter(arr, options);
-  return o;
-}
