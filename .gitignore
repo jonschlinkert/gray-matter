@@ -4,7 +4,6 @@ npm-debug.log
 # Always-ignore dirs
 bower_components
 node_modules
-node_modules
 
 temp
 tmp
@@ -25,3 +24,4 @@ test/actual
 test/yfm
 /*.log
 reg.js
+*.DS_Store

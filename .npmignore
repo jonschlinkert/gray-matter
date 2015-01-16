@@ -1,19 +1,34 @@
-*.sublime-*
-*.log
+# Numerous always-ignore extensions
+npm-debug.log
+
+# Always-ignore dirs
 bower_components
-coverage
 node_modules
-reg.js
+
 temp
+tmp
+vendor
+staging
+_gh_pages
+_test
+
+# OS or Editor folders
+.komodotools
+*.sublime-*
+
+# misc
+TODO.md
+benchmark
+coverage
 test/actual
 test/yfm
-tmp
-TODO.md
-vendor
+/*.log
+reg.js
+*.DS_Store
+
 
 # npmignore
-benchmark
+.*
 test
-.verb*
 gulp*
 bower.json
