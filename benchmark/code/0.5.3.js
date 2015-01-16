@@ -5,7 +5,6 @@ var YAML = require('js-yaml');
 var delims = require('delimiter-regex');
 var extend = require('extend-shallow');
 var parsers = require('../../lib/parsers');
-var utils = require('../../lib/utils');
 
 module.exports = matter;
 

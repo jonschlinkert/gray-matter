@@ -15,7 +15,7 @@ function matter(str, options) {
     str = str.slice(1);
   }
 
-  var o = {lang: '', data: {}, content: '', orig: str};
+  var o = {data: {}, content: '', orig: str};
   var opts = extend({lang: 'yaml', eval: true}, options);
   var delim = opts.delims || ['---', '---'];
 
@@ -26,17 +26,17 @@ function matter(str, options) {
 
   var len = delim[0].length;
   var ch = len;
-  var lang;
+  var language, lang = '';
 
-  while ((lang = str.charAt(ch++)) !== '\n') {
-    o.lang += lang;
+  while ((language = str.charAt(ch++)) !== '\n') {
+    lang += language;
   }
 
-  var ll = o.lang.length;
+  var ll = lang.length;
   var to = str.indexOf(delim[0], len);
-  o.lang = (o.lang || opts.lang).trim();
+  lang = (lang || opts.lang).trim();
 
-  var fn = parsers[o.lang];
+  var fn = parsers[lang];
   var data = str.substr(len + ll, to - ll - len);
   if (fn && data.length > 0) {
     o.data = fn(data, opts);

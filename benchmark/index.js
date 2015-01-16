@@ -10,8 +10,9 @@ var fixtures = argv.f || argv.fixtures;
 var code = argv.c || argv.code;
 
 // fixtures = fixtures || 'fixtures/{complex,empty,matter,no-matter}.js';
-fixtures = fixtures || 'fixtures/matter.js';
-code = code || 'code/*.js';
+fixtures = fixtures || 'fixtures/*.js';
+// code = code || 'code/{gray,front}-matter.js';
+code = code || 'code/{charAt,while*,gray-matter}.js';
 
 if (dryrun) {
   require('./support')({
