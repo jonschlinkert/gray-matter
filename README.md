@@ -36,6 +36,21 @@ var matter = require('gray-matter');
 matter('---\ntitle: Front Matter\n---\nThis is content.');
 ```
 
+Returns:
+
+```js
+{ 
+  orig: '---\ntitle: Front Matter\n---\nThis is content.',
+  data: { title: 'Front Matter' },
+  content: '\nThis is content.' 
+}
+```
+
+That's it! Just pass a string and gray-matter returns an object.
+
+
+***
+
 
 ## API
 ### [matter](index.js#L30)
@@ -92,14 +107,16 @@ foo bar baz
 
 ## Options
 
-> All methods accept an options object passed as the last argument
+> All methods exposed on the API accept an options object passed as the last argument
 
 ## options.eval
 Type: `Boolean`
 
 Default: `false`
 
-Evaluate coffee-script, CSON or JavaScript in front-matter. If you aren't aware of the dangers, google is your friend.
+Evaluate coffee-script, CSON or JavaScript in front-matter. If you aren't aware of the dangers, google is your friend. 
+
+However, if you are aware and you only use front-matter on, say, blog posts for a static site... this feature can be pretty useful.
 
 
 ## options.lang
@@ -210,24 +227,24 @@ gray-matter is 12-20x faster than [front-matter] when content or front matter ac
 
 ```bash
 #1: complex.js
-  front-matter.js x 425 ops/sec ±1.52% (90 runs sampled)
-  gray-matter.js x 6,629 ops/sec ±1.30% (91 runs sampled)
+  front-matter.js x 433 ops/sec ±1.21% (91 runs sampled)
+  gray-matter.js x 9,491 ops/sec ±1.07% (92 runs sampled)
 
 #2: empty.js
-  front-matter.js x 5,224,394 ops/sec ±0.96% (97 runs sampled)
-  gray-matter.js x 10,491,590 ops/sec ±0.66% (98 runs sampled)
+  front-matter.js x 5,744,976 ops/sec ±0.76% (99 runs sampled)
+  gray-matter.js x 18,048,669 ops/sec ±0.84% (93 runs sampled)
 
 #3: matter.js
-  front-matter.js x 9,065 ops/sec ±3.33% (80 runs sampled)
-  gray-matter.js x 186,766 ops/sec ±0.99% (95 runs sampled)
+  front-matter.js x 10,739 ops/sec ±2.65% (84 runs sampled)
+  gray-matter.js x 201,322 ops/sec ±0.71% (93 runs sampled)
 
 #4: no-content.js
-  front-matter.js x 10,037 ops/sec ±3.17% (84 runs sampled)
-  gray-matter.js x 163,841 ops/sec ±0.91% (95 runs sampled)
+  front-matter.js x 13,097 ops/sec ±3.00% (82 runs sampled)
+  gray-matter.js x 198,441 ops/sec ±0.49% (101 runs sampled)
 
 #5: no-matter.js
-  front-matter.js x 5,112,736 ops/sec ±0.89% (96 runs sampled)
-  gray-matter.js x 8,239,841 ops/sec ±1.39% (92 runs sampled)
+  front-matter.js x 5,420,088 ops/sec ±0.79% (96 runs sampled)
+  gray-matter.js x 9,559,091 ops/sec ±1.33% (92 runs sampled)
 ```
 
 
