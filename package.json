@@ -1,6 +1,6 @@
 {
   "name": "gray-matter",
-  "description": "Front-matter parsing done right. Fast, reliable and easy to use. Parses YAML front matter by default, but also has support for YAML, JSON, TOML or Coffee Front-Matter, with options to set custom delimiters.",
+  "description": "Parse front-matter from a string or file. Fast, reliable and easy to use. Parses YAML front matter by default, but also has support for YAML, JSON, TOML or Coffee Front-Matter, with options to set custom delimiters.",
   "version": "1.1.2",
   "author": {
     "name": "Jon Schlinkert",
@@ -22,11 +22,7 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "test": "mocha -R spec",
-    "cover": "istanbul cover node_modules/.bin/_mocha && open coverage/lcov-report/index.html",
-    "ci": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage",
-    "docs": "update && license && npmignore && deps && verb",
-    "all": "npm run test && npm run docs"
+    "test": "mocha -R spec"
   },
   "dependencies": {
     "chalk": "^0.5.1",
