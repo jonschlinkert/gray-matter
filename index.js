@@ -52,12 +52,13 @@ function matter(str, options) {
 
   var b = '\n' + (delims[1] || delims[0]);
   var alen = a.length;
+  var len = str.length;
 
   // find the index of the next delimiter before
   // going any further. If not found, return.
   var end = str.indexOf(b, alen + 1);
   if (end === -1) {
-    return res;
+    end = len;
   }
 
   // detect a language, if defined

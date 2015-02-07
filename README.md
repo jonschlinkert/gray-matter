@@ -69,7 +69,7 @@ matter('---\ntitle: foo\n---\nbar');
 //=> {data: {title: 'foo'}, content: 'bar', orig: '---\ntitle: foo\n---\nbar'}
 ```
 
-### [.read](index.js#L117)
+### [.read](index.js#L118)
 
 Read a file and parse front matter. Returns the same object as `matter()`.
 
@@ -81,7 +81,7 @@ Read a file and parse front matter. Returns the same object as `matter()`.
 matter.read('home.md');
 ```
 
-### [.stringify](index.js#L148)
+### [.stringify](index.js#L149)
 
 Stringify an object to front-matter-formatted YAML, and concatenate it to the given string.
 
@@ -217,8 +217,8 @@ returns
 The following benchmarks reflect the processing time for all markdown posts in the [bootstrap-blog].
 
 ```
-front-matter.js x 209 ops/sec ±2.75% (78 runs sampled)
-gray-matter.js x 3,792 ops/sec ±0.81% (93 runs sampled)
+front-matter.js x 271 ops/sec ±2.68% (80 runs sampled)
+gray-matter.js x 4,294 ops/sec ±0.86% (91 runs sampled)
 ```
 
 **Misc**

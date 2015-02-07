@@ -31,6 +31,7 @@ module.exports = function (options) {
       var args = require(cwd('fixtures', fixture));
       var actual = fn.apply(fn, args);
       res[lib][filename] = actual;
+
       console.log(name(fixture, lib), actual);
     });
 
@@ -40,6 +41,7 @@ module.exports = function (options) {
         value[k] = sortObj(v);
       });
     });
+
 
     fs.writeFileSync(filepath, util.inspect(res, null, 10));
   });
