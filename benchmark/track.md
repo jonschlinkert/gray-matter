@@ -1,19 +1,19 @@
 #1: complex.js
-  front-matter.js x 425 ops/sec ±1.52% (90 runs sampled)
-  gray-matter.js x 6,629 ops/sec ±1.30% (91 runs sampled)
+  front-matter.js x 434 ops/sec ±2.11% (88 runs sampled)
+  gray-matter.js x 9,108 ops/sec ±0.97% (89 runs sampled)
 
 #2: empty.js
-  front-matter.js x 5,224,394 ops/sec ±0.96% (97 runs sampled)
-  gray-matter.js x 10,491,590 ops/sec ±0.66% (98 runs sampled)
+  front-matter.js x 5,721,943 ops/sec ±0.92% (92 runs sampled)
+  gray-matter.js x 18,231,896 ops/sec ±1.98% (88 runs sampled)
 
 #3: matter.js
-  front-matter.js x 9,065 ops/sec ±3.33% (80 runs sampled)
-  gray-matter.js x 186,766 ops/sec ±0.99% (95 runs sampled)
+  front-matter.js x 10,760 ops/sec ±2.54% (85 runs sampled)
+  gray-matter.js x 195,282 ops/sec ±0.63% (96 runs sampled)
 
 #4: no-content.js
-  front-matter.js x 10,037 ops/sec ±3.17% (84 runs sampled)
-  gray-matter.js x 163,841 ops/sec ±0.91% (95 runs sampled)
+  front-matter.js x 11,555 ops/sec ±2.47% (85 runs sampled)
+  gray-matter.js x 192,581 ops/sec ±0.62% (97 runs sampled)
 
 #5: no-matter.js
-  front-matter.js x 5,112,736 ops/sec ±0.89% (96 runs sampled)
-  gray-matter.js x 8,239,841 ops/sec ±1.39% (92 runs sampled)
+  front-matter.js x 5,329,860 ops/sec ±0.63% (94 runs sampled)
+  gray-matter.js x 8,614,712 ops/sec ±0.92% (97 runs sampled)
