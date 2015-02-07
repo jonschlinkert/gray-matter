@@ -21,7 +21,7 @@ module.exports = matter;
  *
  * @param {String} `string` The string to parse.
  * @param {Object} `options`
- *   @option {Array} [options] `delim` Custom delimiters formatted as an array. The default is `['---', '---']`.
+ *   @option {Array} [options] `delims` Custom delimiters formatted as an array. The default is `['---', '---']`.
  *   @option {Function} [options] `parser` Parser function to use. [js-yaml] is the default.
  * @return {Object} Valid JSON
  * @api public
@@ -32,24 +32,26 @@ function matter(str, options) {
     throw new Error('gray-matter expects a string');
   }
 
+  // default results to build up
+  var res = {orig: str, data: {}, content: str};
+  if (str === '') {
+    return res;
+  }
+
   // delimiters
   var delims = arrayify((options && options.delims) || '---');
   var a = delims[0];
-  var b = delims[1] || delims[0];
-
-  // get the length of the first delimiter
-  var alen = a.length;
-
-  // default results to build up
-  var res = {orig: str, data: {}, content: str};
 
   // strip byte order marks
   str = stripBom(str);
 
   // if the first delim isn't the first thing, return
-  if (str === '' || !isFirst(str, a, alen)) {
+  if (!isFirst(str, a)) {
     return res;
   }
+
+  var b = delims[1] || delims[0];
+  var alen = a.length;
 
   // find the index of the next delimiter before
   // going any further. If not found, return.
@@ -60,19 +62,20 @@ function matter(str, options) {
 
   // detect a language, if defined
   var lang = str.slice(alen, str.indexOf('\n'));
+  // measure the lang before trimming whitespace
   var start = alen + lang.length;
 
   var opts = options || {};
   opts.lang = opts.lang || 'yaml';
-
   lang = (lang && lang.trim()) || opts.lang;
 
-  // get the front matter
+  // get the front matter (data) string
   var data = str.slice(start, end).trim();
   if (data) {
     // if data exists, see if we have a matching parser
     var fn = opts.parser || parsers[lang];
     if (typeof fn === 'function') {
+      // run the parser on the data string
       res.data = fn(data, opts);
     } else {
       throw new Error('gray-matter cannot find a parser for: ' + str);
@@ -143,12 +146,12 @@ matter.read = function(fp, options) {
  */
 
 matter.stringify = function(str, data, options) {
+  var delims = arrayify(options && options.delims || '---');
   var res = '';
-  res += '---\n';
+  res += delims[0] + '\n';
   res += YAML.safeDump(data, options);
-  res += '---\n';
-  res += str;
-  res += '\n';
+  res += (delims[1] || delims[0]) + '\n';
+  res += str + '\n';
   return res;
 };
 
@@ -161,8 +164,8 @@ matter.stringify = function(str, data, options) {
  */
 
 matter.test = function(str, options) {
-  var delim = arrayify(options && options.delims || '---')[0];
-  return isFirst(str, delim);
+  var delims = arrayify(options && options.delims || '---');
+  return isFirst(str, delims[0]);
 };
 
 /**
@@ -170,8 +173,8 @@ matter.test = function(str, options) {
  * thing in the string.
  */
 
-function isFirst(str, ch, len) {
-  return str.slice(0, len || ch.length) === ch;
+function isFirst(str, ch) {
+  return str.slice(0, ch.length) === ch;
 }
 
 /**
@@ -179,10 +182,9 @@ function isFirst(str, ch, len) {
  */
 
 function stripBom(str) {
-  if (str.charAt(0) === '\uFEFF') {
-    return str.slice(1);
-  }
-  return str;
+  return str.charAt(0) === '\uFEFF'
+    ? str.slice(1)
+    : str;
 }
 
 /**
