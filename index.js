@@ -50,7 +50,7 @@ function matter(str, options) {
     return res;
   }
 
-  var b = delims[1] || delims[0];
+  var b = '\n' + (delims[1] || delims[0]);
   var alen = a.length;
 
   // find the index of the next delimiter before

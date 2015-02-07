@@ -61,5 +61,13 @@ describe('Read from strings:', function () {
     actual.should.have.property('content', '\n\n<span class="alert alert-info">This is an alert</span>\n');
     actual.should.have.property('orig');
   });
+
+  it('should correctly identify delimiters and ignore strings that look like delimiters.', function () {
+    var fixture = '---\nname: "troublesome --- value"\n---\nhere is some content\n';
+    var actual = matter(fixture);
+    actual.should.have.property('data', {name: 'troublesome --- value'});
+    actual.should.have.property('content', '\nhere is some content\n');
+    actual.should.have.property('orig', '---\nname: "troublesome --- value"\n---\nhere is some content\n');
+  });
 });
 
