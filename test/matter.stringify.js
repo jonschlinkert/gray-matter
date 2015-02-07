@@ -25,5 +25,16 @@ describe('.stringify()', function () {
       'Name: {{author.name}}\n'
     ].join('\n'));
   });
+
+  it('should use custom delimiters.', function () {
+    var res = matter.stringify('Name: {{author.name}}', pkg.author, {delims: '~~~'});
+    res.should.equal([
+      '~~~',
+      'name: Jon Schlinkert',
+      'url: "https://github.com/jonschlinkert"',
+      '~~~',
+      'Name: {{author.name}}\n'
+    ].join('\n'));
+  });
 });
 

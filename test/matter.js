@@ -69,5 +69,13 @@ describe('Read from strings:', function () {
     actual.should.have.property('content', '\nhere is some content\n');
     actual.should.have.property('orig', '---\nname: "troublesome --- value"\n---\nhere is some content\n');
   });
+
+  it('should correctly parse a string that only has an opening delimiter.', function () {
+    var fixture = '---\nname: "troublesome --- value"\n';
+    var actual = matter(fixture);
+    actual.should.have.property('data', {name: 'troublesome --- value'});
+    actual.should.have.property('content', '');
+    actual.should.have.property('orig', '---\nname: "troublesome --- value"\n');
+  });
 });
 
