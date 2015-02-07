@@ -28,12 +28,6 @@ describe('Read from strings:', function () {
     }).should.throw('gray-matter cannot find a parser for: ---whatever\nabc: xyz\n---');
   });
 
-  it('should throw an error when the formatting is bad (e.g. no newlines).', function() {
-    (function() {
-      matter('--- title: "coffee"--- # This page has coffee front matter!', {lang: 'coffee', strict: true});
-    }).should.throw('[gray-matter]: bad formatting, no newlines detected.');
-  });
-
   it('should throw an error when a string is not passed:', function () {
     (function() {
       matter()
@@ -48,15 +42,23 @@ describe('Read from strings:', function () {
     var fixture = '---\nabc: xyz\nversion: 2\n---\n\n<span class="alert alert-info">This is an alert</span>\n';
     var actual = matter(fixture);
     actual.should.have.property('data', {abc: 'xyz', version: 2});
-    actual.should.have.property('content', '<span class="alert alert-info">This is an alert</span>');
+    actual.should.have.property('content', '\n\n<span class="alert alert-info">This is an alert</span>\n');
     actual.should.have.property('orig');
   });
 
-  it('should use custom delimiters.', function () {
+  it('should use a custom delimiter as a string.', function () {
     var fixture = '~~~\nabc: xyz\nversion: 2\n~~~\n\n<span class="alert alert-info">This is an alert</span>\n';
-    var actual = matter(fixture, {delim: '~~~'});
+    var actual = matter(fixture, {delims: '~~~'});
     actual.should.have.property('data', {abc: 'xyz', version: 2});
-    actual.should.have.property('content', '<span class="alert alert-info">This is an alert</span>');
+    actual.should.have.property('content', '\n\n<span class="alert alert-info">This is an alert</span>\n');
+    actual.should.have.property('orig');
+  });
+
+  it('should use custom delimiters as an array.', function () {
+    var fixture = '~~~\nabc: xyz\nversion: 2\n~~~\n\n<span class="alert alert-info">This is an alert</span>\n';
+    var actual = matter(fixture, {delims: ['~~~']});
+    actual.should.have.property('data', {abc: 'xyz', version: 2});
+    actual.should.have.property('content', '\n\n<span class="alert alert-info">This is an alert</span>\n');
     actual.should.have.property('orig');
   });
 });

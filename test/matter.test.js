@@ -14,8 +14,8 @@ var matter = require('..');
 describe('Read from strings:', function () {
   it('should return `true` if the string has front-matter:', function () {
     matter.test('---\nabc: xyz\n---').should.be.true;
-    matter.test('---\nabc: xyz\n---', {delim: '~~~'}).should.be.false;
-    matter.test('~~~\nabc: xyz\n~~~', {delim: '~~~'}).should.be.true;
+    matter.test('---\nabc: xyz\n---', {delims: '~~~'}).should.be.false;
+    matter.test('~~~\nabc: xyz\n~~~', {delims: '~~~'}).should.be.true;
     matter.test('\nabc: xyz\n---').should.be.false;
   });
 });
