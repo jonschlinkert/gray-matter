@@ -32,48 +32,44 @@ function matter(str, options) {
     throw new Error('gray-matter expects a string');
   }
 
-  var delim = options && options.delim || '---';
+  // delimiters
+  var delims = arrayify((options && options.delims) || '---');
+  var a = delims[0];
+  var b = delims[1] || delims[0];
+
+  // get the length of the first delimiter
+  var alen = a.length;
+
+  // default results to build up
+  var res = {orig: str, data: {}, content: str};
+
+  // strip byte order marks
   str = stripBom(str);
 
-  var res = {orig: str, data: {}, content: str};
-  if (str === '' || str.indexOf(delim) !== 0) {
+  // if the first delim isn't the first thing, return
+  if (str === '' || !isFirst(str, a, alen)) {
     return res;
   }
 
-  var opts = options || {};
-  opts.lang = opts.lang || 'yaml';
-  var delimLen = delim.length;
-
-  // find the index of the next fence
-  var end = str.indexOf(delim, delimLen);
+  // find the index of the next delimiter before
+  // going any further. If not found, return.
+  var end = str.indexOf(b, alen);
   if (end === -1) {
     return res;
   }
 
-  // start the character search after the first fence
-  var ch = delimLen, l = '', lang = '';
-  var len = str.length;
+  // detect a language, if defined
+  var lang = str.slice(alen, str.indexOf('\n'));
+  var start = alen + lang.length;
 
-  // detect the language, if any, after the first fence
-  while ((l = str.charAt(ch++)) !== '\n') {
-    lang += l;
+  var opts = options || {};
+  opts.lang = opts.lang || 'yaml';
 
-    if (ch === end) {
-      throw new Error('[gray-matter]: bad formatting, no newlines detected.');
-    }
-  }
+  lang = (lang && lang.trim()) || opts.lang;
 
-  // store the length of the actual string following the fence,
-  // since we need this to continue on to the data block
-  var langLength = lang.length;
-
-  // format the language to use for parsing
-  lang = lang.trim();
-  lang = (lang ? lang : opts.lang).toLowerCase();
-
-  // if it exists, `data` is a string at this point
-  var data = str.slice(delimLen + langLength, end).trim();
-  if (data.length > 0) {
+  // get the front matter
+  var data = str.slice(start, end).trim();
+  if (data) {
     // if data exists, see if we have a matching parser
     var fn = opts.parser || parsers[lang];
     if (typeof fn === 'function') {
@@ -83,7 +79,7 @@ function matter(str, options) {
     }
   }
 
-  res.content = str.substr(end + delimLen).trim();
+  res.content = str.slice(end + b.length);
   return res;
 }
 
@@ -165,20 +161,36 @@ matter.stringify = function(str, data, options) {
  */
 
 matter.test = function(str, options) {
-  var delim = options && options.delim || '---';
-  return str.slice(0, delim.length) === delim;
+  var delim = arrayify(options && options.delims || '---')[0];
+  return isFirst(str, delim);
 };
+
+/**
+ * Return true if the given `ch` the first
+ * thing in the string.
+ */
+
+function isFirst(str, ch, len) {
+  return str.slice(0, len || ch.length) === ch;
+}
 
 /**
  * Utility to strip byte order marks
  */
 
 function stripBom(str) {
-  var hasBom = str.charCodeAt(0) === 65279
-    && str.charCodeAt(1) === 116
-    && str.charCodeAt(2) === 104;
-
-  if (hasBom) return str.slice(1);
+  if (str.charAt(0) === '\uFEFF') {
+    return str.slice(1);
+  }
   return str;
 }
 
+/**
+ * Typecast `val` to an array.
+ */
+
+function arrayify(val) {
+  return !Array.isArray(val)
+    ? [val]
+    : val;
+}
