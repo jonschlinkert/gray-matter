@@ -55,7 +55,7 @@ function matter(str, options) {
 
   // find the index of the next delimiter before
   // going any further. If not found, return.
-  var end = str.indexOf(b, alen);
+  var end = str.indexOf(b, alen + 1);
   if (end === -1) {
     return res;
   }
@@ -82,7 +82,7 @@ function matter(str, options) {
     }
   }
 
-  res.content = str.slice(end + b.length);
+  res.content = str.substr(end + b.length);
   return res;
 }
 
@@ -174,7 +174,7 @@ matter.test = function(str, options) {
  */
 
 function isFirst(str, ch) {
-  return str.slice(0, ch.length) === ch;
+  return str.substr(0, ch.length) === ch;
 }
 
 /**
