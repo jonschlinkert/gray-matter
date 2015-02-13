@@ -109,6 +109,21 @@ foo bar baz
 
 > All methods exposed on the API accept an options object passed as the last argument
 
+## options.parser
+Type: `Function`
+
+Default: `undefined`
+
+Pass a custom parser on the options. This is useful if you need to, for example, define custom schemas for [js-yaml].
+
+**Example**
+
+```js
+matter(str, {
+  parser: require('js-yaml').safeLoad
+});
+```
+
 ## options.eval
 Type: `Boolean`
 
