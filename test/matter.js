@@ -77,5 +77,12 @@ describe('Read from strings:', function () {
     actual.should.have.property('content', '');
     actual.should.have.property('orig', '---\nname: "troublesome --- value"\n');
   });
-});
 
+  it('should not try to parse a string has content that looks like front-matter.', function () {
+    var fixture = '-----------name--------------value\nfoo';
+    var actual = matter(fixture);
+    actual.should.have.property('data', {});
+    actual.should.have.property('content', '-----------name--------------value\nfoo');
+    actual.should.have.property('orig', '-----------name--------------value\nfoo');
+  });
+});
