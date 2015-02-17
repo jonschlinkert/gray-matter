@@ -52,6 +52,15 @@ function matter(str, options) {
 
   var b = '\n' + (delims[1] || delims[0]);
   var alen = a.length;
+
+  // if the next character after the first delim
+  // is a character in the first delim, then just
+  // return the default object. it's either a bad
+  // delim or not a delimiter at all.
+  if (a.indexOf(str.charAt(alen + 1)) !== -1) {
+    return res;
+  }
+
   var len = str.length;
 
   // find the index of the next delimiter before
