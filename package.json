@@ -6,23 +6,21 @@
     "name": "Jon Schlinkert",
     "url": "https://github.com/jonschlinkert"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/assemble/gray-matter.git"
-  },
+  "repository": "assemble/gray-matter",
   "bugs": {
     "url": "https://github.com/assemble/gray-matter/issues"
   },
-  "license": {
-    "type": "MIT",
-    "url": "https://github.com/assemble/gray-matter/blob/master/LICENSE-MIT"
-  },
+  "license": "MIT",
+  "files": [
+    "index.js",
+    "lib/"
+  ],
   "main": "index.js",
   "engines": {
     "node": ">=0.10.0"
   },
   "scripts": {
-    "test": "mocha -R spec"
+    "test": "mocha"
   },
   "dependencies": {
     "chalk": "^0.5.1",

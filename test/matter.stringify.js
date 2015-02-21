@@ -2,12 +2,12 @@
  * gray-matter <https://github.com/assemble/gray-matter>
  *
  * Copyright (c) 2014-2015, Jon Schlinkert.
- * Licensed under the MIT license.
+ * Licensed under the MIT License.
  */
 
 'use strict';
 
-var should = require('should');
+require('should');
 var fs = require('fs');
 var _ = require('lodash');
 var matter = require('..');
@@ -37,4 +37,3 @@ describe('.stringify()', function () {
     ].join('\n'));
   });
 });
-

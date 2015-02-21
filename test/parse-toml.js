@@ -2,13 +2,13 @@
  * gray-matter <https://github.com/assemble/gray-matter>
  *
  * Copyright (c) 2014-2015, Jon Schlinkert.
- * Licensed under the MIT license.
+ * Licensed under the MIT License.
  */
 
 'use strict';
 
 var fs = require('fs');
-var should = require('should');
+require('should');
 var matter = require('..');
 
 describe('parse TOML:', function () {
@@ -42,4 +42,3 @@ describe('parse TOML:', function () {
     }).should.throw('gray-matter parser [TOML]: SyntaxError: Expected "]" but "\n" found.');
   });
 });
-

@@ -2,13 +2,13 @@
  * gray-matter <https://github.com/assemble/gray-matter>
  *
  * Copyright (c) 2014-2015, Jon Schlinkert.
- * Licensed under the MIT license.
+ * Licensed under the MIT License.
  */
 
 'use strict';
 
 var fs = require('fs');
-var should = require('should');
+require('should');
 var matter = require('..');
 
 describe('parse coffee:', function () {
@@ -71,4 +71,3 @@ describe('parse coffee:', function () {
     actual.should.have.property('orig');
   });
 });
-
