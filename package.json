@@ -6,9 +6,12 @@
     "name": "Jon Schlinkert",
     "url": "https://github.com/jonschlinkert"
   },
-  "repository": "assemble/gray-matter",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jonschlinkert/gray-matter.git"
+  },
   "bugs": {
-    "url": "https://github.com/assemble/gray-matter/issues"
+    "url": "https://github.com/jonschlinkert/gray-matter/issues"
   },
   "license": "MIT",
   "files": [
