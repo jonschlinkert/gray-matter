@@ -1,7 +1,7 @@
 {
   "name": "gray-matter",
   "description": "Parse front-matter from a string or file. Fast, reliable and easy to use. Parses YAML front matter by default, but also has support for YAML, JSON, TOML or Coffee Front-Matter, with options to set custom delimiters.",
-  "version": "1.2.6",
+  "version": "1.3.0",
   "author": {
     "name": "Jon Schlinkert",
     "url": "https://github.com/jonschlinkert"
@@ -26,9 +26,8 @@
     "test": "mocha"
   },
   "dependencies": {
-    "chalk": "^0.5.1",
-    "extend-shallow": "^0.2.0",
-    "js-yaml": "^3.2.5"
+    "chalk": "^1.0.0",
+    "extend-shallow": "^1.1.2"
   },
   "devDependencies": {
     "benchmarked": "^0.1.3",
@@ -40,6 +39,7 @@
     "gulp": "^3.8.10",
     "gulp-istanbul": "^0.5.0",
     "gulp-mocha": "^2.0.0",
+    "js-yaml": "^3.2.7",
     "lodash": "^2.4.1",
     "minimist": "^1.1.0",
     "mocha": "^1.19.0",
