@@ -42,7 +42,7 @@ describe('Read from strings:', function () {
     var fixture = '---\nabc: xyz\nversion: 2\n---\n\n<span class="alert alert-info">This is an alert</span>\n';
     var actual = matter(fixture);
     actual.should.have.property('data', {abc: 'xyz', version: 2});
-    actual.should.have.property('content', '\n\n<span class="alert alert-info">This is an alert</span>\n');
+    actual.should.have.property('content', '\n<span class="alert alert-info">This is an alert</span>\n');
     actual.should.have.property('orig');
   });
 
@@ -50,7 +50,7 @@ describe('Read from strings:', function () {
     var fixture = '~~~\nabc: xyz\nversion: 2\n~~~\n\n<span class="alert alert-info">This is an alert</span>\n';
     var actual = matter(fixture, {delims: '~~~'});
     actual.should.have.property('data', {abc: 'xyz', version: 2});
-    actual.should.have.property('content', '\n\n<span class="alert alert-info">This is an alert</span>\n');
+    actual.should.have.property('content', '\n<span class="alert alert-info">This is an alert</span>\n');
     actual.should.have.property('orig');
   });
 
@@ -58,7 +58,7 @@ describe('Read from strings:', function () {
     var fixture = '~~~\nabc: xyz\nversion: 2\n~~~\n\n<span class="alert alert-info">This is an alert</span>\n';
     var actual = matter(fixture, {delims: ['~~~']});
     actual.should.have.property('data', {abc: 'xyz', version: 2});
-    actual.should.have.property('content', '\n\n<span class="alert alert-info">This is an alert</span>\n');
+    actual.should.have.property('content', '\n<span class="alert alert-info">This is an alert</span>\n');
     actual.should.have.property('orig');
   });
 
@@ -66,7 +66,7 @@ describe('Read from strings:', function () {
     var fixture = '---\nname: "troublesome --- value"\n---\nhere is some content\n';
     var actual = matter(fixture);
     actual.should.have.property('data', {name: 'troublesome --- value'});
-    actual.should.have.property('content', '\nhere is some content\n');
+    actual.should.have.property('content', 'here is some content\n');
     actual.should.have.property('orig', '---\nname: "troublesome --- value"\n---\nhere is some content\n');
   });
 

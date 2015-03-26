@@ -40,7 +40,7 @@ describe('parse YAML:', function () {
     var fixture = '---\nabc: xyz\nversion: 2\n---\n\n<span class="alert alert-info">This is an alert</span>\n';
     var actual = matter(fixture, {safeLoad: true});
     actual.should.have.property('data', {abc: 'xyz', version: 2});
-    actual.should.have.property('content', '\n\n<span class="alert alert-info">This is an alert</span>\n');
+    actual.should.have.property('content', '\n<span class="alert alert-info">This is an alert</span>\n');
     actual.should.have.property('orig');
   });
 });
