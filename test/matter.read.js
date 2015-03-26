@@ -17,7 +17,7 @@ describe('Read from file system:', function () {
 
     actual.should.have.property('path');
     actual.should.have.property('data', {title: 'Basic'});
-    actual.should.have.property('content', '\nthis is content.');
+    actual.should.have.property('content', 'this is content.');
   });
 
   it('should parse complex YAML front matter.', function () {

@@ -92,7 +92,14 @@ function matter(str, options) {
     }
   }
 
-  res.content = str.substr(end + b.length);
+  // grab the content from the string, stripping
+  // an optional new line after the second delim
+  var con = str.substr(end + b.length);
+  if (con.charAt(0) === '\n') {
+    con = con.substr(1);
+  }
+
+  res.content = con;
   return res;
 }
 
