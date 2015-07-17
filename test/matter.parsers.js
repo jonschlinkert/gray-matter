@@ -18,13 +18,13 @@ describe('parsers', function () {
   it('should require js-yaml if it is not already on the requires cache.', function () {
     matter.parsers.requires.yaml = null;
 
-    var res = matter.stringify('Name: {{author.name}}', pkg.author);
+    var data = {name: pkg.name};
+    var res = matter.stringify('Name: {{name}}', data);
     res.should.equal([
       '---',
-      'name: Jon Schlinkert',
-      'url: "https://github.com/jonschlinkert"',
+      'name: gray-matter',
       '---',
-      'Name: {{author.name}}\n'
+      'Name: {{name}}\n'
     ].join('\n'));
   });
 

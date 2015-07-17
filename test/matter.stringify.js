@@ -16,24 +16,24 @@ var pkg = require('../package');
 describe('.stringify()', function () {
 
   it('should extract front matter, extend it, and convert it back to front matter.', function () {
-    var res = matter.stringify('Name: {{author.name}}', pkg.author);
+    var data = {name: pkg.name};
+    var res = matter.stringify('Name: {{name}}', data);
     res.should.equal([
       '---',
-      'name: Jon Schlinkert',
-      'url: "https://github.com/jonschlinkert"',
+      'name: gray-matter',
       '---',
-      'Name: {{author.name}}\n'
+      'Name: {{name}}\n'
     ].join('\n'));
   });
 
   it('should use custom delimiters.', function () {
-    var res = matter.stringify('Name: {{author.name}}', pkg.author, {delims: '~~~'});
+    var data = {name: pkg.name};
+    var res = matter.stringify('Name: {{name}}', data, {delims: '~~~'});
     res.should.equal([
       '~~~',
-      'name: Jon Schlinkert',
-      'url: "https://github.com/jonschlinkert"',
+      'name: gray-matter',
       '~~~',
-      'Name: {{author.name}}\n'
+      'Name: {{name}}\n'
     ].join('\n'));
   });
 });
