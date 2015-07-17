@@ -199,9 +199,7 @@ function isFirst(str, ch) {
  */
 
 function stripBom(str) {
-  return str.charAt(0) === '\uFEFF'
-    ? str.slice(1)
-    : str;
+  return str.charAt(0) === '\uFEFF' ? str.slice(1) : str;
 }
 
 /**
@@ -209,7 +207,5 @@ function stripBom(str) {
  */
 
 function arrayify(val) {
-  return !Array.isArray(val)
-    ? [val]
-    : val;
+  return !Array.isArray(val) ? [val] : val;
 }
