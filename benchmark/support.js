@@ -6,7 +6,8 @@ var util = require('util');
 var extend = require('extend-shallow');
 var sortObj = require('sort-object');
 var forOwn = require('for-own');
-var chalk = require('chalk');
+var gray = require('ansi-gray');
+var bold = require('ansi-bold');
 var glob = require('glob');
 
 /**
@@ -41,8 +42,6 @@ module.exports = function (options) {
         value[k] = sortObj(v);
       });
     });
-
-
     fs.writeFileSync(filepath, util.inspect(res, null, 10));
   });
 
@@ -58,5 +57,5 @@ function files(cwd, patterns, opts) {
 }
 
 function name(fp, prefix) {
-  return chalk.gray(path.basename(fp)) + chalk.bold((prefix ? ' (' + prefix + ')' : ''));
+  return gray(path.basename(fp)) + bold((prefix ? ' (' + prefix + ')' : ''));
 }
