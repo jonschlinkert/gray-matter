@@ -115,7 +115,7 @@ matter.parsers = parsers;
  * Requires cache
  */
 
-var YAML = matter.parsers.requires.yaml || (matter.parsers.requires.yaml = require('./lib/js-yaml'));
+var YAML = matter.parsers.requires.yaml || (matter.parsers.requires.yaml = require('js-yaml'));
 
 /**
  * Read a file and parse front matter. Returns the same object

@@ -22,7 +22,8 @@
   },
   "dependencies": {
     "ansi-red": "^0.1.1",
-    "extend-shallow": "^2.0.1"
+    "extend-shallow": "^2.0.1",
+    "js-yaml": "^3.3.1"
   },
   "devDependencies": {
     "ansi-bold": "^0.1.1",
@@ -37,7 +38,6 @@
     "gulp-istanbul": "^0.5.0",
     "gulp-mocha": "^2.0.0",
     "gulp-uglify": "^1.2.0",
-    "js-yaml": "^3.3.1",
     "lodash": "^2.4.1",
     "minimist": "^1.1.0",
     "mocha": "^1.19.0",
