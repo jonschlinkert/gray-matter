@@ -9,12 +9,12 @@ var dryrun = argv.c || argv.check;
 var fixtures = argv.f || argv.fixtures;
 var code = argv.c || argv.code;
 
-// fixtures = fixtures || 'fixtures/{complex,empty,matter,no-{matter,content}}.js';
-// code = code || 'code/{gray,front}-matter.js';
+fixtures = fixtures || 'fixtures/{complex,empty,matter,no-{matter,content}}.js';
+code = code || 'code/{gray,front}-matter.js';
 
 // blog
-fixtures = fixtures || 'bulk/fixtures/*.js';
-code = code || 'bulk/code/*.js';
+// fixtures = fixtures || 'bulk/fixtures/*.js';
+// code = code || 'bulk/code/*.js';
 
 if (dryrun) {
   require('./support')({
