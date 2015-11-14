@@ -1,31 +1,27 @@
 'use strict';
 
-var path = require('path');
 var gulp = require('gulp');
-var istanbul = require('gulp-istanbul');
-var uglify = require('gulp-uglify');
 var mocha = require('gulp-mocha');
+var istanbul = require('gulp-istanbul');
+var eslint = require('gulp-eslint');
 
-gulp.task('coverage', function(cb) {
-  gulp.src(['index.js', 'lib/parsers.js'])
+var lint = ['index.js', 'lib/*.js', 'test/*.js'];
+
+gulp.task('coverage', function () {
+  return gulp.src(lint)
     .pipe(istanbul())
-    .pipe(istanbul.hookRequire())
-    .on('finish', function() {
-      gulp.src(['test/*.js'])
-        .pipe(mocha())
-        .pipe(istanbul.writeReports())
-        .on('end', cb);
-    });
+    .pipe(istanbul.hookRequire());
 });
 
-gulp.task('uglify', function(cb) {
-  var base = path.dirname(require.resolve('js-yaml'));
-  gulp.src(path.resolve(base, 'dist/js-yaml.js'))
-    .pipe(uglify())
-    .pipe(gulp.dest('lib/'))
-    .on('end', cb)
+gulp.task('mocha', ['coverage'], function () {
+  return gulp.src('test/*.js')
+    .pipe(mocha({reporter: 'spec'}))
+    .pipe(istanbul.writeReports());
 });
 
-gulp.task('default', ['coverage', 'uglify']);
+gulp.task('eslint', function () {
+  return gulp.src(lint)
+    .pipe(eslint())
+});
 
-
+gulp.task('default', ['mocha', 'eslint']);
