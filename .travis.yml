@@ -1,8 +1,10 @@
 sudo: false
 language: node_js
 node_js:
-  - "0.10"
+  - "stable"
   - "0.12"
-  - "iojs"
-git:
-  depth: 10
+  - "0.10"
+matrix:
+  fast_finish: true
+  allow_failures:
+    - node_js: "0.10"
