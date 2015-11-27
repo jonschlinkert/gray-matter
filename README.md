@@ -10,9 +10,9 @@ See the [benchmarks](#benchmarks). gray-matter is 20-30x faster than [front-matt
 * Extracts and parses:
   - [YAML](http://github.com/nodeca/js-yaml)
   - [JSON](http://en.wikipedia.org/wiki/Json)
-  - [TOML](http://github.com/mojombo/toml)
-  - [CoffeeScript](http://coffeescript.org) when `options.eval` is set to `true`
-  - [CSON](https://github.com/bevry/cson) when `options.eval` is set to `true`
+  - [TOML](http://github.com/mojombo/toml) (enable by installing `toml`)
+  - [CoffeeScript](http://coffeescript.org) when `options.eval` is set to `true` (enable by installing `coffee-script`)
+  - [CSON](https://github.com/bevry/cson) when `options.eval` is set to `true` (enable by installing `coffee-script`)
   - JavaScript: when `options.eval` is set to `true`
 * Easy to add additional parsers! pull requests welcome!
 
