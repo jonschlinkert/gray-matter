@@ -4,6 +4,14 @@
   "version": "2.0.2",
   "homepage": "https://github.com/jonschlinkert/gray-matter",
   "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
+  "contributors": [
+    "Andrew Meyer (https://github.com/Ajedi32)",
+    "Brian Woodward <brian.woodward@gmail.com> (https://github.com/doowb)",
+    "Ian Storm Taylor (http://ianstormtaylor.com)",
+    "Jon Schlinkert <jon.schlinkert@sellside.com> (http://twitter.com/jonschlinkert)",
+    "Pawel Kadluczka (http://blog.3d-logic.com)",
+    "Rob Loach <robloach@gmail.com> (http://robloach.net)"
+  ],
   "repository": "jonschlinkert/gray-matter",
   "bugs": {
     "url": "https://github.com/jonschlinkert/gray-matter/issues"
@@ -11,7 +19,7 @@
   "license": "MIT",
   "files": [
     "index.js",
-    "lib/"
+    "lib"
   ],
   "main": "index.js",
   "engines": {
@@ -46,7 +54,6 @@
     "toml": "^2.3.0"
   },
   "keywords": [
-    "JSON",
     "assemble",
     "coffee",
     "coffee-script",
@@ -61,9 +68,11 @@
     "generate",
     "generator",
     "gh-pages",
+    "gray",
     "javascript",
     "jekyll",
     "js",
+    "JSON",
     "markdown",
     "matter",
     "parse",
@@ -80,17 +89,17 @@
     "related": {
       "list": [
         "assemble",
-        "verb",
-        "metalsmith"
+        "metalsmith",
+        "verb"
       ]
     },
     "reflinks": [
-      "js-yaml",
-      "coffee-script",
-      "toml-node",
-      "front-matter",
       "assemble",
+      "coffee-script",
+      "front-matter",
+      "js-yaml",
       "metalsmith",
+      "toml-node",
       "verb"
     ]
   }
