@@ -97,6 +97,8 @@ function matter(str, options) {
   var con = str.substr(end + b.length);
   if (con.charAt(0) === '\n') {
     con = con.substr(1);
+  } else if (con.charAt(0) === '\r' && con.charAt(1) === '\n') {
+    con = con.substr(2);
   }
 
   res.content = con;

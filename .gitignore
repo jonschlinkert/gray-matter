@@ -15,6 +15,7 @@ _test
 # OS or Editor folders
 .komodotools
 *.sublime-*
+.vscode/
 
 # misc
 TODO.md
