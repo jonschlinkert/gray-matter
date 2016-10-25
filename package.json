@@ -44,6 +44,7 @@
     "glob": "^6.0.1",
     "gulp": "^3.9.0",
     "gulp-eslint": "^1.1.0",
+    "gulp-format-md": "^0.1.11",
     "gulp-istanbul": "^0.10.2",
     "gulp-mocha": "^2.2.0",
     "lodash": "^3.10.1",
@@ -93,14 +94,22 @@
         "verb"
       ]
     },
+    "toc": false,
+    "layout": "default",
+    "tasks": [
+      "readme"
+    ],
+    "plugins": [
+      "gulp-format-md"
+    ],
+    "lint": {
+      "reflinks": true
+    },
     "reflinks": [
       "assemble",
-      "coffee-script",
       "front-matter",
-      "js-yaml",
-      "metalsmith",
-      "toml-node",
-      "verb"
+      "verb",
+      "verb-generate-readme"
     ]
   }
 }
