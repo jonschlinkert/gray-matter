@@ -7,8 +7,8 @@ declare module "gray-matter" {
     }
     export interface GrayMatter {
         (str:string,options?:GrayMatterOption,delims?:Array<string>,
-        parser?:Function):Object;
-        read(fp:string,options?:GrayMatterOption):Object;
+        parser?:Function):any;
+        read(fp:string,options?:GrayMatterOption):any;
         stringify(str:string,data:Object,options?:GrayMatterOption):string;
     }
 
