@@ -6,10 +6,10 @@ declare module "gray-matter" {
     delims:string;
     }
     export interface GrayMatter {
-        (str:string,options:GrayMatterOption,delims:Array<string>,
-        parser:Function):Object;
-        read(fp:string,options:GrayMatterOption):Object;
-        stringify(str:string,data:Object,options:GrayMatterOption):string;
+        (str:string,options?:GrayMatterOption,delims?:Array<string>,
+        parser?:Function):Object;
+        read(fp:string,options?:GrayMatterOption):Object;
+        stringify(str:string,data:Object,options?:GrayMatterOption):string;
     }
 
     var matter:GrayMatter;
