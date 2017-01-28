@@ -19,7 +19,8 @@
   "license": "MIT",
   "files": [
     "index.js",
-    "lib"
+    "lib",
+    "gray-matter.d.ts"
   ],
   "main": "index.js",
   "typings":"gray-matter.d.ts",
