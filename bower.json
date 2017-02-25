@@ -1,43 +1,61 @@
 {
   "name": "gray-matter",
   "description": "Parse front-matter from a string or file. Fast, reliable and easy to use. Parses YAML front matter by default, but also has support for YAML, JSON, TOML or Coffee Front-Matter, with options to set custom delimiters. Used by metalsmith, assemble, verb and many other projects.",
-  "repository": "jonschlinkert/gray-matter",
-  "license": "MIT",
+  "version": "2.1.0",
   "homepage": "https://github.com/jonschlinkert/gray-matter",
   "authors": [
     "Jon Schlinkert (https://github.com/jonschlinkert)"
+  ],
+  "contributors": [
+    "Andrew Meyer (https://github.com/Ajedi32)",
+    "Brian Woodward <brian.woodward@gmail.com> (https://github.com/doowb)",
+    "Ian Storm Taylor (http://ianstormtaylor.com)",
+    "Jon Schlinkert <jon.schlinkert@sellside.com> (http://twitter.com/jonschlinkert)",
+    "Pawel Kadluczka (http://blog.3d-logic.com)",
+    "Rob Loach <robloach@gmail.com> (http://robloach.net)"
+  ],
+  "repository": "jonschlinkert/gray-matter",
+  "bugs": {
+    "url": "https://github.com/jonschlinkert/gray-matter/issues"
+  },
+  "license": "MIT",
+  "files": [
+    "gray-matter.d.ts",
+    "index.js",
+    "lib",
+    "LICENSE",
+    "README.md"
   ],
   "main": [
     "index.js"
   ],
   "dependencies": {
     "ansi-red": "^0.1.1",
-    "extend-shallow": "^2.0.1"
+    "coffee-script": "^1.12.4",
+    "extend-shallow": "^2.0.1",
+    "js-yaml": "^3.8.1",
+    "toml": "^2.3.2"
   },
   "devDependencies": {
     "ansi-bold": "^0.1.1",
     "ansi-gray": "^0.1.1",
-    "benchmarked": "^0.1.3",
-    "coffee-script": "^1.8.0",
-    "delimiter-regex": "^1.1.0",
-    "for-own": "^0.1.2",
-    "front-matter": "^0.2.1",
-    "glob": "^4.2.1",
-    "gulp": "^3.8.10",
-    "gulp-istanbul": "^0.5.0",
-    "gulp-mocha": "^2.0.0",
-    "gulp-uglify": "^1.2.0",
-    "js-yaml": "^3.3.1",
-    "lodash": "^2.4.1",
-    "minimist": "^1.1.0",
-    "mocha": "^1.19.0",
-    "should": "^4.3.0",
-    "sort-object": "^0.3.2",
-    "toml": "^2.0.6"
+    "benchmarked": "^0.2.5",
+    "delimiter-regex": "^2.0.0",
+    "for-own": "^0.1.4",
+    "front-matter": "^2.1.2",
+    "glob": "^7.1.1",
+    "gulp": "^3.9.1",
+    "gulp-eslint": "^3.0.1",
+    "gulp-format-md": "^0.1.11",
+    "gulp-istanbul": "^1.1.1",
+    "gulp-mocha": "^4.0.1",
+    "lodash": "^4.17.4",
+    "minimist": "^1.2.0",
+    "should": "^11.2.0",
+    "sort-object": "^3.0.2"
   },
   "keywords": [
     "assemble",
-    "JSON",
     "coffee",
     "coffee-script",
     "data",
@@ -51,19 +69,32 @@
     "generate",
     "generator",
     "gh-pages",
+    "gray",
     "javascript",
     "jekyll",
     "js",
+    "JSON",
     "markdown",
     "matter",
     "parse",
     "parser",
     "parsing",
-    "template",
     "site",
     "static",
+    "template",
     "toml",
     "yaml",
     "yfm"
+  ],
+  "typings": "gray-matter.d.ts",
+  "ignore": [
+    "actual",
+    "bower_components",
+    "fixtures",
+    "node_modules",
+    "temp",
+    "test",
+    "test.js",
+    "tmp"
   ]
 }
