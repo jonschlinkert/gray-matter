@@ -19,9 +19,11 @@
   "license": "MIT",
   "files": [
     "index.js",
-    "lib"
+    "lib",
+    "gray-matter.d.ts"
   ],
   "main": "index.js",
+  "typings":"gray-matter.d.ts",
   "engines": {
     "node": ">=0.10.0"
   },
