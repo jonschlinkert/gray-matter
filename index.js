@@ -1,6 +1,7 @@
 'use strict';
 
 var fs = require('fs');
+var isBuffer = require('is-buffer');
 var extend = require('extend-shallow');
 var parsers = require('./lib/parsers');
 
@@ -28,44 +29,50 @@ module.exports = matter;
  */
 
 function matter(str, options) {
-  if (typeof str !== 'string') {
-    throw new Error('gray-matter expects a string');
+  var file = {data: {}, orig: str, content: str};
+  if (isBuffer(str)) {
+    file.orig = str;
+    file.content = str.toString();
+  } else if (typeof str === 'string') {
+    file.orig = new Buffer(str);
+  } else {
+    throw new Error('gray-matter expected a string');
   }
 
-  // default results to build up
-  var res = {orig: str, data: {}, content: str};
+  str = file.content;
   if (str === '') {
-    return res;
+    return file;
   }
 
   // delimiters
-  var delims = arrayify((options && options.delims) || '---');
-  var a = delims[0];
+  var opts = extend({delims: '---'}, options);
+  var delims = arrayify(opts.delims);
+  var open = delims[0];
 
   // strip byte order marks
   str = stripBom(str);
 
   // if the first delim isn't the first thing, return
-  if (!isFirst(str, a)) {
-    return res;
+  if (!isFirst(str, open)) {
+    return file;
   }
 
-  var b = '\n' + (delims[1] || delims[0]);
-  var alen = a.length;
+  var close = '\n' + (delims[1] || delims[0]);
+  var alen = open.length;
 
   // if the next character after the first delim
   // is a character in the first delim, then just
   // return the default object. it's either a bad
   // delim or not a delimiter at all.
-  if (a.indexOf(str.charAt(alen + 1)) !== -1) {
-    return res;
+  if (open.indexOf(str.charAt(alen + 1)) !== -1) {
+    return file;
   }
 
   var len = str.length;
 
   // find the index of the next delimiter before
   // going any further. If not found, return.
-  var end = str.indexOf(b, alen + 1);
+  var end = str.indexOf(close, alen + 1);
   if (end === -1) {
     end = len;
   }
@@ -75,9 +82,7 @@ function matter(str, options) {
   // measure the lang before trimming whitespace
   var start = alen + lang.length;
 
-  var opts = options || {};
-  opts.lang = opts.lang || 'yaml';
-  lang = (lang && lang.trim()) || opts.lang;
+  lang = (lang && lang.trim()) || opts.lang || 'yaml';
 
   // get the front matter (data) string
   var data = str.slice(start, end).trim();
@@ -86,7 +91,7 @@ function matter(str, options) {
     var fn = opts.parser || parsers[lang];
     if (typeof fn === 'function') {
       // run the parser on the data string
-      res.data = fn(data, opts);
+      file.data = fn(data, opts);
     } else {
       throw new Error('gray-matter cannot find a parser for: ' + str);
     }
@@ -94,15 +99,15 @@ function matter(str, options) {
 
   // grab the content from the string, stripping
   // an optional new line after the second delim
-  var con = str.substr(end + b.length);
+  var con = str.substr(end + close.length);
   if (con.charAt(0) === '\n') {
     con = con.substr(1);
   } else if (con.charAt(0) === '\r' && con.charAt(1) === '\n') {
     con = con.substr(2);
   }
 
-  res.content = con;
-  return res;
+  file.content = con;
+  return file;
 }
 
 /**
@@ -175,7 +180,7 @@ matter.stringify = function(str, data, options) {
 };
 
 /**
- * Return true if the given `string` has front matter.
+ * Returns true if the given `string` has front matter.
  *
  * @param  {String} `string`
  * @param  {Object} `options`
@@ -188,12 +193,12 @@ matter.test = function(str, options) {
 };
 
 /**
- * Return true if the given `ch` the first
+ * Returns true if the given `substr` the first
  * thing in the string.
  */
 
-function isFirst(str, ch) {
-  return str.substr(0, ch.length) === ch;
+function isFirst(str, substr) {
+  return str.substr(0, substr.length) === substr;
 }
 
 /**
@@ -205,9 +210,9 @@ function stripBom(str) {
 }
 
 /**
- * Typecast `val` to an array.
+ * Cast `val` to an array.
  */
 
 function arrayify(val) {
-  return !Array.isArray(val) ? [val] : val;
+  return val ? (Array.isArray(val) ? val : [val]) : [];
 }
