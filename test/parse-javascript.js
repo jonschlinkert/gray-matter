@@ -8,51 +8,50 @@
 'use strict';
 
 var fs = require('fs');
-require('should');
+var assert = require('assert');
 var matter = require('..');
 
-describe('parse javascript:', function () {
-  it('should throw an error when `eval` is not defined as `true` on the options.', function() {
-    (function() {
+describe('parse javascript:', function() {
+  it('should throw when "options.eval" is not true', function() {
+    assert.throws(function() {
       matter.read('./test/fixtures/lang-javascript-fn.md', {lang: 'javascript', strict: true});
-    }).should.throw('[gray-matter]: to parse javascript set `options.eval` to `true`');
+    }, /options\.eval/);
   });
 
-  it('should parse javascript front matter.', function () {
+  it('should parse javascript front matter.', function() {
     var actual = matter.read('./test/fixtures/lang-javascript-fn.md', {
       lang: 'javascript',
       eval: true
     });
 
-    actual.data.title.should.equal('javascript front matter');
-    actual.should.have.property('data');
-    actual.should.have.property('content');
-    actual.should.have.property('orig');
+    assert.equal(actual.data.title, 'javascript front matter');
+    assert(actual.hasOwnProperty('data'));
+    assert(actual.hasOwnProperty('content'));
+    assert(actual.hasOwnProperty('orig'));
   });
 
-  it('should auto-detect javascript front matter.', function () {
+  it('should auto-detect javascript front matter.', function() {
     var actual = matter.read('./test/fixtures/autodetect-javascript.md', {
       autodetect: true,
       eval: true
     });
 
-    actual.data.fn.should.be.a.function;
-    actual.data.title.should.equal('autodetect-javascript');
-    actual.should.have.property('data');
-    actual.should.have.property('content');
-    actual.should.have.property('orig');
+    assert.equal(typeof actual.data.fn.reverse, 'function');
+    assert.equal(actual.data.title, 'autodetect-javascript');
+    assert(actual.hasOwnProperty('data'));
+    assert(actual.hasOwnProperty('content'));
+    assert(actual.hasOwnProperty('orig'));
   });
 
-  it('should evaluate functions in javascript front matter.', function () {
+  it('should evaluate functions in javascript front matter.', function() {
     var actual = matter.read('./test/fixtures/autodetect-javascript.md', {
       autodetect: true,
       eval: true
     });
 
-    actual.data.fn.should.be.a.function;
-    actual.data.title.should.equal('autodetect-javascript');
-    actual.should.have.property('data');
-    actual.should.have.property('content');
-    actual.should.have.property('orig');
+    assert.equal(actual.data.title, 'autodetect-javascript');
+    assert(actual.hasOwnProperty('data'));
+    assert(actual.hasOwnProperty('content'));
+    assert(actual.hasOwnProperty('orig'));
   });
 });

@@ -8,25 +8,27 @@
 'use strict';
 
 var fs = require('fs');
-require('should');
+var assert = require('assert');
 var matter = require('..');
 
-describe('parse json:', function () {
-  it('should parse JSON front matter.', function () {
+describe('parse json:', function() {
+  it('should parse JSON front matter.', function() {
     var actual = matter.read('./test/fixtures/lang-json.md', {
       lang: 'json'
     });
 
-    actual.data.title.should.equal('JSON');
-    actual.should.have.property('data');
-    actual.should.have.property('content');
-    actual.should.have.property('orig');
+    assert.equal(actual.data.title, 'JSON');
+    assert(actual.hasOwnProperty('data'));
+    assert(actual.hasOwnProperty('content'));
+    assert(actual.hasOwnProperty('orig'));
   });
 
-  it('should auto-detect JSON as the language.', function () {
+  it('should auto-detect JSON as the language.', function() {
     var actual = matter.read('./test/fixtures/autodetect-json.md');
-    actual.data.title.should.equal('autodetect-JSON');
-    actual.should.have.property('content');
-    actual.should.have.property('orig');
+
+    assert.equal(actual.data.title, 'autodetect-JSON');
+    assert(actual.hasOwnProperty('data'));
+    assert(actual.hasOwnProperty('content'));
+    assert(actual.hasOwnProperty('orig'));
   });
 });

@@ -7,20 +7,18 @@
 
 'use strict';
 
-require('should');
 var fs = require('fs');
-var _ = require('lodash');
-var matter = require('..');
+var assert = require('assert');
 var pkg = require('../package');
+var matter = require('..');
 
-describe('parsers', function () {
-
-  it('should require js-yaml if it is not already on the requires cache.', function () {
+describe('parsers', function() {
+  it('should require js-yaml if it is not already on the requires cache.', function() {
     matter.parsers.requires.yaml = null;
 
     var data = {name: pkg.name};
-    var res = matter.stringify('Name: {{name}}', data);
-    res.should.equal([
+    var actual = matter.stringify('Name: {{name}}', data);
+    assert.equal(actual, [
       '---',
       'name: gray-matter',
       '---',
@@ -28,16 +26,17 @@ describe('parsers', function () {
     ].join('\n'));
   });
 
-  it('should parse coffee front matter.', function () {
+  it('should parse coffee front matter.', function() {
     matter.parsers.requires.coffee = null;
 
     var actual = matter.read('./test/fixtures/lang-coffee.md', {
       lang: 'coffee',
       eval: true
     });
-    actual.data.title.should.equal('coffee');
-    actual.should.have.property('data');
-    actual.should.have.property('content');
-    actual.should.have.property('orig');
+
+    assert.equal(actual.data.title, 'coffee');
+    assert(actual.hasOwnProperty('data'));
+    assert(actual.hasOwnProperty('content'));
+    assert(actual.hasOwnProperty('orig'));
   });
 });

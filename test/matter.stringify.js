@@ -7,18 +7,16 @@
 
 'use strict';
 
-require('should');
 var fs = require('fs');
-var _ = require('lodash');
-var matter = require('..');
+var assert = require('assert');
 var pkg = require('../package');
+var matter = require('..');
 
-describe('.stringify()', function () {
-
-  it('should extract front matter, extend it, and convert it back to front matter.', function () {
+describe('.stringify()', function() {
+  it('should create and stringify front-matter', function() {
     var data = {name: pkg.name};
-    var res = matter.stringify('Name: {{name}}', data);
-    res.should.equal([
+    var actual = matter.stringify('Name: {{name}}', data);
+    assert.equal(actual, [
       '---',
       'name: gray-matter',
       '---',
@@ -26,10 +24,10 @@ describe('.stringify()', function () {
     ].join('\n'));
   });
 
-  it('should use custom delimiters.', function () {
+  it('should use custom delimiters.', function() {
     var data = {name: pkg.name};
-    var res = matter.stringify('Name: {{name}}', data, {delims: '~~~'});
-    res.should.equal([
+    var actual = matter.stringify('Name: {{name}}', data, {delims: '~~~'});
+    assert.equal(actual, [
       '~~~',
       'name: gray-matter',
       '~~~',

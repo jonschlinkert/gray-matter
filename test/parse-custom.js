@@ -8,26 +8,26 @@
 'use strict';
 
 var fs = require('fs');
-require('should');
+var assert = require('assert');
+var YAML = require('js-yaml');
 var matter = require('..');
 
-var YAML = require('js-yaml');
-function yaml(str, opts) {
-  try {
-    return YAML.safeLoad(str, opts);
-  } catch (err) {
-    throw new SyntaxError(err);
-  }
-}
 
-describe('custom parser:', function () {
-  it('should allow a custom parser to be registered:', function () {
+describe('custom parser:', function() {
+  it('should allow a custom parser to be registered:', function() {
     var actual = matter.read('./test/fixtures/lang-yaml.md', {
-      parser: yaml
+      parser: function customParser(str, opts) {
+        try {
+          return YAML.safeLoad(str, opts);
+        } catch (err) {
+          throw new SyntaxError(err);
+        }
+      }
     });
-    actual.data.title.should.equal('YAML');
-    actual.should.have.property('data');
-    actual.should.have.property('content');
-    actual.should.have.property('orig');
+
+    assert.equal(actual.data.title, 'YAML');
+    assert(actual.hasOwnProperty('data'));
+    assert(actual.hasOwnProperty('content'));
+    assert(actual.hasOwnProperty('orig'));
   });
 });

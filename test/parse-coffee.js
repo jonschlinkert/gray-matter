@@ -8,66 +8,66 @@
 'use strict';
 
 var fs = require('fs');
-require('should');
+var assert = require('assert');
 var matter = require('..');
 
-describe('parse coffee:', function () {
+describe('parse coffee:', function() {
   it('should throw an error when `eval` is not defined as `true` on the options.', function() {
-    (function() {
+    assert.throws(function() {
       matter.read('./test/fixtures/lang-coffee.md', {lang: 'coffee', strict: true});
-    }).should.throw('[gray-matter]: to parse coffee set `options.eval` to `true`');
+    }, /options\.eval/);
   });
 
-  it.skip('should throw an error when coffee cannot be parsed:', function() {
-    (function() {
+  it('should throw an error when coffee cannot be parsed:', function() {
+    assert.throws(function() {
       matter.read('./test/fixtures/lang-coffee-bad.md', {lang: 'coffee', eval: true});
-    }).should.throw('gray-matter parser [coffee-script]: ReferenceError: data is not defined');
+    }, /coffee-script/);
   });
 
-  it('should parse coffee front matter.', function () {
+  it('should parse coffee front matter.', function() {
     var actual = matter.read('./test/fixtures/lang-coffee.md', {
       lang: 'coffee',
       eval: true
     });
-    actual.data.title.should.equal('coffee');
-    actual.should.have.property('data');
-    actual.should.have.property('content');
-    actual.should.have.property('orig');
+    assert.equal(actual.data.title, 'coffee');
+    assert(actual.hasOwnProperty('data'));
+    assert(actual.hasOwnProperty('content'));
+    assert(actual.hasOwnProperty('orig'));
   });
 
-  it('should evaluate functions in coffee front matter.', function () {
+  it('should evaluate functions in coffee front matter.', function() {
     var actual = matter.read('./test/fixtures/lang-coffee-fn.md', {
       lang: 'coffee',
       eval: true
     });
-    actual.data.fn.should.be.a.function;
-    actual.data.title.should.equal('coffee functions');
-    actual.should.have.property('data');
-    actual.should.have.property('content');
-    actual.should.have.property('orig');
+    assert.equal(typeof actual.data.fn, 'function');
+    assert.equal(actual.data.title, 'coffee functions');
+    assert(actual.hasOwnProperty('data'));
+    assert(actual.hasOwnProperty('content'));
+    assert(actual.hasOwnProperty('orig'));
   });
 
-  it('should evaluate functions in auto-detected coffee front matter.', function () {
+  it('should evaluate functions in auto-detected coffee front matter.', function() {
     var actual = matter.read('./test/fixtures/autodetect-coffee-fn.md', {
       autodetect: true,
       eval: true
     });
-    actual.data.fn.should.be.a.function;
-    actual.data.title.should.equal('coffee functions');
-    actual.should.have.property('data');
-    actual.should.have.property('content');
-    actual.should.have.property('orig');
+    assert.equal(typeof actual.data.fn, 'function');
+    assert.equal(actual.data.title, 'coffee functions');
+    assert(actual.hasOwnProperty('data'));
+    assert(actual.hasOwnProperty('content'));
+    assert(actual.hasOwnProperty('orig'));
   });
 
-  it('should auto-detect CoffeeScript as the language.', function () {
+  it('should auto-detect CoffeeScript as the language.', function() {
     var actual = matter.read('./test/fixtures/autodetect-coffee.md', {
       autodetect: true,
       eval: true
     });
 
-    actual.data.title.should.equal('autodetect-coffee');
-    actual.should.have.property('data');
-    actual.should.have.property('content');
-    actual.should.have.property('orig');
+    assert.equal(actual.data.title, 'autodetect-coffee');
+    assert(actual.hasOwnProperty('data'));
+    assert(actual.hasOwnProperty('content'));
+    assert(actual.hasOwnProperty('orig'));
   });
 });

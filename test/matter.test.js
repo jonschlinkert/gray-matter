@@ -8,14 +8,14 @@
 'use strict';
 
 var fs = require('fs');
-require('should');
+var assert = require('assert');
 var matter = require('..');
 
-describe('Read from strings:', function () {
-  it('should return `true` if the string has front-matter:', function () {
-    matter.test('---\nabc: xyz\n---').should.be.true;
-    matter.test('---\nabc: xyz\n---', {delims: '~~~'}).should.be.false;
-    matter.test('~~~\nabc: xyz\n~~~', {delims: '~~~'}).should.be.true;
-    matter.test('\nabc: xyz\n---').should.be.false;
+describe('Read from strings:', function() {
+  it('should return `true` if the string has front-matter:', function() {
+    assert.equal(matter.test('---\nabc: xyz\n---'), true);
+    assert.equal(matter.test('---\nabc: xyz\n---', {delims: '~~~'}), false);
+    assert.equal(matter.test('~~~\nabc: xyz\n~~~', {delims: '~~~'}), true);
+    assert.equal(matter.test('\nabc: xyz\n---'), false);
   });
 });

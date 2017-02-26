@@ -8,50 +8,51 @@
 'use strict';
 
 var fs = require('fs');
-require('should');
+var assert = require('assert');
 var matter = require('..');
 
-describe('Read from file system:', function () {
-  it('should extract YAML front matter from files with content.', function () {
+describe('Read from file system:', function() {
+  it('should extract YAML front matter from files with content.', function() {
     var actual = matter.read('./test/fixtures/basic.txt');
 
-    actual.should.have.property('path');
-    actual.should.have.property('data', {title: 'Basic'});
-    actual.should.have.property('content', 'this is content.');
+    assert(actual.hasOwnProperty('path'));
+    assert(actual.hasOwnProperty('data', {title: 'Basic'}));
+    assert.equal(actual.content, 'this is content.');
   });
 
-  it('should parse complex YAML front matter.', function () {
+  it('should parse complex YAML front matter.', function() {
     var actual = matter.read('./test/fixtures/complex.md');
 
-    actual.should.have.property('path');
-    actual.should.have.property('data');
-    actual.should.have.property('content');
-    actual.should.have.property('orig');
-    actual.data.should.have.property('root');
-    actual.data.root.should.equal('_gh_pages');
+    assert(actual.hasOwnProperty('data'));
+    assert.equal(actual.data.root, '_gh_pages');
+
+    assert(actual.hasOwnProperty('path'));
+    assert(actual.hasOwnProperty('content'));
+    assert(actual.hasOwnProperty('orig'));
+    assert(actual.data.hasOwnProperty('root'));
   });
 
-  it('should return an object when a file is empty.', function () {
+  it('should return an object when a file is empty.', function() {
     var actual = matter.read('./test/fixtures/empty.md');
-    actual.should.have.property('path');
-    actual.should.have.property('data');
-    actual.should.have.property('content');
-    actual.should.have.property('orig');
+    assert(actual.hasOwnProperty('path'));
+    assert(actual.hasOwnProperty('data'));
+    assert(actual.hasOwnProperty('content'));
+    assert(actual.hasOwnProperty('orig'));
   });
 
-  it('should return an object when no front matter exists.', function () {
+  it('should return an object when no front matter exists.', function() {
     var actual = matter.read('./test/fixtures/hasnt-matter.md');
-    actual.should.have.property('path');
-    actual.should.have.property('data');
-    actual.should.have.property('content');
-    actual.should.have.property('orig');
+    assert(actual.hasOwnProperty('path'));
+    assert(actual.hasOwnProperty('data'));
+    assert(actual.hasOwnProperty('content'));
+    assert(actual.hasOwnProperty('orig'));
   });
 
-  it('should parse YAML files directly', function () {
+  it('should parse YAML files directly', function() {
     var actual = matter.read('./test/fixtures/a.yml');
-    actual.should.have.property('path');
-    actual.should.have.property('data');
-    actual.should.have.property('content');
-    actual.should.have.property('orig');
+    assert(actual.hasOwnProperty('path'));
+    assert(actual.hasOwnProperty('data'));
+    assert(actual.hasOwnProperty('content'));
+    assert(actual.hasOwnProperty('orig'));
   });
 });
