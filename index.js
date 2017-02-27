@@ -170,7 +170,7 @@ matter.stringify = function(str, data, options) {
   res += delims[0] + '\n';
   res += YAML.safeDump(data, options);
   res += (delims[1] || delims[0]) + '\n';
-  res += str + '\n';
+  res += str;
   return res;
 };
 
