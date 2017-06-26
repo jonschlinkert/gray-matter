@@ -6,9 +6,9 @@ var assert = require('assert');
 var utils = require('../lib/utils');
 var matter = require('..');
 
-describe('gray-matter', function() {
+describe('gray-matter (windows carriage returns)', function() {
   it('should extract YAML front matter', function() {
-    var actual = matter('---\nabc: xyz\n---');
+    var actual = matter('---\r\nabc: xyz\r\n---');
     assert(actual.hasOwnProperty('data'));
     assert(actual.hasOwnProperty('content'));
     assert(actual.hasOwnProperty('orig'));
@@ -16,7 +16,7 @@ describe('gray-matter', function() {
   });
 
   it('should cache original string as a buffer on the "orig property"', function() {
-    var fixture = '---\nabc: xyz\n---';
+    var fixture = '---\r\nabc: xyz\r\n---';
     var actual = matter(fixture);
     assert(utils.isBuffer(actual.orig));
     assert.equal(actual.orig.toString(), fixture);
@@ -24,7 +24,7 @@ describe('gray-matter', function() {
 
   it('should throw parsing errors', function() {
     assert.throws(function() {
-      matter('---whatever\nabc: xyz\n---')
+      matter('---whatever\r\nabc: xyz\r\n---')
     });
   });
 
@@ -39,50 +39,50 @@ describe('gray-matter', function() {
   });
 
   it('should extract YAML front matter and content', function() {
-    var fixture = '---\nabc: xyz\nversion: 2\n---\n\n<span class="alert alert-info">This is an alert</span>\n';
+    var fixture = '---\r\nabc: xyz\r\nversion: 2\r\n---\r\n\r\n<span class="alert alert-info">This is an alert</span>\r\n';
     var actual = matter(fixture);
     assert.deepEqual(actual.data, {abc: 'xyz', version: 2});
-    assert.equal(actual.content, '\n<span class="alert alert-info">This is an alert</span>\n');
+    assert.equal(actual.content, '\r\n<span class="alert alert-info">This is an alert</span>\r\n');
     assert.equal(actual.orig.toString(), fixture);
   });
 
   it('should use a custom delimiter as a string.', function() {
-    var fixture = '~~~\nabc: xyz\nversion: 2\n~~~\n\n<span class="alert alert-info">This is an alert</span>\n';
+    var fixture = '~~~\r\nabc: xyz\r\nversion: 2\r\n~~~\r\n\r\n<span class="alert alert-info">This is an alert</span>\r\n';
     var actual = matter(fixture, {delims: '~~~'});
     assert.deepEqual(actual.data, {abc: 'xyz', version: 2});
-    assert.equal(actual.content, '\n<span class="alert alert-info">This is an alert</span>\n');
+    assert.equal(actual.content, '\r\n<span class="alert alert-info">This is an alert</span>\r\n');
     assert.equal(actual.orig.toString(), fixture);
   });
 
   it('should use custom delimiters as an array.', function() {
-    var fixture = '~~~\nabc: xyz\nversion: 2\n~~~\n\n<span class="alert alert-info">This is an alert</span>\n';
+    var fixture = '~~~\r\nabc: xyz\r\nversion: 2\r\n~~~\r\n\r\n<span class="alert alert-info">This is an alert</span>\r\n';
     var actual = matter(fixture, {delims: ['~~~']});
     assert.deepEqual(actual.data, {abc: 'xyz', version: 2});
-    assert.equal(actual.content, '\n<span class="alert alert-info">This is an alert</span>\n');
+    assert.equal(actual.content, '\r\n<span class="alert alert-info">This is an alert</span>\r\n');
     assert.equal(actual.orig.toString(), fixture);
   });
 
   it('should correctly identify delimiters and ignore strings that look like delimiters.', function() {
-    var fixture = '---\nname: "troublesome --- value"\n---\nhere is some content\n';
+    var fixture = '---\r\nname: "troublesome --- value"\r\n---\r\nhere is some content\r\n';
     var actual = matter(fixture);
     assert.deepEqual(actual.data, {name: 'troublesome --- value'});
-    assert.equal(actual.content, 'here is some content\n');
-    assert.equal(String(actual.orig), '---\nname: "troublesome --- value"\n---\nhere is some content\n');
+    assert.equal(actual.content, 'here is some content\r\n');
+    assert.equal(String(actual.orig), '---\r\nname: "troublesome --- value"\r\n---\r\nhere is some content\r\n');
   });
 
   it('should correctly parse a string that only has an opening delimiter', function() {
-    var fixture = '---\nname: "troublesome --- value"\n';
+    var fixture = '---\r\nname: "troublesome --- value"\r\n';
     var actual = matter(fixture);
     assert.deepEqual(actual.data, {name: 'troublesome --- value'});
     assert.equal(actual.content, '');
-    assert.equal(String(actual.orig), '---\nname: "troublesome --- value"\n');
+    assert.equal(String(actual.orig), '---\r\nname: "troublesome --- value"\r\n');
   });
 
   it('should not try to parse a string has content that looks like front-matter.', function() {
-    var fixture = '-----------name--------------value\nfoo';
+    var fixture = '-----------name--------------value\r\nfoo';
     var actual = matter(fixture);
     assert.deepEqual(actual.data, {});
-    assert.equal(actual.content, '-----------name--------------value\nfoo');
-    assert.equal(String(actual.orig), '-----------name--------------value\nfoo');
+    assert.equal(actual.content, '-----------name--------------value\r\nfoo');
+    assert.equal(String(actual.orig), '-----------name--------------value\r\nfoo');
   });
 });

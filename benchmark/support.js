@@ -3,19 +3,18 @@
 var fs = require('fs');
 var path = require('path');
 var util = require('util');
-var extend = require('extend-shallow');
 var sortObj = require('sort-object');
 var forOwn = require('for-own');
 var gray = require('ansi-gray');
 var bold = require('ansi-bold');
-var glob = require('glob');
+var glob = require('matched');
 
 /**
  * Sanity check. Run to ensure that all fns return the same result.
  */
 
 module.exports = function (options) {
-  var opts = extend({cwd: __dirname}, options);
+  var opts = Object.assign({cwd: __dirname}, options);
   var fixtures = files(opts.cwd, opts.fixtures, opts);
   var libs = files(opts.cwd, opts.code, opts);
   var res = {};

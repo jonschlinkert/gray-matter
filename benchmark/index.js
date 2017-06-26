@@ -28,7 +28,7 @@ if (dryrun) {
     expected: true,
     cwd: __dirname,
     fixtures: fixtures,
-    add: code,
+    code: code,
   });
 
   suite.run();

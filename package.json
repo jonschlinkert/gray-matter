@@ -6,11 +6,13 @@
   "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
   "contributors": [
     "Andrew Meyer (https://github.com/Ajedi32)",
-    "Brian Woodward <brian.woodward@gmail.com> (https://github.com/doowb)",
+    "Brian Woodward (https://twitter.com/doowb)",
     "Ian Storm Taylor (http://ianstormtaylor.com)",
-    "Jon Schlinkert <jon.schlinkert@sellside.com> (http://twitter.com/jonschlinkert)",
+    "Jon Schlinkert (http://twitter.com/jonschlinkert)",
+    "Osman Nuri Okumuş (http://onokumus.com)",
     "Pawel Kadluczka (http://blog.3d-logic.com)",
-    "Rob Loach <robloach@gmail.com> (http://robloach.net)"
+    "Rob Loach (http://robloach.net)",
+    "(https://github.com/heymind)"
   ],
   "repository": "jonschlinkert/gray-matter",
   "bugs": {
@@ -30,29 +32,26 @@
     "test": "mocha"
   },
   "dependencies": {
-    "ansi-red": "^0.1.1",
-    "coffee-script": "^1.12.4",
-    "extend-shallow": "^2.0.1",
     "js-yaml": "^3.8.1",
-    "toml": "^2.3.2"
+    "kind-of": "^5.0.0",
+    "strip-bom-string": "^1.0.0"
   },
   "devDependencies": {
     "ansi-bold": "^0.1.1",
     "ansi-gray": "^0.1.1",
     "benchmarked": "^0.2.5",
+    "coffee-script": "^1.12.6",
     "delimiter-regex": "^2.0.0",
+    "extend-shallow": "^2.0.1",
     "for-own": "^0.1.4",
     "front-matter": "^2.1.2",
-    "glob": "^7.1.1",
-    "gulp": "^3.9.1",
-    "gulp-eslint": "^3.0.1",
-    "gulp-format-md": "^0.1.11",
-    "gulp-istanbul": "^1.1.1",
-    "gulp-mocha": "^4.0.1",
-    "lodash": "^4.17.4",
+    "gulp-format-md": "^0.1.12",
+    "matched": "^1.0.2",
     "minimist": "^1.2.0",
-    "should": "^11.2.0",
-    "sort-object": "^3.0.2"
+    "mocha": "^3.2.0",
+    "sort-object": "^3.0.2",
+    "toml": "^2.3.2",
+    "vinyl": "^2.0.2"
   },
   "keywords": [
     "assemble",
@@ -108,9 +107,21 @@
     },
     "reflinks": [
       "assemble",
+      "coffe-script",
       "front-matter",
+      "js-yaml",
+      "toml",
       "verb",
       "verb-generate-readme"
     ]
+  },
+  "lintDeps": {
+    "devDependencies": {
+      "files": {
+        "patterns": [
+          "concept.js"
+        ]
+      }
+    }
   }
 }

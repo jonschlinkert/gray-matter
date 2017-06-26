@@ -18,9 +18,9 @@ See the [benchmarks](#benchmarks). gray-matter is 20-30x faster than [front-matt
 * Extracts and parses:
   - [YAML](http://github.com/nodeca/js-yaml)
   - [JSON](http://en.wikipedia.org/wiki/Json)
-  - [TOML](http://github.com/mojombo/toml)
-  - [CoffeeScript](http://coffeescript.org) when `options.eval` is set to `true`
-  - [CSON](https://github.com/bevry/cson) when `options.eval` is set to `true`
+  - [TOML](http://github.com/mojombo/toml) (must be installed first)
+  - [CoffeeScript](http://coffeescript.org) when `options.eval` is set to `true` (must be installed first)
+  - [CSON](https://github.com/bevry/cson) when `options.eval` is set to `true` (coffescript must be installed first)
   - JavaScript: when `options.eval` is set to `true`
 * Easy to add additional parsers! pull requests welcome!
 
@@ -47,9 +47,18 @@ That's it! Just pass a string and gray-matter returns an object.
 
 ## API
 
-### [matter](index.js#L30)
+### [matter](index.js#L31)
 
 Parses a `string` of front-matter with the given `options`, and returns an object.
+
+**Params**
+
+* `string` **{String}**: The string to parse.
+* `options` **{Object}**  
+
+- `delims` **{Array}**: Custom delimiters formatted as an array. The default is `['---', '---']`.
+- `parser` **{Function}**: Parser function to use. [js-yaml](https://github.com/nodeca/js-yaml) is the default.
+* `returns` **{Object}**: Valid JSON
 
 **Example**
 
@@ -58,24 +67,9 @@ matter('---\ntitle: foo\n---\nbar');
 //=> {data: {title: 'foo'}, content: 'bar', orig: '---\ntitle: foo\n---\nbar'}
 ```
 
-**Params**
-
-* `string` **{String}**: The string to parse.
-* `options` **{Object}**  
-
-- `delims` **{Array}**: Custom delimiters formatted as an array. The default is `['---', '---']`.
-- `parser` **{Function}**: Parser function to use. [js-yaml] is the default.
-* `returns` **{Object}**: Valid JSON
-
-### [.read](index.js#L136)
+### [.read](index.js#L141)
 
 Read a file and parse front matter. Returns the same object as `matter()`.
-
-**Example**
-
-```js
-matter.read('home.md');
-```
 
 **Params**
 
@@ -83,11 +77,24 @@ matter.read('home.md');
 * `options` **{Object}**: Options to pass to gray-matter.
 * `returns` **{Object}**
 
-### [.stringify](index.js#L167)
+**Example**
+
+```js
+matter.read('home.md');
+```
+
+### [.stringify](index.js#L172)
 
 Stringify an object to front-matter-formatted YAML, and concatenate it to the given string.
 
 Results in:
+
+**Params**
+
+* `str` **{String}**: The content string to append to stringified front-matter.
+* `data` **{Object}**: Front matter to stringify.
+* `options` **{Object}**: Options to pass to js-yaml
+* `returns` **{String}**
 
 **Examples**
 
@@ -102,13 +109,6 @@ title: Home
 foo bar baz
 ```
 
-**Params**
-
-* `str` **{String}**: The content string to append to stringified front-matter.
-* `data` **{Object}**: Front matter to stringify.
-* `options` **{Object}**: Options to pass to js-yaml
-* `returns` **{String}**
-
 ## Options
 
 > All methods exposed on the API accept an options object passed as the last argument
@@ -119,7 +119,7 @@ Type: `Function`
 
 Default: `undefined`
 
-Pass a custom parser on the options. This is useful if you need to, for example, define custom schemas for [js-yaml].
+Pass a custom parser on the options. This is useful if you need to, for example, define custom schemas for [js-yaml](https://github.com/nodeca/js-yaml).
 
 **Example**
 
@@ -153,9 +153,9 @@ Valid languages are:
 
 * `yaml`
 * `json`
-* `coffee`
-* `cson`
-* `toml`
+* `coffee` (to enable you must first install [coffe-script][])
+* `cson` (to enable you must first install [coffe-script][])
+* `toml` (to enable you must first install [toml](https://github.com/BinaryMuse/toml-node))
 * `js`|`javascript`
 
 **Example**
@@ -200,7 +200,7 @@ would parse:
 title: Home
 ```
 
-This is the  page.
+This is the {{title}} page.
 </pre>
 
 ## Example usage
@@ -212,7 +212,7 @@ Given we have a page, `abc.html`, containing:
 title: YAML Front matter
 description: This is a page
 ---
-<h1></h1>
+<h1>{{title}}</h1>
 ```
 
 then running the following in the command line:
@@ -220,7 +220,6 @@ then running the following in the command line:
 ```js
 matter('abc.html');
 ```
-
 returns
 
 ```json
@@ -229,8 +228,8 @@ returns
     "title": "YAML Front matter",
     "description": "This is a page"
   },
-  "content": "<h1></h1>",
-  "original": "---\ntitle: YAML Front matter\n---\n<h1></h1>"
+  "content": "<h1>{{title}}</h1>",
+  "original": "---\ntitle: YAML Front matter\n---\n<h1>{{title}}</h1>"
 }
 ```
 
@@ -269,6 +268,7 @@ gray-matter is 12-20x faster than [front-matter](https://github.com/jxson/front-
 #5: no-matter
   front-matter x 3,540,817 ops/sec ±0.68% (95 runs sampled)
   gray-matter x 7,959,809 ops/sec ±0.73% (91 runs sampled)
+
 ```
 
 ## Why?
@@ -303,10 +303,11 @@ Pull requests and stars are always welcome. For bugs and feature requests, [plea
 
 ### Contributors
 
-| **Commits** | **Contributor**<br/> | 
+| **Commits** | **Contributor** | 
 | --- | --- |
-| 121 | [jonschlinkert](https://github.com/jonschlinkert) |
+| 127 | [jonschlinkert](https://github.com/jonschlinkert) |
 | 7 | [RobLoach](https://github.com/RobLoach) |
+| 5 | [heymind](https://github.com/heymind) |
 | 2 | [doowb](https://github.com/doowb) |
 | 2 | [moozzyk](https://github.com/moozzyk) |
 | 1 | [Ajedi32](https://github.com/Ajedi32) |
@@ -314,20 +315,20 @@ Pull requests and stars are always welcome. For bugs and feature requests, [plea
 
 ### Building docs
 
-_(This document was generated by [verb-generate-readme](https://github.com/verbose/verb-generate-readme) (a [verb](https://github.com/verbose/verb) generator), please don't edit the readme directly. Any changes to the readme must be made in [.verb.md](.verb.md).)_
+_(This project's readme.md is generated by [verb](https://github.com/verbose/verb-generate-readme), please don't edit the readme directly. Any changes to the readme must be made in the [.verb.md](.verb.md) readme template.)_
 
-To generate the readme and API documentation with [verb](https://github.com/verbose/verb):
+To generate the readme, run the following command:
 
 ```sh
-$ npm install -g verb verb-generate-readme && verb
+$ npm install -g verbose/verb#dev verb-generate-readme && verb
 ```
 
 ### Running tests
 
-Install dev dependencies:
+Running and reviewing unit tests is a great way to get familiarized with a library and its API. You can install dependencies and run tests with the following command:
 
 ```sh
-$ npm install -d && npm test
+$ npm install && npm test
 ```
 
 ### Author
@@ -335,13 +336,13 @@ $ npm install -d && npm test
 **Jon Schlinkert**
 
 * [github/jonschlinkert](https://github.com/jonschlinkert)
-* [twitter/jonschlinkert](http://twitter.com/jonschlinkert)
+* [twitter/jonschlinkert](https://twitter.com/jonschlinkert)
 
 ### License
 
-Copyright © 2016, [Jon Schlinkert](https://github.com/jonschlinkert).
-Released under the [MIT license](https://github.com/jonschlinkert/gray-matter/blob/master/LICENSE).
+Copyright © 2017, [Jon Schlinkert](https://github.com/jonschlinkert).
+Released under the [MIT License](LICENSE).
 
 ***
 
-_This file was generated by [verb-generate-readme](https://github.com/verbose/verb-generate-readme), v0.2.0, on October 25, 2016._
+_This file was generated by [verb-generate-readme](https://github.com/verbose/verb-generate-readme), v0.4.2, on February 25, 2017._

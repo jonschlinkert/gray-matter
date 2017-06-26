@@ -1,21 +1,37 @@
 /*!
- * gray-matter <https://github.com/jonschlinkert/gray-matter.git>
+ * gray-matter <https://github.com/jonschlinkert/gray-matter>
  *
- * Copyright (c) 2014-2015, Jon Schlinkert.
- * Licensed under the MIT License.
+ * Copyright (c) 2014-2017, Jon Schlinkert.
+ * Released under the MIT License.
  */
 
 'use strict';
 
 var fs = require('fs');
+var path = require('path');
 var assert = require('assert');
 var matter = require('..');
+var coffee = require('coffee-script');
+var fixture = path.join.bind(path, __dirname, 'fixtures');
+var defaults = {
+  engines: {
+    coffee: {
+      parse: function(str, options) {
+        /* eslint no-eval: 0 */
+        return coffee['eval'](str, options);
+      }
+    }
+  }
+};
+
+function parse(name, options) {
+  return matter.read(fixture(name), Object.assign({}, defaults, options));
+}
 
 describe('parse cson:', function() {
   it('should parse CSON front matter.', function() {
-    var actual = matter.read('./test/fixtures/lang-cson.md', {
-      lang: 'cson',
-      eval: true
+    var actual = parse('lang-cson.md', {
+      language: 'cson'
     });
 
     assert.equal(actual.data.title, 'CSON');
@@ -25,9 +41,8 @@ describe('parse cson:', function() {
   });
 
   it('should evaluate functions in CSON front matter.', function() {
-    var actual = matter.read('./test/fixtures/lang-cson-fn.md', {
-      lang: 'cson',
-      eval: true
+    var actual = parse('lang-cson-fn.md', {
+      language: 'cson'
     });
 
     assert.equal(typeof actual.data.fn, 'function');
@@ -38,11 +53,7 @@ describe('parse cson:', function() {
   });
 
   it('should evaluate functions in auto-detected CSON front matter.', function() {
-    var actual = matter.read('./test/fixtures/autodetect-cson-fn.md', {
-      autodetect: true,
-      eval: true
-    });
-
+    var actual = parse('autodetect-cson-fn.md');
     assert.equal(typeof actual.data.fn, 'function');
     assert.equal(actual.data.title, 'CSON functions');
     assert(actual.hasOwnProperty('data'));
@@ -51,10 +62,7 @@ describe('parse cson:', function() {
   });
 
   it('should auto-detect cson as the language.', function() {
-    var actual = matter.read('./test/fixtures/autodetect-cson.md', {
-      autodetect: true,
-      eval: true
-    });
+    var actual = parse('autodetect-cson.md');
 
     assert.equal(actual.data.title, 'autodetect-CSON');
     assert(actual.hasOwnProperty('data'));

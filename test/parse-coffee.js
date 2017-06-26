@@ -1,73 +1,80 @@
 /*!
- * gray-matter <https://github.com/jonschlinkert/gray-matter.git>
+ * gray-matter <https://github.com/jonschlinkert/gray-matter>
  *
- * Copyright (c) 2014-2015, Jon Schlinkert.
- * Licensed under the MIT License.
+ * Copyright (c) 2014-2017, Jon Schlinkert.
+ * Released under the MIT License.
  */
 
 'use strict';
 
 var fs = require('fs');
+var path = require('path');
 var assert = require('assert');
-var matter = require('..');
+var matter = require('../');
+var fixture = path.join.bind(path, __dirname, 'fixtures');
+var coffee = require('coffee-script');
+var defaults = {
+  engines: {
+    coffee: {
+      parse: function(str, options) {
+        /* eslint no-eval: 0 */
+        return coffee['eval'](str, options);
+      }
+    }
+  }
+};
 
-describe('parse coffee:', function() {
-  it('should throw an error when `eval` is not defined as `true` on the options.', function() {
+function parse(name, options) {
+  return matter.read(fixture(name), Object.assign({}, defaults, options));
+}
+
+describe('parse coffee', function() {
+  it('should throw an error when coffee cannot be parsed', function() {
     assert.throws(function() {
-      matter.read('./test/fixtures/lang-coffee.md', {lang: 'coffee', strict: true});
-    }, /options\.eval/);
-  });
-
-  it('should throw an error when coffee cannot be parsed:', function() {
-    assert.throws(function() {
-      matter.read('./test/fixtures/lang-coffee-bad.md', {lang: 'coffee', eval: true});
-    }, /coffee-script/);
-  });
-
-  it('should parse coffee front matter.', function() {
-    var actual = matter.read('./test/fixtures/lang-coffee.md', {
-      lang: 'coffee',
-      eval: true
+      parse('lang-coffee-bad.md', {lang: 'coffee'});
     });
-    assert.equal(actual.data.title, 'coffee');
-    assert(actual.hasOwnProperty('data'));
-    assert(actual.hasOwnProperty('content'));
-    assert(actual.hasOwnProperty('orig'));
   });
 
-  it('should evaluate functions in coffee front matter.', function() {
-    var actual = matter.read('./test/fixtures/lang-coffee-fn.md', {
-      lang: 'coffee',
-      eval: true
-    });
-    assert.equal(typeof actual.data.fn, 'function');
-    assert.equal(actual.data.title, 'coffee functions');
-    assert(actual.hasOwnProperty('data'));
-    assert(actual.hasOwnProperty('content'));
-    assert(actual.hasOwnProperty('orig'));
+  it('should parse coffee front matter', function() {
+    var file = parse('lang-coffee.md', {lang: 'coffee'});
+    assert.equal(file.data.title, 'coffee');
+    assert(file.hasOwnProperty('data'));
+    assert(file.hasOwnProperty('content'));
+    assert(file.hasOwnProperty('orig'));
   });
 
-  it('should evaluate functions in auto-detected coffee front matter.', function() {
-    var actual = matter.read('./test/fixtures/autodetect-coffee-fn.md', {
-      autodetect: true,
-      eval: true
-    });
-    assert.equal(typeof actual.data.fn, 'function');
-    assert.equal(actual.data.title, 'coffee functions');
-    assert(actual.hasOwnProperty('data'));
-    assert(actual.hasOwnProperty('content'));
-    assert(actual.hasOwnProperty('orig'));
+  it('should eval functions in coffee front matter', function() {
+    var file = parse('lang-coffee-fn.md', {lang: 'coffee'});
+
+    assert.equal(typeof file.data.fn, 'function');
+    assert.equal(file.data.title, 'coffee functions');
+    assert(file.hasOwnProperty('data'));
+    assert(file.hasOwnProperty('content'));
+    assert(file.hasOwnProperty('orig'));
   });
 
-  it('should auto-detect CoffeeScript as the language.', function() {
-    var actual = matter.read('./test/fixtures/autodetect-coffee.md', {
-      autodetect: true,
-      eval: true
-    });
+  it('should eval functions in auto-detected coffee front matter', function() {
+    var file = parse('autodetect-coffee-fn.md');
+    assert.equal(typeof file.data.fn, 'function');
+    assert.equal(file.data.title, 'coffee functions');
+    assert(file.hasOwnProperty('data'));
+    assert(file.hasOwnProperty('content'));
+    assert(file.hasOwnProperty('orig'));
+  });
 
-    assert.equal(actual.data.title, 'autodetect-coffee');
-    assert(actual.hasOwnProperty('data'));
-    assert(actual.hasOwnProperty('content'));
-    assert(actual.hasOwnProperty('orig'));
+  it('should detect "coffee" as the language', function() {
+    var file = parse('autodetect-coffee.md');
+    assert.equal(file.data.title, 'autodetect-coffee');
+    assert(file.hasOwnProperty('data'));
+    assert(file.hasOwnProperty('content'));
+    assert(file.hasOwnProperty('orig'));
+  });
+
+  it('should detect "coffeescript" as the language', function() {
+    var file = parse('autodetect-coffeescript.md');
+    assert.equal(file.data.title, 'autodetect-coffeescript');
+    assert(file.hasOwnProperty('data'));
+    assert(file.hasOwnProperty('content'));
+    assert(file.hasOwnProperty('orig'));
   });
 });
