@@ -1,20 +1,15 @@
-declare module "gray-matter" {
-    export interface GrayMatterOption{
-    parser?:Function;
-    eval?:boolean;
-    lang?:string;
-    delims:string;
-    }
-    export interface GrayMatter {
-        (str:string,options?:GrayMatterOption,delims?:Array<string>,
-        parser?:Function):any;
-        read(fp:string,options?:GrayMatterOption):any;
-        stringify(str:string,data:Object,options?:GrayMatterOption):string;
-    }
+declare function matter(str: string, options?: matter.GrayMatterOption): any
 
-    var matter:GrayMatter;
-    export default matter;
-    
+declare namespace matter {
+  interface GrayMatterOption {
+    parser?: () => void;
+    eval?: boolean;
+    lang?: string;
+    delims?: string | string[];
+  }
+  export function read(fp: string, options?: GrayMatterOption): any;
+  export function stringify(str: string, data: object, options?: GrayMatterOption): string;
+  export function test(str: string, options?: GrayMatterOption): string;
 }
 
-
+export = matter
