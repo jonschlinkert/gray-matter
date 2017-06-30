@@ -7,12 +7,9 @@
 
 'use strict';
 
-var fs = require('fs');
-var path = require('path');
 var assert = require('assert');
 var File = require('vinyl');
 var matter = require('..');
-var fixture = path.join.bind(path, __dirname, 'fixtures');
 
 describe('vinyl files', function() {
   it('should take a vinyl file', function() {

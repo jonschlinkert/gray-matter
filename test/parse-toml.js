@@ -7,17 +7,12 @@
 
 'use strict';
 
-var fs = require('fs');
 var assert = require('assert');
 var matter = require('..');
 var toml = require('toml');
 var defaults = {
   engines: {
-    toml: {
-      parse: function(str, options) {
-        return toml.parse(str, options);
-      }
-    }
+    toml: toml.parse.bind(toml)
   }
 };
 

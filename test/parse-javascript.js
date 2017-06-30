@@ -7,13 +7,12 @@
 
 'use strict';
 
-var fs = require('fs');
 var assert = require('assert');
 var matter = require('../');
 
 describe('parse javascript:', function() {
   it('should parse front matter when options.lang is javascript', function() {
-    var file = matter.read('./test/fixtures/lang-javascript-fn.md', {
+    var file = matter.read('./test/fixtures/lang-javascript-object-fn.md', {
       lang: 'javascript'
     });
 
@@ -24,9 +23,9 @@ describe('parse javascript:', function() {
     assert.equal(typeof file.data.fn.reverse, 'function');
   });
 
-  it('should parse front matter when options.lang is js', function() {
-    var file = matter.read('./test/fixtures/lang-javascript-fn.md', {
-      lang: 'js'
+  it('should parse front matter when options.language is js', function() {
+    var file = matter.read('./test/fixtures/lang-javascript-object-fn.md', {
+      language: 'js'
     });
 
     assert.equal(file.data.title, 'javascript front matter');
@@ -36,7 +35,12 @@ describe('parse javascript:', function() {
     assert.equal(typeof file.data.fn.reverse, 'function');
   });
 
-  it('should detect "javascript" as the front matter language', function() {
+  it('should eval functions', function() {
+    var file = matter.read('./test/fixtures/lang-javascript-fn.md', {language: 'js'});
+    assert.equal(typeof file.data, 'function');
+  });
+
+  it('should detect "javascript" after the first delimiter', function() {
     var file = matter.read('./test/fixtures/autodetect-javascript.md');
     assert.equal(file.data.title, 'autodetect-javascript');
     assert.equal(file.data.title, 'autodetect-javascript');

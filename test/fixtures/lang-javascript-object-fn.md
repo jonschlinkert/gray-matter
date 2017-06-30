@@ -1,6 +1,6 @@
----javascript
+---
 {
-  title: 'autodetect-javascript',
+  title: 'javascript front matter',
   user: 'jonschlinkert',
   fn: {
     reverse: function(str) {

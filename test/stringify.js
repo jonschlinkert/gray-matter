@@ -7,9 +7,8 @@
 
 'use strict';
 
-var fs = require('fs');
 var assert = require('assert');
-var stringify = require('../lib/stringify');
+var matter = require('../');
 
 describe('.stringify', function() {
   it('should stringify front-matter from a file object', function() {
@@ -18,21 +17,21 @@ describe('.stringify', function() {
       data: {name: 'gray-matter'}
     };
 
-    assert.equal(stringify(file), [
+    assert.equal(matter.stringify(file), [
       '---',
       'name: gray-matter',
       '---',
-      'Name: {{name}}\n',
+      'Name: {{name}}\n'
     ].join('\n'));
   });
 
   it('should stringify from a string', function() {
-    assert.equal(stringify('Name: {{name}}\n'), 'Name: {{name}}\n');
+    assert.equal(matter.stringify('Name: {{name}}\n'), 'Name: {{name}}\n');
   });
 
   it('should use custom delimiters to stringify', function() {
     var data = {name: 'gray-matter'};
-    var actual = stringify('Name: {{name}}', data, {delims: '~~~'});
+    var actual = matter.stringify('Name: {{name}}', data, {delims: '~~~'});
     assert.equal(actual, [
       '~~~',
       'name: gray-matter',
@@ -43,7 +42,7 @@ describe('.stringify', function() {
 
   it('should stringify a file object', function() {
     var file = { content: 'Name: {{name}}', data: {name: 'gray-matter'} };
-    var actual = stringify(file);
+    var actual = matter.stringify(file);
     assert.equal(actual, [
       '---',
       'name: gray-matter',
@@ -56,7 +55,7 @@ describe('.stringify', function() {
     var file = { content: 'Name: {{name}}', data: {name: 'gray-matter'} };
     file.excerpt = 'This is an excerpt.';
 
-    assert.equal(stringify(file), [
+    assert.equal(matter.stringify(file), [
       '---',
       'name: gray-matter',
       '---',
@@ -70,7 +69,7 @@ describe('.stringify', function() {
     var file = { content: 'Name: {{name}}\n\nThis is an excerpt.', data: {name: 'gray-matter'} };
     file.excerpt = 'This is an excerpt.';
 
-    assert.equal(stringify(file), [
+    assert.equal(matter.stringify(file), [
       '---',
       'name: gray-matter',
       '---',

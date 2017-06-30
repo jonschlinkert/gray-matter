@@ -39,6 +39,7 @@
   "devDependencies": {
     "ansi-bold": "^0.1.1",
     "ansi-gray": "^0.1.1",
+    "ansi-magenta": "^0.1.1",
     "benchmarked": "^0.2.5",
     "coffee-script": "^1.12.6",
     "delimiter-regex": "^2.0.0",
@@ -87,13 +88,6 @@
   ],
   "typings": "gray-matter.d.ts",
   "verb": {
-    "related": {
-      "list": [
-        "assemble",
-        "metalsmith",
-        "verb"
-      ]
-    },
     "toc": false,
     "layout": "default",
     "tasks": [
@@ -102,26 +96,25 @@
     "plugins": [
       "gulp-format-md"
     ],
+    "helpers": {
+      "examples": "./examples/helper.js"
+    },
     "lint": {
       "reflinks": true
     },
+    "related": {
+      "list": [
+        "assemble",
+        "metalsmith",
+        "verb"
+      ]
+    },
     "reflinks": [
-      "assemble",
       "coffe-script",
-      "front-matter",
+      "generate",
       "js-yaml",
       "toml",
-      "verb",
-      "verb-generate-readme"
+      "update"
     ]
-  },
-  "lintDeps": {
-    "devDependencies": {
-      "files": {
-        "patterns": [
-          "concept.js"
-        ]
-      }
-    }
   }
 }

@@ -1,7 +1,6 @@
 'use strict';
 
 require('mocha');
-var fs = require('fs');
 var assert = require('assert');
 var utils = require('../lib/utils');
 var matter = require('..');
@@ -15,7 +14,7 @@ describe('gray-matter (windows carriage returns)', function() {
     assert.deepEqual(actual.data.abc, 'xyz');
   });
 
-  it('should cache original string as a buffer on the "orig property"', function() {
+  it('should cache orig string as a buffer on the "orig property"', function() {
     var fixture = '---\r\nabc: xyz\r\n---';
     var actual = matter(fixture);
     assert(utils.isBuffer(actual.orig));
@@ -24,13 +23,13 @@ describe('gray-matter (windows carriage returns)', function() {
 
   it('should throw parsing errors', function() {
     assert.throws(function() {
-      matter('---whatever\r\nabc: xyz\r\n---')
+      matter('---whatever\r\nabc: xyz\r\n---');
     });
   });
 
   it('should throw an error when a string is not passed:', function() {
     assert.throws(function() {
-      matter()
+      matter();
     });
   });
 

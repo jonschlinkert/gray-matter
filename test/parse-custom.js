@@ -7,7 +7,6 @@
 
 'use strict';
 
-var fs = require('fs');
 var assert = require('assert');
 var YAML = require('js-yaml');
 var matter = require('..');
