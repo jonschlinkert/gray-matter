@@ -473,7 +473,7 @@ Pull requests and stars are always welcome. For bugs and feature requests, [plea
 
 | **Commits** | **Contributor** | 
 | --- | --- |
-| 128 | [jonschlinkert](https://github.com/jonschlinkert) |
+| 136 | [jonschlinkert](https://github.com/jonschlinkert) |
 | 7 | [RobLoach](https://github.com/RobLoach) |
 | 5 | [heymind](https://github.com/heymind) |
 | 2 | [doowb](https://github.com/doowb) |
