@@ -1,7 +1,7 @@
 {
   "name": "gray-matter",
   "description": "Parse front-matter from a string or file. Fast, reliable and easy to use. Parses YAML front matter by default, but also has support for YAML, JSON, TOML or Coffee Front-Matter, with options to set custom delimiters. Used by metalsmith, assemble, verb and many other projects.",
-  "version": "2.1.1",
+  "version": "3.0.0",
   "homepage": "https://github.com/jonschlinkert/gray-matter",
   "authors": [
     "Jon Schlinkert (https://github.com/jonschlinkert)"
@@ -9,11 +9,12 @@
   "contributors": [
     "(https://github.com/heymind)",
     "Andrew Meyer (https://github.com/Ajedi32)",
-    "Brian Woodward <brian.woodward@gmail.com> (https://github.com/doowb)",
+    "Brian Woodward (https://twitter.com/doowb)",
     "Ian Storm Taylor (http://ianstormtaylor.com)",
-    "Jon Schlinkert <jon.schlinkert@sellside.com> (http://twitter.com/jonschlinkert)",
+    "Jon Schlinkert (http://twitter.com/jonschlinkert)",
+    "Osman Nuri Okumuş (http://onokumus.com)",
     "Pawel Kadluczka (http://blog.3d-logic.com)",
-    "Rob Loach <robloach@gmail.com> (http://robloach.net)"
+    "Rob Loach (http://robloach.net)"
   ],
   "repository": "jonschlinkert/gray-matter",
   "bugs": {
@@ -36,6 +37,7 @@
   "devDependencies": {
     "ansi-bold": "^0.1.1",
     "ansi-gray": "^0.1.1",
+    "ansi-magenta": "^0.1.1",
     "benchmarked": "^0.2.5",
     "coffee-script": "^1.12.6",
     "delimiter-regex": "^2.0.0",
