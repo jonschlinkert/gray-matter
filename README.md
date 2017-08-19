@@ -12,7 +12,7 @@ $ npm install --save gray-matter
 
 ## Heads up!
 
-Please see the [release history](#release-history) to learn about breaking changes that were made in v3.0.
+Please see the [changelog](CHANGELOG.md) to learn about breaking changes that were made in v3.0.
 
 ## What does this do?
 
@@ -443,19 +443,6 @@ Decrecated, please use [options.delimiters](#optionsdelimiters) instead.
 ### options.parsers
 
 Decrecated, please use [options.engines](#optionsengines) instead.
-
-## Release history
-
-### v3.0.0 - June 30, 2007
-
-* adds support for [excerpts](#optionsexcerpt)
-* refactored engines (parsers), so that it's easier to add parsers and stringifiers
-* `options.parsers` was renamed to [options.engines](#optionsengines)
-* the returned object now has non-enumerable `matter` and `stringify` properties
-
-**Breaking changes**
-
-* `toml`, `coffee` and `cson` are no longer supported by default. Please see [options.engines](#optionsengine) and the [examples](./examples) to learn how to add engines.
 
 ## About
 
