@@ -59,8 +59,8 @@ Into an object like this:
 * **simple**: main function takes a string and returns an object
 * **accurate**: better at catching and handling edge cases than front-matter parsers that rely on regex for parsing
 * **fast**: faster than other front-matter parsers that use regex for parsing
-* **flexible**: By default, gray-matter is capable of parsing [YAML](https://github.com/nodeca/js-yaml), [JSON](http://en.wikipedia.org/wiki/Json) and JavaScript front-matter. But other [engines](#engines) may be added.
-* **extensible**: Use [custom delimiters](#optionsdelimiters), or add support for [any language](#engines), like [TOML](http://github.com/mojombo/toml), [CoffeeScript](http://coffeescript.org), or [CSON](https://github.com/bevry/cson)
+* **flexible**: By default, gray-matter is capable of parsing [YAML](https://github.com/nodeca/js-yaml), [JSON](http://en.wikipedia.org/wiki/Json) and JavaScript front-matter. But other [engines](#optionsengines) may be added.
+* **extensible**: Use [custom delimiters](#optionsdelimiters), or add support for [any language](#optionsengines), like [TOML](http://github.com/mojombo/toml), [CoffeeScript](http://coffeescript.org), or [CSON](https://github.com/bevry/cson)
 * **battle-tested**: used by [assemble](https://github.com/assemble/assemble), [metalsmith](https://github.com/segmentio/metalsmith), [phenomic](https://github.com/phenomic/phenomic), [verb](https://github.com/assemble/verb), [generate](https://github.com/generate/generate), [update](https://github.com/update/update) and many others.
 
 <details>
@@ -201,7 +201,7 @@ console.log(matter('---\ntitle: Home\n---\nOther stuff'));
 
 ### [.stringify](index.js#L127)
 
-Stringify an object to YAML or the specified language, and append it to the given string. By default, only YAML and JSON can be stringified. See the [engines](#engines) section to learn how to stringify other languages.
+Stringify an object to YAML or the specified language, and append it to the given string. By default, only YAML and JSON can be stringified. See the [engines](#optionsengines) section to learn how to stringify other languages.
 
 **Params**
 
