@@ -7,12 +7,14 @@
   "contributors": [
     "Andrew Meyer (https://github.com/Ajedi32)",
     "Brian Woodward (https://twitter.com/doowb)",
+    "Caesar Schinas (https://caesarschinas.com)",
     "Ian Storm Taylor (http://ianstormtaylor.com)",
     "Jon Schlinkert (http://twitter.com/jonschlinkert)",
     "Osman Nuri Okumuş (http://onokumus.com)",
     "Pawel Kadluczka (http://blog.3d-logic.com)",
     "Rob Loach (http://robloach.net)",
-    "(https://github.com/heymind)"
+    "(https://github.com/heymind)",
+    "Zach Whaley (http://zachwhaleys.website)"
   ],
   "repository": "jonschlinkert/gray-matter",
   "bugs": {
