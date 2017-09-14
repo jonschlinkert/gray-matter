@@ -1,14 +1,14 @@
 'use strict';
 
-const fs = require('fs');
-const parse = require('./lib/parse');
-const defaults = require('./lib/defaults');
-const stringify = require('./lib/stringify');
-const excerpt = require('./lib/excerpt');
-const engines = require('./lib/engines');
-const toFile = require('./lib/to-file');
-const utils = require('./lib/utils');
-const cache = {};
+var fs = require('fs');
+var parse = require('./lib/parse');
+var defaults = require('./lib/defaults');
+var stringify = require('./lib/stringify');
+var excerpt = require('./lib/excerpt');
+var engines = require('./lib/engines');
+var toFile = require('./lib/to-file');
+var utils = require('./lib/utils');
+var cache = {};
 
 /**
  * Takes a string or object with `content` property, extracts
@@ -27,8 +27,8 @@ const cache = {};
  */
 
 function matter(input, options) {
-  const file = toFile(input);
-  let str = file.content;
+  var file = toFile(input);
+  var str = file.content;
 
   if (str === '') return file;
   if (typeof options === 'undefined') {
@@ -39,21 +39,21 @@ function matter(input, options) {
   }
 
   // support "options.delims" for backward compatibility
-  const opts = defaults(options);
-  const open = opts.delimiters[0];
-  const close = '\n' + opts.delimiters[1];
+  var opts = defaults(options);
+  var open = opts.delimiters[0];
+  var close = '\n' + opts.delimiters[1];
 
   if (opts.language) {
     file.language = opts.language;
   }
 
-  const openLen = open.length;
+  var openLen = open.length;
   if (!utils.startsWith(str, open, openLen)) {
     excerpt(file, opts);
     return file;
   }
 
-  const nextChar = str.charAt(openLen);
+  var nextChar = str.charAt(openLen);
   if (nextChar === open.slice(-1)) {
     return file;
   }
@@ -69,7 +69,7 @@ function matter(input, options) {
   }
 
   // get the index of the closing delimiter
-  let closeIndex = str.indexOf(close);
+  var closeIndex = str.indexOf(close);
   if (closeIndex === -1) {
     closeIndex = len;
   }
@@ -145,8 +145,8 @@ matter.stringify = function(file, data, options) {
  */
 
 matter.read = function(filepath, options) {
-  const str = fs.readFileSync(filepath, 'utf8');
-  const file = matter(str, options);
+  var str = fs.readFileSync(filepath, 'utf8');
+  var file = matter(str, options);
   file.path = filepath;
   return file;
 };
@@ -160,7 +160,7 @@ matter.read = function(filepath, options) {
  */
 
 matter.test = function(str, options) {
-  const opts = defaults(options);
+  var opts = defaults(options);
   return utils.startsWith(str, opts.delimiters[0]);
 };
 
@@ -173,14 +173,14 @@ matter.test = function(str, options) {
  */
 
 matter.language = function(str, options) {
-  const opts = defaults(options);
-  const open = opts.delimiters[0];
+  var opts = defaults(options);
+  var open = opts.delimiters[0];
 
   if (matter.test(str)) {
     str = str.slice(open.length);
   }
 
-  const language = str.slice(0, str.search(/\r?\n/));
+  var language = str.slice(0, str.search(/\r?\n/));
   return {
     raw: language,
     name: language ? language.trim() : ''
