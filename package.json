@@ -33,6 +33,9 @@
   "scripts": {
     "test": "mocha"
   },
+  "browser": {
+    "fs": false
+  },
   "dependencies": {
     "js-yaml": "^3.8.1",
     "kind-of": "^5.0.0",
