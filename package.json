@@ -1,7 +1,7 @@
 {
   "name": "gray-matter",
   "description": "Parse front-matter from a string or file. Fast, reliable and easy to use. Parses YAML front matter by default, but also has support for YAML, JSON, TOML or Coffee Front-Matter, with options to set custom delimiters. Used by metalsmith, assemble, verb and many other projects.",
-  "version": "3.0.6",
+  "version": "3.0.7",
   "homepage": "https://github.com/jonschlinkert/gray-matter",
   "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
   "contributors": [
@@ -37,27 +37,27 @@
     "fs": false
   },
   "dependencies": {
+    "extend-shallow": "^2.0.1",
     "js-yaml": "^3.8.1",
     "kind-of": "^5.0.0",
     "strip-bom-string": "^1.0.0"
   },
   "devDependencies": {
-    "ansi-bold": "^0.1.1",
-    "ansi-gray": "^0.1.1",
-    "ansi-magenta": "^0.1.1",
-    "benchmarked": "^0.2.5",
-    "coffee-script": "^1.12.6",
     "delimiter-regex": "^2.0.0",
-    "extend-shallow": "^2.0.1",
-    "for-own": "^0.1.4",
     "front-matter": "^2.1.2",
-    "gulp-format-md": "^0.1.12",
-    "matched": "^1.0.2",
     "minimist": "^1.2.0",
-    "mocha": "^3.2.0",
+    "benchmarked": "^0.2.5",
     "sort-object": "^3.0.2",
+    "for-own": "^0.1.4",
+    "ansi-gray": "^0.1.1",
+    "ansi-bold": "^0.1.1",
+    "matched": "^1.0.2",
+    "coffee-script": "^1.12.6",
+    "ansi-magenta": "^0.1.1",
     "toml": "^2.3.2",
-    "vinyl": "^2.0.2"
+    "mocha": "^3.2.0",
+    "vinyl": "^2.0.2",
+    "gulp-format-md": "^0.1.12"
   },
   "keywords": [
     "assemble",
