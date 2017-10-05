@@ -9,6 +9,7 @@
 
 var assert = require('assert');
 var matter = require('..');
+var extend = require('extend-shallow');
 var toml = require('toml');
 var defaults = {
   engines: {
@@ -17,7 +18,7 @@ var defaults = {
 };
 
 function parse(str, options) {
-  return matter(str, Object.assign({}, defaults, options));
+  return matter(str, extend({}, defaults, options));
 }
 
 describe('parse TOML:', function() {

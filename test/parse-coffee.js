@@ -9,6 +9,7 @@
 
 var path = require('path');
 var assert = require('assert');
+var extend = require('extend-shallow');
 var matter = require('../');
 var fixture = path.join.bind(path, __dirname, 'fixtures');
 var coffee = require('coffee-script');
@@ -24,7 +25,7 @@ var defaults = {
 };
 
 function parse(name, options) {
-  return matter.read(fixture(name), Object.assign({}, defaults, options));
+  return matter.read(fixture(name), extend({}, defaults, options));
 }
 
 describe('parse coffee', function() {

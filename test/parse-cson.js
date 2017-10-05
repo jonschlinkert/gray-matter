@@ -10,6 +10,7 @@
 var path = require('path');
 var assert = require('assert');
 var matter = require('..');
+var extend = require('extend-shallow');
 var coffee = require('coffee-script');
 var fixture = path.join.bind(path, __dirname, 'fixtures');
 var defaults = {
@@ -24,7 +25,7 @@ var defaults = {
 };
 
 function parse(name, options) {
-  return matter.read(fixture(name), Object.assign({}, defaults, options));
+  return matter.read(fixture(name), extend({}, defaults, options));
 }
 
 describe('parse cson:', function() {
