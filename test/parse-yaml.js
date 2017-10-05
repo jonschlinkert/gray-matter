@@ -20,6 +20,15 @@ describe('parse YAML:', function() {
     });
   });
 
+  it('should parse YAML with closing ...', function() {
+    var file = matter.read('./test/fixtures/all-dots.yaml');
+    assert.deepEqual(file.data, {
+      one: 'foo',
+      two: 'bar',
+      three: 'baz'
+    });
+  });
+
   it('should parse YAML front matter', function() {
     var actual = matter.read('./test/fixtures/lang-yaml.md');
     assert.equal(actual.data.title, 'YAML');
