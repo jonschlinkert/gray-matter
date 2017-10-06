@@ -1,6 +1,1 @@
-
-var matter = require('../..');
-
-module.exports = function(str) {
-  return matter(str);
-};
+module.exports = require('../..');

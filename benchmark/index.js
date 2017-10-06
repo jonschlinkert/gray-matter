@@ -1,36 +1,15 @@
 'use strict';
 
-/**
- * Module dependencies
- */
+const path = require('path');
+const argv = require('minimist')(process.argv.slice(2));
+const suite = require('benchmarked');
+const write = require('write');
+const type = argv._[0] || 'match';
+const dir = path.join.bind(path, __dirname);
 
-var argv = require('minimist')(process.argv.slice(2));
-var dryrun = argv.c || argv.check;
-var fixtures = argv.f || argv.fixtures;
-var code = argv.c || argv.code;
-
-fixtures = fixtures || 'fixtures/{complex,empty,matter,no-{matter,content}}.js';
-code = code || 'code/{gray,front}-matter.js';
-
-// blog
-// fixtures = fixtures || 'bulk/fixtures/*.js';
-// code = code || 'bulk/code/*.js';
-
-if (dryrun) {
-  require('./support')({
-    fixtures: fixtures,
-    code: code
-  });
-} else {
-
-  var Suite = require('benchmarked');
-  var suite = new Suite({
-    expected: true,
-    cwd: __dirname,
-    fixtures: fixtures,
-    code: code,
-  });
-
-  suite.run();
-}
-
+suite.run({code: `code/${type}/*.js`, fixtures: `fixtures/${type}/*.js`})
+  .then(function(stats) {
+    write.sync(dir('stats.json'), JSON.stringify(stats, null, 2));
+    write.sync(dir('stats.md'), suite.render(stats));
+  })
+  .catch(console.error);
