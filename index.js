@@ -1,6 +1,7 @@
 'use strict';
 
 var fs = require('fs');
+var extend = require('extend-shallow');
 var parse = require('./lib/parse');
 var defaults = require('./lib/defaults');
 var stringify = require('./lib/stringify');
@@ -27,37 +28,49 @@ var cache = {};
  */
 
 function matter(input, options) {
-  var file = toFile(input);
-  var str = file.content;
+  var file = {data: {}, content: input, excerpt: '', orig: input};
+  if (input === '') return file;
 
-  if (str === '') return file;
-  if (typeof options === 'undefined') {
-    if (cache[str]) {
-      return cache[str];
+  file = toFile(input);
+  var cached = cache[file.content];
+
+  if (!options) {
+    if (cached) {
+      file = extend({}, cached);
+      file.orig = cached.orig;
+      return file;
     }
-    cache[str] = file;
+    cache[file.content] = file;
   }
 
-  // support "options.delims" for backward compatibility
+  return parseMatter(file, options);
+}
+
+function parseMatter(file, options) {
   var opts = defaults(options);
   var open = opts.delimiters[0];
   var close = '\n' + opts.delimiters[1];
+  var str = file.content;
 
   if (opts.language) {
     file.language = opts.language;
   }
 
+  // get the length of the opening delimiter
   var openLen = open.length;
   if (!utils.startsWith(str, open, openLen)) {
     excerpt(file, opts);
     return file;
   }
 
-  var nextChar = str.charAt(openLen);
-  if (nextChar === open.slice(-1)) {
+  // if the next character after the opening delimiter is
+  // a character from the delimiter, then it's not a front-
+  // matter delimiter
+  if (str.charAt(openLen) === open.slice(-1)) {
     return file;
   }
 
+  // strip the opening delimiter
   str = str.slice(openLen);
   var len = str.length;
 
@@ -81,16 +94,16 @@ function matter(input, options) {
   file.data = parse(file.language, file.matter, opts);
 
   // update file.content
-  if (closeIndex !== len) {
-    file.content = str.slice(closeIndex + close.length);
-    if (file.content.charAt(0) === '\r') {
-      file.content = file.content.slice(1);
-    }
-    if (file.content.charAt(0) === '\n') {
-      file.content = file.content.slice(1);
-    }
-  } else {
+  if (closeIndex === len) {
     file.content = '';
+  } else {
+    file.content = str.slice(closeIndex + close.length);
+    if (file.content[0] === '\r') {
+      file.content = file.content.slice(1);
+    }
+    if (file.content[0] === '\n') {
+      file.content = file.content.slice(1);
+    }
   }
 
   excerpt(file, opts);
