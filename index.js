@@ -107,6 +107,10 @@ function parseMatter(file, options) {
   }
 
   excerpt(file, opts);
+
+  if (opts.sections === true) {
+    matter.sections(file, opts);
+  }
   return file;
 }
 
@@ -115,6 +119,50 @@ function parseMatter(file, options) {
  */
 
 matter.engines = engines;
+
+/**
+ * Parse matter-sections from a file (experimental)
+ *
+ * @param {Object} `file`
+ * @param {Object} `options`
+ * @return {Object}
+ * @api public
+ */
+
+matter.sections = function(file, options) {
+  var idx = file.content.indexOf('----');
+
+  if (idx === -1 || (idx !== 0 && file.content[idx - 1] !== '\n')) {
+    if (file.sections.length) {
+      file.sections[file.sections.length - 1].content = file.content;
+      file.content = file.text.join('\n');
+      delete file.text;
+    }
+    return file;
+  }
+
+  var orig = file.content;
+  file.sections = file.sections || [];
+  file.text = file.text || [];
+
+  var rest = file.content.slice(idx + 5);
+  var content = file.content.slice(0, idx);
+  if (file.sections.length === 0) {
+    file.text.push(content);
+  } else {
+    file.sections[file.sections.length - 1].content = content;
+  }
+
+  var end = rest.indexOf('\n----');
+  if (end === -1) {
+    file.content = orig;
+    return file;
+  }
+
+  file.sections.push({data: rest.slice(0, end)});
+  file.content = rest.slice(end + 5);
+  return matter.sections(file, options);
+};
 
 /**
  * Stringify an object to YAML or the specified language, and
