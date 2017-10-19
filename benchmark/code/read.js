@@ -1,18 +1,7 @@
-'use strict';
-
-var fs = require('fs');
 var extend = require('extend-shallow');
-var parsers = require('../../lib/parsers');
+var engines = require('../../lib/engines');
 
-/**
- * Expose `matter`
- */
-
-module.exports = matter;
-
-
-
-function matter(str, options) {
+module.exports = function matter(str, options) {
   var defaults = {orig: str, data: {}, content: str};
   if (str == '') {
     return defaults;
@@ -55,7 +44,7 @@ function matter(str, options) {
   if (data.length > 0 && typeof fn === 'function') {
     try {
       res.data = fn(data, opts);
-    } catch(err) {}
+    } catch (err) {}
   } else if (opts.strict) {
     throw new Error('gray-matter cannot find a parser for: ' + str);
   } else {
@@ -65,7 +54,7 @@ function matter(str, options) {
   res.content = str.slice(blen + dataEnd);
   delete res.lang;
   return res;
-}
+};
 
 /**
  * Determine the correct the parser to use
@@ -77,79 +66,8 @@ function matter(str, options) {
 
 function parser(lang, opts) {
   lang = lang || opts.lang;
-
-  if (parsers.hasOwnProperty(lang)) {
-    return parsers[lang];
+  if (engines.hasOwnProperty(lang)) {
+    return engines[lang];
   }
-
-  return parsers.yaml;
+  return engines.yaml;
 }
-
-/**
- * Expose `parsers`
- *
- * @type {Object}
- */
-
-matter.parsers = parsers;
-
-/**
- * Requires cache
- */
-
-var YAML = matter.parsers.requires.yaml || (matter.parsers.requires.yaml = require('js-yaml'));
-
-/**
- * Read a file and parse front matter. Returns the same object
- * as `matter()`.
- *
- * ```js
- * matter.read('home.md');
- * ```
- *
- * @param {String} `fp` file path of the file to read.
- * @param {Object} `options` Options to pass to gray-matter.
- * @return {Object}
- * @api public
- */
-
-matter.read = function(fp, options) {
-  var str = fs.readFileSync(fp, 'utf8');
-  var obj = matter(str, options);
-  return extend(obj, {
-    path: fp
-  });
-};
-
-/**
- * Stringify an object to front-matter-formatted YAML, and
- * concatenate it to the given string.
- *
- * ```js
- * matter.stringify('foo bar baz', {title: 'Home'});
- * ```
- * Results in:
- *
- * ```yaml
- * ---
- * title: Home
- * ---
- * foo bar baz
- * ```
- *
- * @param {String} `str` The content string to append to stringified front-matter.
- * @param {Object} `data` Front matter to stringify.
- * @param {Object} `options` Options to pass to js-yaml
- * @return {String}
- * @api public
- */
-
-matter.stringify = function(str, data, options) {
-  var res = '';
-  res += '---\n';
-  res += YAML.safeDump(data, options);
-  res += '---\n';
-  res += str;
-  res += '\n';
-  return res;
-};

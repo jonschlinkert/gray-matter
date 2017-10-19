@@ -1,14 +1,10 @@
 'use strict';
 
-var fs = require('fs');
-var YAML = require('js-yaml');
 var delims = require('delimiter-regex');
 var extend = require('extend-shallow');
-var parsers = require('../../lib/parsers');
+var parse = require('../../lib/parse');
 
-module.exports = matter;
-
-function matter(str, options) {
+module.exports = function matter(str, options) {
   if (str.length === 0) {
     return {orig: '', data: {}, content: ''};
   }
@@ -29,7 +25,7 @@ function matter(str, options) {
   if (file) {
     var lang = (file[1] !== '' ? file[1].trim() : opts.lang) || 'yaml';
     try {
-      res.data = parsers[lang](file[2].trim(), opts);
+      res.data = parse(lang, file[2].trim(), opts);
     } catch (err) {
       err.origin = __filename;
       console.log('Front-matter language not detected by gray-matter', err);
@@ -38,13 +34,4 @@ function matter(str, options) {
   }
 
   return res;
-}
-
-matter.read = function(fp, opts) {
-  var str = fs.readFileSync(fp, 'utf8');
-  var obj = matter(str, opts);
-  return extend(obj, {
-    path: fp
-  });
 };
-

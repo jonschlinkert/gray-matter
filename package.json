@@ -43,21 +43,17 @@
     "strip-bom-string": "^1.0.0"
   },
   "devDependencies": {
-    "ansi-bold": "^0.1.1",
-    "ansi-gray": "^0.1.1",
     "ansi-magenta": "^0.1.1",
     "benchmarked": "^2.0.0",
     "coffee-script": "^1.12.7",
     "delimiter-regex": "^2.0.0",
-    "for-own": "^1.0.0",
     "front-matter": "^2.2.0",
     "gulp-format-md": "^1.0.0",
-    "matched": "^1.0.2",
     "minimist": "^1.2.0",
     "mocha": "^4.0.0",
-    "sort-object": "^3.0.2",
     "toml": "^2.3.3",
-    "vinyl": "^2.1.0"
+    "vinyl": "^2.1.0",
+    "write": "^1.0.3"
   },
   "keywords": [
     "assemble",

@@ -1,12 +1,7 @@
-'use strict';
-
-var fs = require('fs');
 var extend = require('extend-shallow');
-var parsers = require('../../lib/parsers');
+var engines = require('../../lib/engines');
 
-module.exports = matter;
-
-function matter(str, options) {
+module.exports = function matter(str, options) {
   var defaults = {orig: str, data: {}, content: str};
   if (str == '') {
     return defaults;
@@ -36,7 +31,7 @@ function matter(str, options) {
   }
 
   if (res.data.length > 0) {
-    res.data = parsers[res.lang](res.data, opts);
+    res.data = engines[res.lang](res.data, opts);
   }
 
   // if (typeof res.data === 'string') {
@@ -46,12 +41,4 @@ function matter(str, options) {
   sections.shift();
   res.content = sections.join(delims[0]).trim();
   return res;
-}
-
-matter.read = function(filepath, options) {
-  var str = fs.readFileSync(filepath, 'utf8');
-  var obj = matter(str, options);
-  return extend(obj, {
-    path: filepath
-  });
 };

@@ -1,0 +1,1791 @@
+[
+  {
+    "name": "complex",
+    "file": {
+      "stat": null,
+      "_contents": null,
+      "history": [
+        "/Users/jonschlinkert/dev/utils/gray-matter/benchmark/fixtures/complex.js"
+      ],
+      "_cwd": "/Users/jonschlinkert/dev/utils/gray-matter",
+      "_isVinyl": true,
+      "_symlink": null,
+      "key": "complex",
+      "content": [
+        "---\n# =============================================\n# BUILD CONFIG\n# =============================================\n\nroot:             _gh_pages\ndest:             <%= site.root %>\nassets:           <%= site.dest %>/assets\ndate:             <%= new Date() %>\n\n\n# Data\ndata:             data\n\n# Templates\ntemplates:        templates\npages:            <%= site.templates %>\nincludes:         <%= site.templates %>/includes\nlayouts:          <%= site.templates %>/layouts\nlayoutext:        .hbs\nlayout:           default\n\n# Styles\nstyles:           styles\ncomponents:       <%= site.styles %>/components\n\n\n# =============================================\n# EXTENSIONS\n# =============================================\n\nhelpers:          <%= site.templates %>/helpers\nplugins:\n  # - assemble-contrib-permalinks\n  # - assemble-contrib-anchors\n  # - assemble-contrib-toc\n\n\n# =============================================\n# PROJECT METADATA\n# =============================================\n\nbrand:            ASSEMBLE\ntitle:            BOILERPLATE\nlead:             The most awe inspiring static site boilerplate in Northern Kentucky.\n\n# GitHub\nversion:          <%= pkg.version %>\nauthor:           <%= pkg.author.name %>\nname:             <%= pkg.name %>\ndescription:      <%= pkg.description %>\n\n# URLs\nurl:\n\n  # Repo\n  homepage:       <%= pkg.homepage %>\n  repo:           <%= pkg.homepage %>\n  issues:         <%= pkg.bugs.url %>?state=open\n  ghpages:        https://<%= site.username %>.github.io/<%= pkg.name %>/\n\n  # Site\n  domain:         http://assemble.io/\n  about:          <%= site.url.domain %>/about/\n  blog:           <%= site.url.domain %>/blog/\n\n# Download Links\ndownload:\n  source:         <%= pkg.homepage %>/archive/master.zip\n  latest:         <%= pkg.homepage %>/master/dist/<%= pkg.name %>-<%= pkg.version %>.min.js\n\n\n# =============================================\n# SEO / SEM\n# =============================================\n\nanalytics:\n  alexa:           lpTeh1awA400OE\n  google:\n    id:             UA-XXXXXXXX-YY\n    domain:         assemble.github.io\n    siteid:         false\n    tags:           FOO-012345 # Google Tags (see: https://www.google.com/tagmanager/)\n\n\n# =============================================\n# SOCIAL / SHARING\n# =============================================\n\n# Comments\ndisqus:\n  enabled:        false\n  shortname:      <%= pkg.name %>\n\n# Social\nsocial:\n  twitter:\n    via:          jonschlinkert\n    username:     jonschlinkert\n    related:      jonschlinkert:Assemble core team.\n  facebook:       false\n  linkedin:       false\n  gplus:          false\n  hn:             false\n  google:         false\n\n# Sharing\nsharing:\n  twitter:        false\n  facebook:       false\n  gplus:          false\n  hn:             false\n  google:         false\n---\n\n> Add lots of potentially confusing sytax\n\n<span class=alert alert-info>This is an alert</span>\n\n## YAML Front Matter\nAdd YAML front matter to documents to extend the metadata that is supplied to your projects templates.\n\n```yaml\n---\nusername: jonschlinkert\n---\n```\nThis is probably most useful when:\n1. You need to use the same or similar templates on a number of different projects\n1. You want to supply data to the templates that wont typically be found in package.json\n\n\n## Code Comments\nCode comments may be used in markdown templates, and they will be stripped from the rendered README as long athey adhere to the following syntax:\",\n\n```handlebars\n[[!-- foo --]]\n[[! foo ]]\n[[!foo]]\n```\n\n## Escaping\n\n### Escaping hashes\nThis task automatically adjusts heading levels in included templates. For example, `#` is adjusted to `##`, sthat heading levels line up properly after the \",\nREADME is built.\n\nThis can cause problems if youre using hashes for a reason other than headings, such as CSS Ids in codcomments. So to prevent grunt-readme from converting `\",\n#id {}` to `##id {}`, just add a  single backtick before the hash: <code>`#id {}</code>.\n\n### Escaping Lo-Dash templates\nTo prevent Lo-Dash from attempting to evaluat templates that shouldnt be (_as with code examples_), just ussquare brackets instead of curly braces in any \",\ntemplates that have similar patterns to these: `[%= .. %]`, `[%- .. %]`, and `[% .. %]`. The square bracketwill be replaced with curly braces in the rendered output.\",\n\n~~~\nfoo: bar\nversion: 2\n~~~\n\n<span class=alert alert-info>This is an alert</span>\n\n# yfm [![NPM version](https://badge.fury.io/js/yfm.png)](http://badge.fury.io/js/yfm)\n\n> A simple to use YAML Front-Matter parsing and extraction Library.\n\n**Why another YAML Front Matter library?**\n\nBecause other libraries we tried failed to meet our requirements with [Assemble](http://assemble.io). Some mosof the libraries met most of the \",\nrequirements, but _none had all of them_. Here are the most important:\n\n* Be usable, if not simple\n* Allow custom delimiters\n* Use a dependable and well-supported library for parsing YAML\n* Dont fail if YAML front matter exists, but no content\n* Dont fail if content exists, but no YAML front matter\n* Have no problem reading YAML files directly\n* Should return an object that contains the parsed YAML front matter and content, as well as the originacontent.\",\n\n```bash\nnpm i yfm --save\n```\n## Usage\n\n```js\nvar yfm = require(yfm);\nyfm(yfm.html);\n```\n## Options\nYou may pass an options object as a second parameter.\n\n#### custom delimiters\nType: `object`\n\nDefault: `{close: ---, open: ---}`\n\nOpen and close delimiters can be a string or an array of strings. If an array of strings is passed for delimiter then all patterns supplied will be used to \",\ncheck for YAML front matter.\n\nExample:\n\n```js\n{\n  close: [---, ~~~],\n  open: [..., ---]\n}\n```\n\nChecks for all patterns using these delimiters.\n\n_Passing multiple delimiters will likely provide unpredictable results, but the option is included for testinpurposes._\",\n\n#### read\nType: `boolean`\n\nDefault: `true`\n\nSpecify whether or not to read a file from the file system. When set to `false` a raw string may be passed tthe function. Example:\",\n\n```js\nyfm(---\\nTitle: YFM\\n---\\nContent., {read: false})\n```\n\n\n## Examples\n#### Extract front matter\n\nLets say our page, `foo.html` contains\n\n```html\n---\ntitle: YAML Front matter\n---\n<h1>{{title}}</h1>\n```\n\nthen running the following in the command line:\n\n```js\nconsole.log(yfm(foo.html));\n```\nreturns\n\n```json\n{\n  context: {\n    title: YAML Front matter\n  },\n  content: <h1>{{title}}</h1>,\n  original: ---\\ntitle: YAML Front matter\\n---\\n<h1>{{title}}</h1>\n}\n```\nand\n\n```js\nconsole.log(yfm(foo.html).context);\n```\nreturns\n\n\n```json\n{title: YAML Front matter}\n```\n\n#### Check for YAML front matter\n\n```js\nvar hasYFM = function (src, options) {\n  var obj = yfm(src, options).context;\n  return _.keys(obj).length > 0;\n};\n```\n\n## Authors\n\n**Jon Schlinkert**\n\n+ [github/jonschlinkert](https://github.com/jonschlinkert)\n+ [twitter/jonschlinkert](http://twitter.com/jonschlinkert)\n\n**Brian Woodward**\n\n+ [github/doowb](https://github.com/doowb)\n+ [twitter/doowb](http://twitter.com/jonschlinkert)\n\n\n## License\nCopyright (c) 2014 Jon Schlinkert, Brian Woodward, contributors.\nReleased under the MIT license\n\n***\n\n_This file was generated by [grunt-readme](https://github.com/assemble/grunt-readme) on Monday, January 27, 2014._\n\n[grunt]: http://gruntjs.com/\n[Getting Started]: https://github.com/gruntjs/grunt/blob/devel/docs/getting_started.md\n[package.json]: https://npmjs.org/doc/json.html\n"
+      ],
+      "bytes": "(112 bytes)",
+      "suite": {
+        "0": {
+          "name": "gray-matter",
+          "options": {
+            "async": false,
+            "defer": false,
+            "delay": 0.005,
+            "initCount": 1,
+            "maxTime": 5,
+            "minSamples": 5,
+            "minTime": 0.05
+          },
+          "async": false,
+          "defer": false,
+          "delay": 0.005,
+          "initCount": 1,
+          "maxTime": 5,
+          "minSamples": 5,
+          "minTime": 0.05,
+          "events": {
+            "abort": [
+              null
+            ],
+            "complete": [
+              null
+            ],
+            "cycle": [
+              null
+            ],
+            "error": [
+              null
+            ]
+          },
+          "id": 1,
+          "stats": {
+            "moe": 3.2651679564763303e-9,
+            "rme": 1.5562657433775133,
+            "sem": 1.6659020186103727e-9,
+            "deviation": 1.5538499592884765e-8,
+            "mean": 2.0980786670726567e-7,
+            "sample": [
+              2.719294390055652e-7,
+              2.9043419689645363e-7,
+              2.0993472685094427e-7,
+              2.0445081438280073e-7,
+              2.2073198289203838e-7,
+              2.068171643782354e-7,
+              2.0011390059999846e-7,
+              2.0855776986589615e-7,
+              1.9816025753428835e-7,
+              2.0670591688458225e-7,
+              2.2018542011329068e-7,
+              2.347474898411948e-7,
+              2.1031443122126755e-7,
+              2.1331621901850312e-7,
+              2.145822234250993e-7,
+              2.0499986277036146e-7,
+              2.5308908109509247e-7,
+              2.1305073303498593e-7,
+              2.0768097920970976e-7,
+              2.0898119572758391e-7,
+              2.1653821464240243e-7,
+              1.9337161404926544e-7,
+              2.2764686239679187e-7,
+              2.0937093552494147e-7,
+              2.1455866185854674e-7,
+              2.1007223234502582e-7,
+              1.9144927840081727e-7,
+              1.9977674524025386e-7,
+              1.9775764959202178e-7,
+              1.9648490480507705e-7,
+              1.9557099954669083e-7,
+              1.989073096101541e-7,
+              2.1733769643396795e-7,
+              2.2105169613176185e-7,
+              1.9655355092172864e-7,
+              2.0643346932608038e-7,
+              1.9396413946811726e-7,
+              2.0703091946207314e-7,
+              2.06793774554246e-7,
+              2.2704711015412512e-7,
+              2.0413667271078875e-7,
+              1.959836355394379e-7,
+              2.0611483454215775e-7,
+              2.215516772438803e-7,
+              1.9692927621637957e-7,
+              2.1449424675128438e-7,
+              2.122568109700816e-7,
+              1.9100298806285886e-7,
+              1.9403079102447868e-7,
+              2.197360531882744e-7,
+              1.9783157298277424e-7,
+              2.1854363856149895e-7,
+              1.9805282940465397e-7,
+              2.089803037171351e-7,
+              1.9692711166515563e-7,
+              2.050277425203989e-7,
+              1.972350332426715e-7,
+              2.240494872114032e-7,
+              2.1338566832252687e-7,
+              2.1214543280564576e-7,
+              2.167473662770303e-7,
+              2.0595738140231365e-7,
+              1.9009180028590932e-7,
+              1.9688963823792334e-7,
+              2.200462547007193e-7,
+              2.2497447184094688e-7,
+              1.9136163760424564e-7,
+              2.1867424062402165e-7,
+              2.007438885934241e-7,
+              1.9022963273096232e-7,
+              2.0631409291676567e-7,
+              2.0883816323990357e-7,
+              2.1025044225423303e-7,
+              2.0002851926870574e-7,
+              2.1138870469487287e-7,
+              2.0247938850101274e-7,
+              2.022143905189745e-7,
+              2.0947196164741116e-7,
+              2.1803077863148248e-7,
+              1.9974196492895643e-7,
+              2.1128124351706216e-7,
+              2.079296617745239e-7,
+              2.1097204651496122e-7,
+              2.213771513923936e-7,
+              2.107659202094154e-7,
+              2.0049905136938506e-7,
+              2.1106723395909008e-7
+            ],
+            "variance": 2.4144496959808e-16
+          },
+          "times": {
+            "cycle": 0.055624051813563564,
+            "elapsed": 5.519,
+            "period": 2.0980786670726567e-7,
+            "timeStamp": 1508426180265
+          },
+          "running": false,
+          "count": 265119,
+          "cycles": 5,
+          "hz": 4766265.51565509
+        },
+        "1": {
+          "name": "front-matter",
+          "options": {
+            "async": false,
+            "defer": false,
+            "delay": 0.005,
+            "initCount": 1,
+            "maxTime": 5,
+            "minSamples": 5,
+            "minTime": 0.05
+          },
+          "async": false,
+          "defer": false,
+          "delay": 0.005,
+          "initCount": 1,
+          "maxTime": 5,
+          "minSamples": 5,
+          "minTime": 0.05,
+          "events": {
+            "abort": [
+              null
+            ],
+            "complete": [
+              null
+            ],
+            "cycle": [
+              null
+            ],
+            "error": [
+              null
+            ]
+          },
+          "id": 2,
+          "stats": {
+            "moe": 0.000003999839780865077,
+            "rme": 2.424203341081083,
+            "sem": 0.000002040734582074019,
+            "deviation": 0.000018479637605396145,
+            "mean": 0.00016499605099468814,
+            "sample": [
+              0.00021251277215189872,
+              0.00022534120717131474,
+              0.00022172310358565736,
+              0.00020634449003984064,
+              0.00020934792430278885,
+              0.00020082241434262948,
+              0.0001904078007518797,
+              0.00017581115916955015,
+              0.00017671727681660898,
+              0.00017786318456375837,
+              0.00017610554697986577,
+              0.00016476884112149535,
+              0.0001558041339563863,
+              0.0001739329875389408,
+              0.00015327292378048782,
+              0.00015684379573170732,
+              0.00016425372865853659,
+              0.00015251809146341465,
+              0.0001667204695121951,
+              0.00015946175609756098,
+              0.00015998142378048782,
+              0.0001637644207317073,
+              0.0001615011981707317,
+              0.00016070844047619048,
+              0.00015199181547619046,
+              0.0001559077857142857,
+              0.00017374078273809523,
+              0.00014931636011904762,
+              0.00017855938392857143,
+              0.0001665407380952381,
+              0.00016229007142857144,
+              0.00015642288095238095,
+              0.00016328998511904762,
+              0.0001606563363095238,
+              0.0001612283005952381,
+              0.00015387324404761906,
+              0.00018832230654761904,
+              0.0002364600505952381,
+              0.00015600247023809524,
+              0.00016817880357142858,
+              0.00015743668154761904,
+              0.0001508920988372093,
+              0.00015755241569767443,
+              0.00016703430813953487,
+              0.0001690542034883721,
+              0.00016306545058139535,
+              0.00017557798255813954,
+              0.00015578256104651164,
+              0.00014792327325581394,
+              0.00016468978779069767,
+              0.0001466136918604651,
+              0.00016280541860465116,
+              0.00016031032558139536,
+              0.00014642608139534883,
+              0.0001530299069767442,
+              0.0001700783226744186,
+              0.00015841220058139535,
+              0.00014994443023255813,
+              0.00014729751162790696,
+              0.0001520826191860465,
+              0.00015757762209302325,
+              0.00014945440988372094,
+              0.0001553400784883721,
+              0.0001668270578034682,
+              0.00015196531791907515,
+              0.00016281751734104047,
+              0.00015167607225433525,
+              0.0001622513583815029,
+              0.0001611186098265896,
+              0.00016279337572254335,
+              0.0001596559161849711,
+              0.00015917557803468208,
+              0.000147492387283237,
+              0.0001595867456647399,
+              0.00015946959826589594,
+              0.00015121703468208092,
+              0.00014847609537572254,
+              0.0001538600809248555,
+              0.00015043545375722543,
+              0.00015061576011560693,
+              0.00015106121098265894,
+              0.0001514892225433526
+            ],
+            "variance": 3.4149700602677134e-10
+          },
+          "times": {
+            "cycle": 0.0570886336441621,
+            "elapsed": 5.406,
+            "period": 0.00016499605099468814,
+            "timeStamp": 1508426185785
+          },
+          "running": false,
+          "count": 346,
+          "cycles": 4,
+          "hz": 6060.751114777855
+        },
+        "name": "(112 bytes)",
+        "options": {
+          "name": "complex"
+        },
+        "events": {
+          "start": [
+            null
+          ],
+          "complete": [
+            null,
+            null
+          ]
+        },
+        "length": 2,
+        "running": false
+      }
+    },
+    "results": [
+      {
+        "name": "gray-matter",
+        "file": {
+          "stat": null,
+          "_contents": null,
+          "history": [
+            "/Users/jonschlinkert/dev/utils/gray-matter/benchmark/code/gray-matter.js"
+          ],
+          "_cwd": "/Users/jonschlinkert/dev/utils/gray-matter",
+          "_isVinyl": true,
+          "_symlink": null,
+          "key": "gray-matter"
+        },
+        "runs": 87,
+        "hz": 4766265.51565509,
+        "ops": "4,766,266",
+        "rme": "1.56"
+      },
+      {
+        "name": "front-matter",
+        "file": {
+          "stat": null,
+          "_contents": null,
+          "history": [
+            "/Users/jonschlinkert/dev/utils/gray-matter/benchmark/code/front-matter.js"
+          ],
+          "_cwd": "/Users/jonschlinkert/dev/utils/gray-matter",
+          "_isVinyl": true,
+          "_symlink": null,
+          "key": "front-matter"
+        },
+        "runs": 82,
+        "hz": 6060.751114777855,
+        "ops": "6,061",
+        "rme": "2.42"
+      }
+    ],
+    "fastest": [
+      "gray-matter"
+    ]
+  },
+  {
+    "name": "empty",
+    "file": {
+      "stat": null,
+      "_contents": null,
+      "history": [
+        "/Users/jonschlinkert/dev/utils/gray-matter/benchmark/fixtures/empty.js"
+      ],
+      "_cwd": "/Users/jonschlinkert/dev/utils/gray-matter",
+      "_isVinyl": true,
+      "_symlink": null,
+      "key": "empty",
+      "content": [
+        ""
+      ],
+      "bytes": "(38 bytes)",
+      "suite": {
+        "0": {
+          "name": "gray-matter",
+          "options": {
+            "async": false,
+            "defer": false,
+            "delay": 0.005,
+            "initCount": 1,
+            "maxTime": 5,
+            "minSamples": 5,
+            "minTime": 0.05
+          },
+          "async": false,
+          "defer": false,
+          "delay": 0.005,
+          "initCount": 1,
+          "maxTime": 5,
+          "minSamples": 5,
+          "minTime": 0.05,
+          "events": {
+            "abort": [
+              null
+            ],
+            "complete": [
+              null
+            ],
+            "cycle": [
+              null
+            ],
+            "error": [
+              null
+            ]
+          },
+          "id": 3,
+          "stats": {
+            "moe": 6.536195571051802e-10,
+            "rme": 1.8151035723262308,
+            "sem": 3.334793658699899e-10,
+            "deviation": 3.1104884518530848e-9,
+            "mean": 3.601004191003291e-8,
+            "sample": [
+              4.34694944252849e-8,
+              5.86779663161024e-8,
+              4.011061749595594e-8,
+              3.660934969935652e-8,
+              3.776523572743374e-8,
+              3.737648049494236e-8,
+              3.5565621966198886e-8,
+              3.5396860679153893e-8,
+              3.795765848837978e-8,
+              3.533903969212247e-8,
+              3.777429320045792e-8,
+              3.5479439918994247e-8,
+              3.6798320035353024e-8,
+              3.857693632627781e-8,
+              3.872581571191459e-8,
+              3.8079451749731203e-8,
+              3.856746756116317e-8,
+              3.741698754640954e-8,
+              3.811209320389397e-8,
+              3.866200535594974e-8,
+              3.4194260270060565e-8,
+              3.376958774274199e-8,
+              3.703144734573356e-8,
+              3.607012104769705e-8,
+              3.4677764052632714e-8,
+              3.4848493706489644e-8,
+              3.4853258966096945e-8,
+              3.557166613681919e-8,
+              3.533992903636011e-8,
+              3.378554715283316e-8,
+              3.750841581891071e-8,
+              3.4094441046834926e-8,
+              3.3862533542039356e-8,
+              3.607344898377051e-8,
+              3.483965692824967e-8,
+              3.589336662391965e-8,
+              3.557592287755674e-8,
+              3.69461266353428e-8,
+              3.506694937172662e-8,
+              3.4218601822316094e-8,
+              3.383272619369122e-8,
+              3.406106271109022e-8,
+              3.344199099126132e-8,
+              3.5051063077841234e-8,
+              3.3928710270028776e-8,
+              3.552702588261967e-8,
+              3.659482147560605e-8,
+              3.427243799407197e-8,
+              3.3397886847308216e-8,
+              3.4410652450063516e-8,
+              3.679197948861572e-8,
+              3.383425654567217e-8,
+              3.8565266678002606e-8,
+              3.5737981068979196e-8,
+              3.3589369554997645e-8,
+              3.816240935415146e-8,
+              3.440863065171656e-8,
+              3.5526995208898044e-8,
+              3.361689521923376e-8,
+              3.421568560768977e-8,
+              3.4840905408243894e-8,
+              3.541578096295481e-8,
+              3.8323118317212955e-8,
+              3.380184709149771e-8,
+              3.575671004330996e-8,
+              3.867103700517786e-8,
+              3.454154988980799e-8,
+              3.5567195788364655e-8,
+              3.480344279184212e-8,
+              3.342960814320627e-8,
+              3.5141047107501394e-8,
+              3.558414835412145e-8,
+              3.3808826416819804e-8,
+              3.502167568405828e-8,
+              3.405784087104742e-8,
+              3.4729830258785783e-8,
+              3.603480595158201e-8,
+              3.4296929599135745e-8,
+              3.360373463408246e-8,
+              3.689006661974367e-8,
+              3.6139775751722784e-8,
+              3.357185536804544e-8,
+              3.823777912363118e-8,
+              3.4483847249275696e-8,
+              3.3430153372726824e-8,
+              3.3547070859181906e-8,
+              3.949254153503674e-8
+            ],
+            "variance": 9.675138409111399e-18
+          },
+          "times": {
+            "cycle": 0.05499903726024101,
+            "elapsed": 5.51,
+            "period": 3.601004191003291e-8,
+            "timeStamp": 1508426191194
+          },
+          "running": false,
+          "count": 1527325,
+          "cycles": 6,
+          "hz": 27770031.55115423
+        },
+        "1": {
+          "name": "front-matter",
+          "options": {
+            "async": false,
+            "defer": false,
+            "delay": 0.005,
+            "initCount": 1,
+            "maxTime": 5,
+            "minSamples": 5,
+            "minTime": 0.05
+          },
+          "async": false,
+          "defer": false,
+          "delay": 0.005,
+          "initCount": 1,
+          "maxTime": 5,
+          "minSamples": 5,
+          "minTime": 0.05,
+          "events": {
+            "abort": [
+              null
+            ],
+            "complete": [
+              null
+            ],
+            "cycle": [
+              null
+            ],
+            "error": [
+              null
+            ]
+          },
+          "id": 4,
+          "stats": {
+            "moe": 1.2935780482654905e-9,
+            "rme": 1.1389130370431342,
+            "sem": 6.599888001354544e-10,
+            "deviation": 6.084796084164211e-9,
+            "mean": 1.1358005450740124e-7,
+            "sample": [
+              1.0762477838705928e-7,
+              1.0708572696440458e-7,
+              1.1372879013597896e-7,
+              1.1565026889388992e-7,
+              1.0780735364036896e-7,
+              1.0894070810485277e-7,
+              1.1731561486365125e-7,
+              1.089310980934514e-7,
+              1.1857289425194186e-7,
+              1.1160924945577918e-7,
+              1.0914301945953609e-7,
+              1.0887218082733258e-7,
+              1.12935859000713e-7,
+              1.0518153616504955e-7,
+              1.122420558643378e-7,
+              1.1102156101588201e-7,
+              1.0895219758913568e-7,
+              1.0602619135974915e-7,
+              1.1750003360714672e-7,
+              1.1648086123914642e-7,
+              1.1281775353537e-7,
+              1.0892859805241492e-7,
+              1.0729739269645414e-7,
+              1.0900072102605674e-7,
+              1.0660452739186137e-7,
+              1.0931182951196313e-7,
+              1.0726769823633767e-7,
+              1.1911619721895768e-7,
+              1.0829571030232174e-7,
+              1.1462193385706169e-7,
+              1.0833772941969623e-7,
+              1.0908874119849196e-7,
+              1.1471667953243293e-7,
+              1.1786826202168374e-7,
+              1.053285006935293e-7,
+              1.1733505103194309e-7,
+              1.1379701283385645e-7,
+              1.227862748412826e-7,
+              1.1101961435289948e-7,
+              1.156507219426153e-7,
+              1.1376083524961962e-7,
+              1.1159204997484556e-7,
+              1.0675100363160864e-7,
+              1.2759515812671728e-7,
+              1.1703954033570484e-7,
+              1.1252939810618637e-7,
+              1.0732299319506199e-7,
+              1.1642984966403037e-7,
+              1.0228707362325527e-7,
+              1.0862939998528449e-7,
+              1.1788332395385695e-7,
+              1.1289327282742493e-7,
+              1.1348613859220356e-7,
+              1.406863668813672e-7,
+              1.0837492120245549e-7,
+              1.0612755159872015e-7,
+              1.122568750236144e-7,
+              1.252203785861583e-7,
+              1.0655629376122305e-7,
+              1.1280415255602331e-7,
+              1.1463043205911655e-7,
+              1.217479631953324e-7,
+              1.1580671981482329e-7,
+              1.1989098595862556e-7,
+              1.1940087418045583e-7,
+              1.1867775035744754e-7,
+              1.154059669378429e-7,
+              1.1877171282495908e-7,
+              1.1680906634106958e-7,
+              1.1538612685957234e-7,
+              1.1323914483038394e-7,
+              1.0866081559684293e-7,
+              1.2176569139998132e-7,
+              1.1773858703325505e-7,
+              1.0596161838722058e-7,
+              1.0952468525725286e-7,
+              1.2141414995098145e-7,
+              1.2145166653078025e-7,
+              1.1778605447520338e-7,
+              1.1526676622831701e-7,
+              1.0876170031678105e-7,
+              1.1393819687355206e-7,
+              1.193231365499303e-7,
+              1.2399380159126297e-7,
+              1.1391151408611751e-7
+            ],
+            "variance": 3.702474338586012e-17
+          },
+          "times": {
+            "cycle": 0.05711611559019137,
+            "elapsed": 5.374,
+            "period": 1.1358005450740124e-7,
+            "timeStamp": 1508426196704
+          },
+          "running": false,
+          "count": 502871,
+          "cycles": 5,
+          "hz": 8804362.740773616
+        },
+        "name": "(38 bytes)",
+        "options": {
+          "name": "empty"
+        },
+        "events": {
+          "start": [
+            null
+          ],
+          "complete": [
+            null,
+            null
+          ]
+        },
+        "length": 2,
+        "running": false
+      }
+    },
+    "results": [
+      {
+        "name": "gray-matter",
+        "file": {
+          "stat": null,
+          "_contents": null,
+          "history": [
+            "/Users/jonschlinkert/dev/utils/gray-matter/benchmark/code/gray-matter.js"
+          ],
+          "_cwd": "/Users/jonschlinkert/dev/utils/gray-matter",
+          "_isVinyl": true,
+          "_symlink": null,
+          "key": "gray-matter"
+        },
+        "runs": 87,
+        "hz": 27770031.55115423,
+        "ops": "27,770,032",
+        "rme": "1.82"
+      },
+      {
+        "name": "front-matter",
+        "file": {
+          "stat": null,
+          "_contents": null,
+          "history": [
+            "/Users/jonschlinkert/dev/utils/gray-matter/benchmark/code/front-matter.js"
+          ],
+          "_cwd": "/Users/jonschlinkert/dev/utils/gray-matter",
+          "_isVinyl": true,
+          "_symlink": null,
+          "key": "front-matter"
+        },
+        "runs": 85,
+        "hz": 8804362.740773616,
+        "ops": "8,804,363",
+        "rme": "1.14"
+      }
+    ],
+    "fastest": [
+      "gray-matter"
+    ]
+  },
+  {
+    "name": "matter",
+    "file": {
+      "stat": null,
+      "_contents": null,
+      "history": [
+        "/Users/jonschlinkert/dev/utils/gray-matter/benchmark/fixtures/matter.js"
+      ],
+      "_cwd": "/Users/jonschlinkert/dev/utils/gray-matter",
+      "_isVinyl": true,
+      "_symlink": null,
+      "key": "matter",
+      "content": [
+        "---\ntitle: autodetect-no-lang\nuser: jonschlinkert\n---\nContent\n"
+      ],
+      "bytes": "(105 bytes)",
+      "suite": {
+        "0": {
+          "name": "gray-matter",
+          "options": {
+            "async": false,
+            "defer": false,
+            "delay": 0.005,
+            "initCount": 1,
+            "maxTime": 5,
+            "minSamples": 5,
+            "minTime": 0.05
+          },
+          "async": false,
+          "defer": false,
+          "delay": 0.005,
+          "initCount": 1,
+          "maxTime": 5,
+          "minSamples": 5,
+          "minTime": 0.05,
+          "events": {
+            "abort": [
+              null
+            ],
+            "complete": [
+              null
+            ],
+            "cycle": [
+              null
+            ],
+            "error": [
+              null
+            ]
+          },
+          "id": 5,
+          "stats": {
+            "moe": 2.806827532077223e-9,
+            "rme": 1.2576795020638445,
+            "sem": 1.4320548633047056e-9,
+            "deviation": 1.3202893477520222e-8,
+            "mean": 2.2317510363103128e-7,
+            "sample": [
+              3.018634501526487e-7,
+              2.340780860810646e-7,
+              2.21602645834422e-7,
+              2.427422096810716e-7,
+              2.161816547688506e-7,
+              2.1684511960737206e-7,
+              2.20643614648042e-7,
+              2.390486366132409e-7,
+              2.2778136475958404e-7,
+              2.252792025603185e-7,
+              2.1683187613687064e-7,
+              2.1765396778295889e-7,
+              2.4129062738448494e-7,
+              2.41956422212802e-7,
+              2.205607757524375e-7,
+              2.322698770665536e-7,
+              2.1916163204747773e-7,
+              2.3781153454853752e-7,
+              2.2941467571004663e-7,
+              2.1731689275116572e-7,
+              2.3224233573548114e-7,
+              2.1930013565069944e-7,
+              2.3025058075455701e-7,
+              2.210269181856719e-7,
+              2.1129557714874255e-7,
+              2.2069416915856886e-7,
+              2.1061869492826258e-7,
+              2.1021995982200897e-7,
+              2.1248208137091667e-7,
+              2.3657480949005825e-7,
+              2.3866146477715475e-7,
+              2.14436891615885e-7,
+              2.2821035149451221e-7,
+              2.1879181677494034e-7,
+              2.103120085220958e-7,
+              2.15726294775603e-7,
+              2.2185169372460041e-7,
+              2.249069866926132e-7,
+              2.191571051715533e-7,
+              2.236497427014876e-7,
+              2.1855935480353466e-7,
+              2.098692873229631e-7,
+              2.3000251636686952e-7,
+              2.097441232348735e-7,
+              2.1531958698031782e-7,
+              2.274943360775712e-7,
+              2.2403051094829285e-7,
+              2.272341856827113e-7,
+              2.1833386316835752e-7,
+              2.105669278498796e-7,
+              2.1447936596869144e-7,
+              2.0984228241236285e-7,
+              2.1870422046427615e-7,
+              2.216975556930693e-7,
+              2.245559021273749e-7,
+              2.1444945812148783e-7,
+              2.2662685748706977e-7,
+              2.1982311031718006e-7,
+              2.1351923228714456e-7,
+              2.1232384354942567e-7,
+              2.1661130797831462e-7,
+              2.3039094780134183e-7,
+              2.26246170782876e-7,
+              2.0956144403132336e-7,
+              2.272625843840226e-7,
+              2.2560168248758906e-7,
+              2.2067570778721723e-7,
+              2.648264877552292e-7,
+              2.2058606235589805e-7,
+              2.1034993664707225e-7,
+              2.2968642170201276e-7,
+              2.227600398811873e-7,
+              2.238826098284183e-7,
+              2.1217242009503312e-7,
+              2.0319481785322665e-7,
+              2.1660499939081345e-7,
+              2.171152905819762e-7,
+              2.2134076270153922e-7,
+              2.2588656946757096e-7,
+              2.3208893717256223e-7,
+              2.4030696097144943e-7,
+              2.1206474840596193e-7,
+              2.2344775210169354e-7,
+              2.0780437802054989e-7,
+              2.2149436299394875e-7
+            ],
+            "variance": 1.7431639617874604e-16
+          },
+          "times": {
+            "cycle": 0.05495240576706883,
+            "elapsed": 5.356,
+            "period": 2.2317510363103128e-7,
+            "timeStamp": 1508426202079
+          },
+          "running": false,
+          "count": 246230,
+          "cycles": 4,
+          "hz": 4480786.5381493
+        },
+        "1": {
+          "name": "front-matter",
+          "options": {
+            "async": false,
+            "defer": false,
+            "delay": 0.005,
+            "initCount": 1,
+            "maxTime": 5,
+            "minSamples": 5,
+            "minTime": 0.05
+          },
+          "async": false,
+          "defer": false,
+          "delay": 0.005,
+          "initCount": 1,
+          "maxTime": 5,
+          "minSamples": 5,
+          "minTime": 0.05,
+          "events": {
+            "abort": [
+              null
+            ],
+            "complete": [
+              null
+            ],
+            "cycle": [
+              null
+            ],
+            "error": [
+              null
+            ]
+          },
+          "id": 6,
+          "stats": {
+            "moe": 5.6094702443866094e-8,
+            "rme": 1.1022171194998613,
+            "sem": 2.861974614482964e-8,
+            "deviation": 2.699981451345725e-7,
+            "mean": 0.000005089260677544135,
+            "sample": [
+              0.000005394419581110452,
+              0.000004960342949980307,
+              0.000005352315576998818,
+              0.000005065856734935014,
+              0.000005080862683643486,
+              0.00000503260930460333,
+              0.000005055773065621939,
+              0.000005190587952987267,
+              0.0000051591892262487755,
+              0.000005098654456415279,
+              0.000004963101958863859,
+              0.0000050022440744368265,
+              0.0000049094589618021545,
+              0.000005056443682664055,
+              0.00000506350499510284,
+              0.000004942040156709109,
+              0.000004899955533790401,
+              0.0000049713212536728695,
+              0.000005082407247796278,
+              0.000005085436671504596,
+              0.000004910502951136914,
+              0.000004981404934687953,
+              0.000004971211804547653,
+              0.000004900023028543783,
+              0.0000049614274794388,
+              0.000004930579100145138,
+              0.000004931839187227866,
+              0.000005109477697145622,
+              0.000005274434252539913,
+              0.000005254255055636188,
+              0.00000513018480890179,
+              0.0000051326068698597,
+              0.000005434611901306241,
+              0.00000494751465892598,
+              0.000005255775616835995,
+              0.000005090052830188679,
+              0.000004968129946782777,
+              0.000004935052636671504,
+              0.0000052269911949685535,
+              0.000005168381519109821,
+              0.0000053323470730527335,
+              0.000005106099951620706,
+              0.000005397476923076923,
+              0.000005134785486211901,
+              0.0000048506640541848084,
+              0.000004988859506531204,
+              0.000004981537106918239,
+              0.000004992973294629898,
+              0.000004987167392356072,
+              0.000005290522883405903,
+              0.000005487573197871311,
+              0.000005146525012094823,
+              0.000005169159108452335,
+              0.000004937488421458896,
+              0.000005126660362794288,
+              0.000004978337610961019,
+              0.000005888549401775376,
+              0.0000070056124083365495,
+              0.000005012790428406021,
+              0.000004972921941335391,
+              0.000004887699729834041,
+              0.000004900447317637978,
+              0.000004970536665380162,
+              0.000005102271034349672,
+              0.0000052103065418757235,
+              0.000004924764280200694,
+              0.0000049061761868004634,
+              0.000004954020648398302,
+              0.000004895793901968352,
+              0.000004942940632228218,
+              0.00000505606399383192,
+              0.000005425961160370085,
+              0.000004984673091750192,
+              0.0000053385676561295295,
+              0.0000049415374903623745,
+              0.000005018928392444102,
+              0.000004930617482652274,
+              0.00000486552833461835,
+              0.000005106354182729376,
+              0.0000048941138203546646,
+              0.000005009292309175019,
+              0.000004939566017733231,
+              0.000005310844545104086,
+              0.000004924729375481881,
+              0.000004937267636854279,
+              0.0000049511730917501926,
+              0.000005145825366229761,
+              0.000004958608899521531,
+              0.000004840555406698565
+            ],
+            "variance": 7.289899837610968e-14
+          },
+          "times": {
+            "cycle": 0.05318277408033621,
+            "elapsed": 5.437,
+            "period": 0.000005089260677544135,
+            "timeStamp": 1508426207435
+          },
+          "running": false,
+          "count": 10450,
+          "cycles": 5,
+          "hz": 196492.19471354695
+        },
+        "name": "(105 bytes)",
+        "options": {
+          "name": "matter"
+        },
+        "events": {
+          "start": [
+            null
+          ],
+          "complete": [
+            null,
+            null
+          ]
+        },
+        "length": 2,
+        "running": false
+      }
+    },
+    "results": [
+      {
+        "name": "gray-matter",
+        "file": {
+          "stat": null,
+          "_contents": null,
+          "history": [
+            "/Users/jonschlinkert/dev/utils/gray-matter/benchmark/code/gray-matter.js"
+          ],
+          "_cwd": "/Users/jonschlinkert/dev/utils/gray-matter",
+          "_isVinyl": true,
+          "_symlink": null,
+          "key": "gray-matter"
+        },
+        "runs": 85,
+        "hz": 4480786.5381493,
+        "ops": "4,480,787",
+        "rme": "1.26"
+      },
+      {
+        "name": "front-matter",
+        "file": {
+          "stat": null,
+          "_contents": null,
+          "history": [
+            "/Users/jonschlinkert/dev/utils/gray-matter/benchmark/code/front-matter.js"
+          ],
+          "_cwd": "/Users/jonschlinkert/dev/utils/gray-matter",
+          "_isVinyl": true,
+          "_symlink": null,
+          "key": "front-matter"
+        },
+        "runs": 89,
+        "hz": 196492.19471354695,
+        "ops": "196,492",
+        "rme": "1.10"
+      }
+    ],
+    "fastest": [
+      "gray-matter"
+    ]
+  },
+  {
+    "name": "no-content",
+    "file": {
+      "stat": null,
+      "_contents": null,
+      "history": [
+        "/Users/jonschlinkert/dev/utils/gray-matter/benchmark/fixtures/no-content.js"
+      ],
+      "_cwd": "/Users/jonschlinkert/dev/utils/gray-matter",
+      "_isVinyl": true,
+      "_symlink": null,
+      "key": "no-content",
+      "content": [
+        "---\ntitle: autodetect-no-lang\nuser: jonschlinkert\n---"
+      ],
+      "bytes": "(94 bytes)",
+      "suite": {
+        "0": {
+          "name": "gray-matter",
+          "options": {
+            "async": false,
+            "defer": false,
+            "delay": 0.005,
+            "initCount": 1,
+            "maxTime": 5,
+            "minSamples": 5,
+            "minTime": 0.05
+          },
+          "async": false,
+          "defer": false,
+          "delay": 0.005,
+          "initCount": 1,
+          "maxTime": 5,
+          "minSamples": 5,
+          "minTime": 0.05,
+          "events": {
+            "abort": [
+              null
+            ],
+            "complete": [
+              null
+            ],
+            "cycle": [
+              null
+            ],
+            "error": [
+              null
+            ]
+          },
+          "id": 7,
+          "stats": {
+            "moe": 2.0314180009840817e-9,
+            "rme": 0.9192479008956571,
+            "sem": 1.0364377556041233e-9,
+            "deviation": 9.777734230920393e-9,
+            "mean": 2.2098696108033494e-7,
+            "sample": [
+              2.3674143098118797e-7,
+              2.2449036707852758e-7,
+              2.17847495868547e-7,
+              2.1550154554873403e-7,
+              2.3043837023510615e-7,
+              2.2518913320990474e-7,
+              2.3116218603904062e-7,
+              2.4374915364418443e-7,
+              2.1765424781973678e-7,
+              2.1996355498987176e-7,
+              2.097012440883964e-7,
+              2.2427343740251314e-7,
+              2.107023546587804e-7,
+              2.310373309707716e-7,
+              2.0981439332493126e-7,
+              2.100467229854794e-7,
+              2.389818482054098e-7,
+              2.3056986402791817e-7,
+              2.085106627235179e-7,
+              2.129011841924656e-7,
+              2.1294843958621894e-7,
+              2.1724653414691973e-7,
+              2.3315873669499244e-7,
+              2.164439944628923e-7,
+              2.2366143305620327e-7,
+              2.339136474872902e-7,
+              2.2399864044230945e-7,
+              2.1660175259345928e-7,
+              2.0949730148397784e-7,
+              2.3721986107792327e-7,
+              2.41093475771034e-7,
+              2.254060133648641e-7,
+              2.1643966447764145e-7,
+              2.1417751291579808e-7,
+              2.1829712515346523e-7,
+              2.2357152921401087e-7,
+              2.1032549047073655e-7,
+              2.1683300923675254e-7,
+              2.2670940072344948e-7,
+              2.2910192150820268e-7,
+              2.1125153465224162e-7,
+              2.474689320468347e-7,
+              2.2025925117210354e-7,
+              2.1913299358123976e-7,
+              2.136168642831835e-7,
+              2.3050066329935815e-7,
+              2.1996287171543222e-7,
+              2.0619046991257633e-7,
+              2.1307348203323913e-7,
+              2.2390477328345544e-7,
+              2.2495351548659804e-7,
+              2.303940863360332e-7,
+              2.210054135115315e-7,
+              2.1992465990458377e-7,
+              2.164097336090901e-7,
+              2.1447070359170423e-7,
+              2.1850919143396258e-7,
+              2.1218179346258743e-7,
+              2.0657501462554485e-7,
+              2.2280787801883608e-7,
+              2.420587328922324e-7,
+              2.1565305735685506e-7,
+              2.4038464358989147e-7,
+              2.3144729448019576e-7,
+              2.2326550101760833e-7,
+              2.1365845438889943e-7,
+              2.420862083171972e-7,
+              2.1449567001474916e-7,
+              2.25628465842143e-7,
+              2.1553817885187413e-7,
+              2.0744944505326995e-7,
+              2.1363251567611216e-7,
+              2.1937619373285103e-7,
+              2.1512538417804437e-7,
+              2.1393193559816417e-7,
+              2.1300393859743085e-7,
+              2.309409539975116e-7,
+              2.1077086921055019e-7,
+              2.1681678930151692e-7,
+              2.3393931840841113e-7,
+              2.1311651821395318e-7,
+              2.1919433435231495e-7,
+              2.1214319850366255e-7,
+              2.143908151578323e-7,
+              2.255556388685184e-7,
+              2.066390250735397e-7,
+              2.2130498174896797e-7,
+              2.1072096108369108e-7,
+              2.1705467481851964e-7
+            ],
+            "variance": 9.560408669051241e-17
+          },
+          "times": {
+            "cycle": 0.05363928111518538,
+            "elapsed": 5.37,
+            "period": 2.2098696108033494e-7,
+            "timeStamp": 1508426212873
+          },
+          "running": false,
+          "count": 242726,
+          "cycles": 5,
+          "hz": 4525153.860260887
+        },
+        "1": {
+          "name": "front-matter",
+          "options": {
+            "async": false,
+            "defer": false,
+            "delay": 0.005,
+            "initCount": 1,
+            "maxTime": 5,
+            "minSamples": 5,
+            "minTime": 0.05
+          },
+          "async": false,
+          "defer": false,
+          "delay": 0.005,
+          "initCount": 1,
+          "maxTime": 5,
+          "minSamples": 5,
+          "minTime": 0.05,
+          "events": {
+            "abort": [
+              null
+            ],
+            "complete": [
+              null
+            ],
+            "cycle": [
+              null
+            ],
+            "error": [
+              null
+            ]
+          },
+          "id": 8,
+          "stats": {
+            "moe": 9.605327054320917e-8,
+            "rme": 1.9144956500395087,
+            "sem": 4.90067706853108e-8,
+            "deviation": 4.597242591208693e-7,
+            "mean": 0.000005017157941373591,
+            "sample": [
+              0.000004931409896033886,
+              0.0000048242467269926834,
+              0.000004818780227185214,
+              0.000004889138637675581,
+              0.000005064062343659804,
+              0.000005066852126226669,
+              0.0000048391535501250725,
+              0.000004865624302482201,
+              0.000004869743313450067,
+              0.000004886382239753704,
+              0.000004795245431059228,
+              0.000004870724619653622,
+              0.000004867586259688068,
+              0.000004833431920390393,
+              0.000005236524638790546,
+              0.0000048813148024112526,
+              0.000005253690037252842,
+              0.0000050372025026268025,
+              0.000005043012704174229,
+              0.00000496299493743433,
+              0.000005061806380743146,
+              0.000004969164485624224,
+              0.000004977660102253361,
+              0.000004807204506722212,
+              0.000004746310641923878,
+              0.000004787698163226662,
+              0.000004983358265480022,
+              0.000004972762734330619,
+              0.000004784170232910434,
+              0.000004955252793031623,
+              0.0000049988017420943,
+              0.000004899693997348987,
+              0.000005117051575393848,
+              0.000004768057858214554,
+              0.0000049874322018004505,
+              0.000005003874437359339,
+              0.0000050496647599399845,
+              0.000004723801481620405,
+              0.000004766697299324831,
+              0.000005044608308327082,
+              0.000004815961646661665,
+              0.000005206587678169542,
+              0.000004778646942985747,
+              0.0000049274480495123784,
+              0.000004894494911772944,
+              0.000004969837083372234,
+              0.000005185276444776398,
+              0.000007218742040892541,
+              0.000007079745121837363,
+              0.000006986244981794417,
+              0.000004752233871720661,
+              0.000004945902996919055,
+              0.0000047758595836056395,
+              0.000004794787414807208,
+              0.000004836982354588741,
+              0.000004736701895247876,
+              0.00000484818130893474,
+              0.000004884697320511624,
+              0.000005122856222574923,
+              0.000004745351694519652,
+              0.000004787151993277939,
+              0.0000050679479040239,
+              0.000005120865278685463,
+              0.000004744719820745028,
+              0.000004840222108113155,
+              0.000004780425543833442,
+              0.000004932322472224816,
+              0.000005534002427411073,
+              0.000006735028008589301,
+              0.000004741038185043414,
+              0.000004819482868079544,
+              0.000004870720100830921,
+              0.000005011172346186164,
+              0.000004785127812529175,
+              0.000004814873494538325,
+              0.0000048876117075903276,
+              0.00000484974353468397,
+              0.000004840974792269629,
+              0.0000049441765474745584,
+              0.000005135711978340024,
+              0.00000496785743628046,
+              0.00000484057903090281,
+              0.000004871835496218841,
+              0.00000492645327233685,
+              0.0000049361604892166935,
+              0.0000051005445803379704,
+              0.000004952831668378302,
+              0.000004921585192792456
+            ],
+            "variance": 2.1134639442423216e-13
+          },
+          "times": {
+            "cycle": 0.05373877871005254,
+            "elapsed": 5.555,
+            "period": 0.000005017157941373591,
+            "timeStamp": 1508426218243
+          },
+          "running": false,
+          "count": 10711,
+          "cycles": 7,
+          "hz": 199316.02945037468
+        },
+        "name": "(94 bytes)",
+        "options": {
+          "name": "no-content"
+        },
+        "events": {
+          "start": [
+            null
+          ],
+          "complete": [
+            null,
+            null
+          ]
+        },
+        "length": 2,
+        "running": false
+      }
+    },
+    "results": [
+      {
+        "name": "gray-matter",
+        "file": {
+          "stat": null,
+          "_contents": null,
+          "history": [
+            "/Users/jonschlinkert/dev/utils/gray-matter/benchmark/code/gray-matter.js"
+          ],
+          "_cwd": "/Users/jonschlinkert/dev/utils/gray-matter",
+          "_isVinyl": true,
+          "_symlink": null,
+          "key": "gray-matter"
+        },
+        "runs": 89,
+        "hz": 4525153.860260887,
+        "ops": "4,525,154",
+        "rme": "0.92"
+      },
+      {
+        "name": "front-matter",
+        "file": {
+          "stat": null,
+          "_contents": null,
+          "history": [
+            "/Users/jonschlinkert/dev/utils/gray-matter/benchmark/code/front-matter.js"
+          ],
+          "_cwd": "/Users/jonschlinkert/dev/utils/gray-matter",
+          "_isVinyl": true,
+          "_symlink": null,
+          "key": "front-matter"
+        },
+        "runs": 88,
+        "hz": 199316.02945037468,
+        "ops": "199,316",
+        "rme": "1.91"
+      }
+    ],
+    "fastest": [
+      "gray-matter"
+    ]
+  },
+  {
+    "name": "no-matter",
+    "file": {
+      "stat": null,
+      "_contents": null,
+      "history": [
+        "/Users/jonschlinkert/dev/utils/gray-matter/benchmark/fixtures/no-matter.js"
+      ],
+      "_cwd": "/Users/jonschlinkert/dev/utils/gray-matter",
+      "_isVinyl": true,
+      "_symlink": null,
+      "key": "no-matter",
+      "content": [
+        "# No front matter here."
+      ],
+      "bytes": "(61 bytes)",
+      "suite": {
+        "0": {
+          "name": "gray-matter",
+          "options": {
+            "async": false,
+            "defer": false,
+            "delay": 0.005,
+            "initCount": 1,
+            "maxTime": 5,
+            "minSamples": 5,
+            "minTime": 0.05
+          },
+          "async": false,
+          "defer": false,
+          "delay": 0.005,
+          "initCount": 1,
+          "maxTime": 5,
+          "minSamples": 5,
+          "minTime": 0.05,
+          "events": {
+            "abort": [
+              null
+            ],
+            "complete": [
+              null
+            ],
+            "cycle": [
+              null
+            ],
+            "error": [
+              null
+            ]
+          },
+          "id": 9,
+          "stats": {
+            "moe": 1.8116880558137103e-9,
+            "rme": 0.8090209299262102,
+            "sem": 9.243306407212808e-10,
+            "deviation": 8.817552332548723e-9,
+            "mean": 2.2393586974059524e-7,
+            "sample": [
+              2.3192005030376446e-7,
+              2.16066396882494e-7,
+              2.3058388510598307e-7,
+              2.24606961306142e-7,
+              2.1538508462412535e-7,
+              2.303847129785471e-7,
+              2.2685508812699174e-7,
+              2.1468532298991004e-7,
+              2.337171819867233e-7,
+              2.1928345450972685e-7,
+              2.2099666373337206e-7,
+              2.1440394884106387e-7,
+              2.162786658350919e-7,
+              2.1389838697275453e-7,
+              2.2680988833545498e-7,
+              2.392825826624975e-7,
+              2.2293979941454327e-7,
+              2.3798219513006452e-7,
+              2.2240254723571287e-7,
+              2.266650422460249e-7,
+              2.2310286241767016e-7,
+              2.1482994727563036e-7,
+              2.1960230939391923e-7,
+              2.1637259247555053e-7,
+              2.28313489621449e-7,
+              2.143236769010711e-7,
+              2.1738528707338169e-7,
+              2.2344923408289536e-7,
+              2.1485934485396846e-7,
+              2.24891994045639e-7,
+              2.2245621132991816e-7,
+              2.0848187080034595e-7,
+              2.1816667636883773e-7,
+              2.1438270075177966e-7,
+              2.1395115927084027e-7,
+              2.263770083494112e-7,
+              2.2910044241900072e-7,
+              2.2518742931275364e-7,
+              2.2292338334109506e-7,
+              2.1375324745525913e-7,
+              2.2150624542611937e-7,
+              2.1451692335839264e-7,
+              2.3732830483667086e-7,
+              2.158599269842326e-7,
+              2.1768285543210698e-7,
+              2.488582263322467e-7,
+              2.3400428697358792e-7,
+              2.191609049630763e-7,
+              2.2288209367307566e-7,
+              2.2927997970860222e-7,
+              2.2705928580932738e-7,
+              2.3148386667553723e-7,
+              2.3975443666422726e-7,
+              2.2753961396447341e-7,
+              2.1371074778790497e-7,
+              2.1336809344022354e-7,
+              2.183128867008183e-7,
+              2.4100392937928284e-7,
+              2.0790993197392058e-7,
+              2.231627428314816e-7,
+              2.1477822915973652e-7,
+              2.2189616043510078e-7,
+              2.1808090779056614e-7,
+              2.2145209899540948e-7,
+              2.359493837735347e-7,
+              2.2350883174772137e-7,
+              2.1442804454128134e-7,
+              2.26040769908855e-7,
+              2.1766942901337238e-7,
+              2.3075697724702281e-7,
+              2.230590654314417e-7,
+              2.272420663961147e-7,
+              2.4734116159936133e-7,
+              2.237359207637549e-7,
+              2.19465167819839e-7,
+              2.365520673940523e-7,
+              2.386265717517131e-7,
+              2.4113828920231524e-7,
+              2.3449482319872264e-7,
+              2.242170347947575e-7,
+              2.3064738290865544e-7,
+              2.2454957670813654e-7,
+              2.3119385769409886e-7,
+              2.3106654164726233e-7,
+              2.313043501763023e-7,
+              2.1626340978644136e-7,
+              2.2491007334841329e-7,
+              2.289668726298982e-7,
+              2.1493740020624044e-7,
+              2.1173549248220346e-7,
+              2.107121781651254e-7
+            ],
+            "variance": 7.774922913723541e-17
+          },
+          "times": {
+            "cycle": 0.05385568092913419,
+            "elapsed": 5.423,
+            "period": 2.2393586974059524e-7,
+            "timeStamp": 1508426223800
+          },
+          "running": false,
+          "count": 240496,
+          "cycles": 3,
+          "hz": 4465564.186561039
+        },
+        "1": {
+          "name": "front-matter",
+          "options": {
+            "async": false,
+            "defer": false,
+            "delay": 0.005,
+            "initCount": 1,
+            "maxTime": 5,
+            "minSamples": 5,
+            "minTime": 0.05
+          },
+          "async": false,
+          "defer": false,
+          "delay": 0.005,
+          "initCount": 1,
+          "maxTime": 5,
+          "minSamples": 5,
+          "minTime": 0.05,
+          "events": {
+            "abort": [
+              null
+            ],
+            "complete": [
+              null
+            ],
+            "cycle": [
+              null
+            ],
+            "error": [
+              null
+            ]
+          },
+          "id": 10,
+          "stats": {
+            "moe": 2.253729225402981e-9,
+            "rme": 1.15939703139827,
+            "sem": 1.1498618496953984e-9,
+            "deviation": 1.0663380116600148e-8,
+            "mean": 1.9438804519664083e-7,
+            "sample": [
+              2.0934776343862976e-7,
+              1.8796359568541455e-7,
+              1.9578518194749007e-7,
+              1.960355042079061e-7,
+              2.0060256030344336e-7,
+              2.0365822159620978e-7,
+              2.0022639983902536e-7,
+              2.0403677904403024e-7,
+              2.0863166782628863e-7,
+              1.9406692105873484e-7,
+              1.9512509421928451e-7,
+              2.088000050733461e-7,
+              1.9655427393169827e-7,
+              2.0266697282872041e-7,
+              1.8395845115750954e-7,
+              1.9520496344135793e-7,
+              1.8613697738499036e-7,
+              1.9422754952231486e-7,
+              1.9028015635961262e-7,
+              1.945809464440785e-7,
+              1.9459527678786984e-7,
+              1.9293896722073487e-7,
+              1.929321569743769e-7,
+              1.8277174864785982e-7,
+              1.8425963613826602e-7,
+              1.979232765377527e-7,
+              2.091774867779041e-7,
+              2.1323299486650803e-7,
+              1.8134379214653403e-7,
+              1.8482676053354422e-7,
+              1.9247777487484023e-7,
+              1.977008416949703e-7,
+              2.1619707454508224e-7,
+              1.824028167124468e-7,
+              2.050322308447313e-7,
+              1.9120386741891977e-7,
+              1.945698952824127e-7,
+              1.8845655243999745e-7,
+              1.8133386763075576e-7,
+              1.83443623383868e-7,
+              1.8966273240172576e-7,
+              1.9664706006962341e-7,
+              2.047295737153913e-7,
+              1.9438313361907654e-7,
+              1.793078682945085e-7,
+              1.8781672303857533e-7,
+              1.9706679541586933e-7,
+              1.9438764925610264e-7,
+              2.154276403589914e-7,
+              1.8782077616703972e-7,
+              1.9152367973223933e-7,
+              1.9699919855386635e-7,
+              1.8975982036308688e-7,
+              1.833980362804426e-7,
+              1.9665774719493854e-7,
+              1.874513695196266e-7,
+              2.0038197205177272e-7,
+              1.98749239155763e-7,
+              2.0057585846531892e-7,
+              1.9747102436819918e-7,
+              1.9815803670411455e-7,
+              1.816163826887635e-7,
+              1.866264660815286e-7,
+              1.7917983462670967e-7,
+              1.82464637513328e-7,
+              1.9492057562897633e-7,
+              1.9354910358073422e-7,
+              1.8939586143102268e-7,
+              1.915674803522126e-7,
+              1.9842013077341318e-7,
+              1.8929818032891067e-7,
+              2.0210415975257558e-7,
+              1.962307776498916e-7,
+              1.9859081408568058e-7,
+              1.9812206342369316e-7,
+              1.8228361307451684e-7,
+              1.8232811628383197e-7,
+              1.8559562276248243e-7,
+              1.8519312733460906e-7,
+              1.9061560242622812e-7,
+              1.8763930334206567e-7,
+              1.887343188413984e-7,
+              1.8663482301103665e-7,
+              1.943291860555434e-7,
+              1.9368414548895276e-7,
+              2.551609988772693e-7
+            ],
+            "variance": 1.137076755111034e-16
+          },
+          "times": {
+            "cycle": 0.055058081145406154,
+            "elapsed": 5.281,
+            "period": 1.9438804519664083e-7,
+            "timeStamp": 1508426229223
+          },
+          "running": false,
+          "count": 283238,
+          "cycles": 3,
+          "hz": 5144349.278210041
+        },
+        "name": "(61 bytes)",
+        "options": {
+          "name": "no-matter"
+        },
+        "events": {
+          "start": [
+            null
+          ],
+          "complete": [
+            null,
+            null
+          ]
+        },
+        "length": 2,
+        "running": false
+      }
+    },
+    "results": [
+      {
+        "name": "gray-matter",
+        "file": {
+          "stat": null,
+          "_contents": null,
+          "history": [
+            "/Users/jonschlinkert/dev/utils/gray-matter/benchmark/code/gray-matter.js"
+          ],
+          "_cwd": "/Users/jonschlinkert/dev/utils/gray-matter",
+          "_isVinyl": true,
+          "_symlink": null,
+          "key": "gray-matter"
+        },
+        "runs": 91,
+        "hz": 4465564.186561039,
+        "ops": "4,465,564",
+        "rme": "0.81"
+      },
+      {
+        "name": "front-matter",
+        "file": {
+          "stat": null,
+          "_contents": null,
+          "history": [
+            "/Users/jonschlinkert/dev/utils/gray-matter/benchmark/code/front-matter.js"
+          ],
+          "_cwd": "/Users/jonschlinkert/dev/utils/gray-matter",
+          "_isVinyl": true,
+          "_symlink": null,
+          "key": "front-matter"
+        },
+        "runs": 86,
+        "hz": 5144349.278210041,
+        "ops": "5,144,349",
+        "rme": "1.16"
+      }
+    ],
+    "fastest": [
+      "front-matter"
+    ]
+  }
+]
