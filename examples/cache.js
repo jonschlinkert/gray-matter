@@ -1,5 +1,5 @@
 // https://github.com/jonschlinkert/gray-matter/issues/43
-var frontMatter = require('gray-matter');
+var frontMatter = require('..');
 
 var docs = [
   {
