@@ -1,8 +1,6 @@
-# gray-matter [![NPM version](https://img.shields.io/npm/v/gray-matter.svg?style=flat)](https://www.npmjs.com/package/gray-matter) [![NPM monthly downloads](https://img.shields.io/npm/dm/gray-matter.svg?style=flat)](https://npmjs.org/package/gray-matter) [![NPM total downloads](https://img.shields.io/npm/dt/gray-matter.svg?style=flat)](https://npmjs.org/package/gray-matter) [![Linux Build Status](https://img.shields.io/travis/jonschlinkert/gray-matter.svg?style=flat&label=Travis)](https://travis-ci.org/jonschlinkert/gray-matter)
+# gray-matter [![NPM version](https://img.shields.io/npm/v/gray-matter.svg?style=flat)](https://www.npmjs.com/package/gray-matter) [![NPM monthly downloads](https://img.shields.io/npm/dm/gray-matter.svg?style=flat)](https://npmjs.org/package/gray-matter)  [![NPM total downloads](https://img.shields.io/npm/dt/gray-matter.svg?style=flat)](https://npmjs.org/package/gray-matter) [![Linux Build Status](https://img.shields.io/travis/jonschlinkert/gray-matter.svg?style=flat&label=Travis)](https://travis-ci.org/jonschlinkert/gray-matter)
 
 > Parse front-matter from a string or file. Fast, reliable and easy to use. Parses YAML front matter by default, but also has support for YAML, JSON, TOML or Coffee Front-Matter, with options to set custom delimiters. Used by metalsmith, assemble, verb and many other projects.
-
-Please consider following this project's author, [Jon Schlinkert](https://github.com/jonschlinkert), and consider starring the project to show your :heart: and support.
 
 ## Install
 
@@ -10,6 +8,12 @@ Install with [npm](https://www.npmjs.com/):
 
 ```sh
 $ npm install --save gray-matter
+```
+
+Install with [yarn](https://yarnpkg.com):
+
+```sh
+$ yarn add gray-matter
 ```
 
 ## Heads up!
@@ -59,7 +63,7 @@ Into an object like this:
 * **simple**: main function takes a string and returns an object
 * **accurate**: better at catching and handling edge cases than front-matter parsers that rely on regex for parsing
 * **fast**: faster than other front-matter parsers that use regex for parsing
-* **flexible**: By default, gray-matter is capable of parsing [YAML](https://github.com/nodeca/js-yaml), [JSON](http://en.wikipedia.org/wiki/Json) and JavaScript front-matter. But other [engines](#optionsengines) may be added.
+* **flexible**: By default, gray-matter is capable of parsing [YAML](https://github.com/nodeca/js-yaml), [JSON](http://en.wikipedia.org/wiki/Json), [HJSON](https://hjson.org/), and JavaScript front-matter. But other [engines](#optionsengines) may be added.
 * **extensible**: Use [custom delimiters](#optionsdelimiters), or add support for [any language](#optionsengines), like [TOML](http://github.com/mojombo/toml), [CoffeeScript](http://coffeescript.org), or [CSON](https://github.com/bevry/cson)
 * **battle-tested**: used by [assemble](https://github.com/assemble/assemble), [metalsmith](https://github.com/segmentio/metalsmith), [phenomic](https://github.com/phenomic/phenomic), [verb](https://github.com/assemble/verb), [generate](https://github.com/generate/generate), [update](https://github.com/update/update) and many others.
 
@@ -168,10 +172,13 @@ Then run any of the [examples](./examples) to see how gray-matter works:
 $ node examples/<example_name>
 ```
 
+* [cache](examples/cache.js)
 * [coffee](examples/coffee.js)
 * [excerpt-separator](examples/excerpt-separator.js)
 * [excerpt-stringify](examples/excerpt-stringify.js)
 * [excerpt](examples/excerpt.js)
+* [hjson-stringify](examples/hjson-stringify.js)
+* [hjson](examples/hjson.js)
 * [javascript](examples/javascript.js)
 * [json-stringify](examples/json-stringify.js)
 * [json](examples/json.js)
@@ -201,7 +208,7 @@ console.log(matter('---\ntitle: Home\n---\nOther stuff'));
 
 ### [.stringify](index.js#L140)
 
-Stringify an object to YAML or the specified language, and append it to the given string. By default, only YAML and JSON can be stringified. See the [engines](#engines) section to learn how to stringify other languages.
+Stringify an object to YAML or the specified language, and append it to the given string. By default, only YAML, HJSON and JSON can be stringified. See the [engines](#engines) section to learn how to stringify other languages.
 
 **Params**
 
@@ -315,7 +322,7 @@ Define custom engines for parsing and/or stringifying front-matter.
 
 **Type**: `Object` Object of engines
 
-**Default**: `JSON`, `YAML` and `JavaScript` are already handled by default.
+**Default**: `JSON`, `HJSON`, `YAML` and `JavaScript` are already handled by default.
 
 **Engine format**
 
@@ -448,26 +455,32 @@ Decrecated, please use [options.engines](#optionsengines) instead.
 
 ## About
 
-<details>
-<summary><strong>Contributing</strong></summary>
+### Related projects
+
+* [assemble](https://www.npmjs.com/package/assemble): Get the rocks out of your socks! Assemble makes you fast at creating web projects… [more](https://github.com/assemble/assemble) | [homepage](https://github.com/assemble/assemble "Get the rocks out of your socks! Assemble makes you fast at creating web projects. Assemble is used by thousands of projects for rapid prototyping, creating themes, scaffolds, boilerplates, e-books, UI components, API documentation, blogs, building websit")
+* [metalsmith](https://www.npmjs.com/package/metalsmith): An extremely simple, pluggable static site generator. | [homepage](https://github.com/segmentio/metalsmith#readme "An extremely simple, pluggable static site generator.")
+* [verb](https://www.npmjs.com/package/verb): Documentation generator for GitHub projects. Verb is extremely powerful, easy to use, and is used… [more](https://github.com/verbose/verb) | [homepage](https://github.com/verbose/verb "Documentation generator for GitHub projects. Verb is extremely powerful, easy to use, and is used on hundreds of projects of all sizes to generate everything from API docs to readmes.")
+
+### Contributing
 
 Pull requests and stars are always welcome. For bugs and feature requests, [please create an issue](../../issues/new).
 
-</details>
+### Contributors
 
-<details>
-<summary><strong>Running Tests</strong></summary>
+| **Commits** | **Contributor** |  
+| --- | --- |  
+| 172 | [jonschlinkert](https://github.com/jonschlinkert) |  
+| 7   | [RobLoach](https://github.com/RobLoach) |  
+| 5   | [heymind](https://github.com/heymind) |  
+| 2   | [doowb](https://github.com/doowb) |  
+| 2   | [onokumus](https://github.com/onokumus) |  
+| 2   | [moozzyk](https://github.com/moozzyk) |  
+| 1   | [Ajedi32](https://github.com/Ajedi32) |  
+| 1   | [caesar](https://github.com/caesar) |  
+| 1   | [ianstormtaylor](https://github.com/ianstormtaylor) |  
+| 1   | [zachwhaley](https://github.com/zachwhaley) |  
 
-Running and reviewing unit tests is a great way to get familiarized with a library and its API. You can install dependencies and run tests with the following command:
-
-```sh
-$ npm install && npm test
-```
-
-</details>
-
-<details>
-<summary><strong>Building docs</strong></summary>
+### Building docs
 
 _(This project's readme.md is generated by [verb](https://github.com/verbose/verb-generate-readme), please don't edit the readme directly. Any changes to the readme must be made in the [.verb.md](.verb.md) readme template.)_
 
@@ -477,30 +490,13 @@ To generate the readme, run the following command:
 $ npm install -g verbose/verb#dev verb-generate-readme && verb
 ```
 
-</details>
+### Running tests
 
-### Related projects
+Running and reviewing unit tests is a great way to get familiarized with a library and its API. You can install dependencies and run tests with the following command:
 
-You might also be interested in these projects:
-
-* [assemble](https://www.npmjs.com/package/assemble): Get the rocks out of your socks! Assemble makes you fast at creating web projects… [more](https://github.com/assemble/assemble) | [homepage](https://github.com/assemble/assemble "Get the rocks out of your socks! Assemble makes you fast at creating web projects. Assemble is used by thousands of projects for rapid prototyping, creating themes, scaffolds, boilerplates, e-books, UI components, API documentation, blogs, building websit")
-* [metalsmith](https://www.npmjs.com/package/metalsmith): An extremely simple, pluggable static site generator. | [homepage](https://github.com/segmentio/metalsmith#readme "An extremely simple, pluggable static site generator.")
-* [verb](https://www.npmjs.com/package/verb): Documentation generator for GitHub projects. Verb is extremely powerful, easy to use, and is used… [more](https://github.com/verbose/verb) | [homepage](https://github.com/verbose/verb "Documentation generator for GitHub projects. Verb is extremely powerful, easy to use, and is used on hundreds of projects of all sizes to generate everything from API docs to readmes.")
-
-### Contributors
-
-| **Commits** | **Contributor** | 
-| --- | --- |
-| 163 | [jonschlinkert](https://github.com/jonschlinkert) |
-| 7 | [RobLoach](https://github.com/RobLoach) |
-| 5 | [heymind](https://github.com/heymind) |
-| 2 | [doowb](https://github.com/doowb) |
-| 2 | [onokumus](https://github.com/onokumus) |
-| 2 | [moozzyk](https://github.com/moozzyk) |
-| 1 | [Ajedi32](https://github.com/Ajedi32) |
-| 1 | [caesar](https://github.com/caesar) |
-| 1 | [ianstormtaylor](https://github.com/ianstormtaylor) |
-| 1 | [zachwhaley](https://github.com/zachwhaley) |
+```sh
+$ npm install && npm test
+```
 
 ### Author
 
@@ -516,4 +512,4 @@ Released under the [MIT License](LICENSE).
 
 ***
 
-_This file was generated by [verb-generate-readme](https://github.com/verbose/verb-generate-readme), v0.6.0, on October 19, 2017._
+_This file was generated by [verb-generate-readme](https://github.com/verbose/verb-generate-readme), v0.6.0, on November 26, 2017._
