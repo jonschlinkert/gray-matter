@@ -13,6 +13,7 @@
     "Osman Nuri Okumuş (http://onokumus.com)",
     "Pawel Kadluczka (http://blog.3d-logic.com)",
     "Rob Loach (http://robloach.net)",
+    "Remi Barraquand (https://github.com/barraq)",
     "(https://github.com/heymind)",
     "Zach Whaley (http://zachwhaleys.website)"
   ],
@@ -38,6 +39,7 @@
   },
   "dependencies": {
     "extend-shallow": "^2.0.1",
+    "hjson": "^3.1.0",
     "js-yaml": "^3.10.0",
     "kind-of": "^5.0.2",
     "strip-bom-string": "^1.0.0"
@@ -75,6 +77,7 @@
     "jekyll",
     "js",
     "JSON",
+    "HJSON",
     "markdown",
     "matter",
     "parse",
@@ -114,6 +117,7 @@
       "coffe-script",
       "generate",
       "js-yaml",
+      "hjson",
       "toml",
       "update"
     ]

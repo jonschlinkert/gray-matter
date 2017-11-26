@@ -118,7 +118,7 @@ matter.engines = engines;
 
 /**
  * Stringify an object to YAML or the specified language, and
- * append it to the given string. By default, only YAML and JSON
+ * append it to the given string. By default, only YAML, HJSON and JSON
  * can be stringified. See the [engines](#engines) section to learn
  * how to stringify other languages.
  *
