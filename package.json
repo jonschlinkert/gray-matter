@@ -45,7 +45,7 @@
   "devDependencies": {
     "ansi-magenta": "^0.1.1",
     "benchmarked": "^2.0.0",
-    "coffee-script": "^1.12.7",
+    "coffeescript": "1.12.7",
     "delimiter-regex": "^2.0.0",
     "front-matter": "^2.2.0",
     "gulp-format-md": "^1.0.0",
