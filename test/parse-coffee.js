@@ -12,7 +12,7 @@ var assert = require('assert');
 var extend = require('extend-shallow');
 var matter = require('../');
 var fixture = path.join.bind(path, __dirname, 'fixtures');
-var coffee = require('coffeescript);
+var coffee = require('coffeescript');
 var defaults = {
   engines: {
     coffee: {
