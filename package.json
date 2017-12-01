@@ -59,6 +59,7 @@
     "assemble",
     "coffee",
     "coffee-script",
+    "coffeescript",
     "data",
     "docs",
     "documentation",

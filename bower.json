@@ -57,7 +57,8 @@
   "keywords": [
     "assemble",
     "coffee",
-    "coffeescript",
+    "coffee-script",
+    "coffeescript",    
     "data",
     "docs",
     "documentation",
