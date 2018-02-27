@@ -1,6 +1,6 @@
 var path = require('path');
 var matter = require('..');
-var coffee = require('coffee-script');
+var coffee = require('coffeescript');
 var magenta = require('ansi-magenta');
 
 var fixture = path.join.bind(path, __dirname, 'fixtures');
