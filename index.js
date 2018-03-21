@@ -1,15 +1,14 @@
 'use strict';
 
-var fs = require('fs');
-var extend = require('extend-shallow');
-var parse = require('./lib/parse');
-var defaults = require('./lib/defaults');
-var stringify = require('./lib/stringify');
-var excerpt = require('./lib/excerpt');
-var engines = require('./lib/engines');
-var toFile = require('./lib/to-file');
-var utils = require('./lib/utils');
-var cache = {};
+const fs = require('fs');
+const sections = require('section-matter');
+const defaults = require('./lib/defaults');
+const stringify = require('./lib/stringify');
+const excerpt = require('./lib/excerpt');
+const engines = require('./lib/engines');
+const toFile = require('./lib/to-file');
+const parse = require('./lib/parse');
+const utils = require('./lib/utils');
 
 /**
  * Takes a string or object with `content` property, extracts
@@ -17,7 +16,7 @@ var cache = {};
  * with `data`, `content` and other [useful properties](#returned-object).
  *
  * ```js
- * var matter = require('gray-matter');
+ * const matter = require('gray-matter');
  * console.log(matter('---\ntitle: Home\n---\nOther stuff'));
  * //=> { data: { title: 'Home'}, content: 'Other stuff' }
  * ```
@@ -28,36 +27,45 @@ var cache = {};
  */
 
 function matter(input, options) {
-  var file = {data: {}, content: input, excerpt: '', orig: input};
-  if (input === '') return file;
+  if (input === '') {
+    return { data: {}, content: input, excerpt: '', orig: input };
+  }
 
-  file = toFile(input);
-  var cached = cache[file.content];
+  let file = toFile(input);
+  const cached = matter.cache[file.content];
 
   if (!options) {
     if (cached) {
-      file = extend({}, cached);
+      file = Object.assign({}, cached);
       file.orig = cached.orig;
       return file;
     }
-    cache[file.content] = file;
+
+    // only cache if there are no options passed. if we cache when options
+    // are passed, we would need to also cache options values, which would
+    // negate any performance benefits of caching
+    matter.cache[file.content] = file;
   }
 
   return parseMatter(file, options);
 }
 
+/**
+ * Parse front matter
+ */
+
 function parseMatter(file, options) {
-  var opts = defaults(options);
-  var open = opts.delimiters[0];
-  var close = '\n' + opts.delimiters[1];
-  var str = file.content;
+  const opts = defaults(options);
+  const open = opts.delimiters[0];
+  const close = '\n' + opts.delimiters[1];
+  let str = file.content;
 
   if (opts.language) {
     file.language = opts.language;
   }
 
   // get the length of the opening delimiter
-  var openLen = open.length;
+  const openLen = open.length;
   if (!utils.startsWith(str, open, openLen)) {
     excerpt(file, opts);
     return file;
@@ -72,17 +80,17 @@ function parseMatter(file, options) {
 
   // strip the opening delimiter
   str = str.slice(openLen);
-  var len = str.length;
+  const len = str.length;
 
   // use the language defined after first delimiter, if it exists
-  var language = matter.language(str, opts);
+  const language = matter.language(str, opts);
   if (language.name) {
     file.language = language.name;
     str = str.slice(language.raw.length);
   }
 
   // get the index of the closing delimiter
-  var closeIndex = str.indexOf(close);
+  let closeIndex = str.indexOf(close);
   if (closeIndex === -1) {
     closeIndex = len;
   }
@@ -90,8 +98,16 @@ function parseMatter(file, options) {
   // get the raw front-matter block
   file.matter = str.slice(0, closeIndex);
 
-  // create file.data by parsing the raw file.matter block
-  file.data = parse(file.language, file.matter, opts);
+  const block = file.matter.replace(/^\s*#[^\n]+/gm, '').trim();
+  if (block === '') {
+    file.isEmpty = true;
+    file.empty = file.content;
+    file.data = {};
+  } else {
+
+    // create file.data by parsing the raw file.matter block
+    file.data = parse(file.language, file.matter, opts);
+  }
 
   // update file.content
   if (closeIndex === len) {
@@ -107,6 +123,10 @@ function parseMatter(file, options) {
   }
 
   excerpt(file, opts);
+
+  if (opts.sections === true || typeof opts.section === 'function') {
+    sections(file, opts.section);
+  }
   return file;
 }
 
@@ -138,9 +158,7 @@ matter.engines = engines;
  */
 
 matter.stringify = function(file, data, options) {
-  if (typeof file === 'string') {
-    file = matter(file, options);
-  }
+  if (typeof file === 'string') file = matter(file, options);
   return stringify(file, data, options);
 };
 
@@ -149,7 +167,7 @@ matter.stringify = function(file, data, options) {
  * front matter. Returns the same object as the [main function](#matter).
  *
  * ```js
- * var file = matter.read('./content/blog-post.md');
+ * const file = matter.read('./content/blog-post.md');
  * ```
  * @param {String} `filepath` file path of the file to read.
  * @param {Object} `options` [Options](#options) to pass to gray-matter.
@@ -158,8 +176,8 @@ matter.stringify = function(file, data, options) {
  */
 
 matter.read = function(filepath, options) {
-  var str = fs.readFileSync(filepath, 'utf8');
-  var file = matter(str, options);
+  const str = fs.readFileSync(filepath, 'utf8');
+  const file = matter(str, options);
   file.path = filepath;
   return file;
 };
@@ -173,8 +191,7 @@ matter.read = function(filepath, options) {
  */
 
 matter.test = function(str, options) {
-  var opts = defaults(options);
-  return utils.startsWith(str, opts.delimiters[0]);
+  return utils.startsWith(str, defaults(options).delimiters[0]);
 };
 
 /**
@@ -186,14 +203,14 @@ matter.test = function(str, options) {
  */
 
 matter.language = function(str, options) {
-  var opts = defaults(options);
-  var open = opts.delimiters[0];
+  const opts = defaults(options);
+  const open = opts.delimiters[0];
 
   if (matter.test(str)) {
     str = str.slice(open.length);
   }
 
-  var language = str.slice(0, str.search(/\r?\n/));
+  const language = str.slice(0, str.search(/\r?\n/));
   return {
     raw: language,
     name: language ? language.trim() : ''
@@ -204,4 +221,6 @@ matter.language = function(str, options) {
  * Expose `matter`
  */
 
+matter.cache = {};
+matter.clearCache = () => (matter.cache = {});
 module.exports = matter;

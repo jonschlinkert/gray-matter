@@ -28,26 +28,26 @@
   ],
   "main": "index.js",
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=6.0"
   },
   "scripts": {
     "test": "mocha"
   },
-  "browser": {
-    "fs": false
-  },
   "dependencies": {
-    "extend-shallow": "^2.0.1",
-    "js-yaml": "^3.10.0",
-    "kind-of": "^5.0.2",
+    "define-property": "^2.0.2",
+    "js-yaml": "^3.11.0",
+    "kind-of": "^6.0.2",
+    "section-matter": "^1.0.0",
     "strip-bom-string": "^1.0.0"
   },
   "devDependencies": {
+    "ansi-green": "^0.1.1",
     "ansi-magenta": "^0.1.1",
     "benchmarked": "^2.0.0",
-    "coffeescript": "1.12.7",
+    "coffeescript": "^2.2.3",
     "delimiter-regex": "^2.0.0",
-    "front-matter": "^2.2.0",
+    "extend-shallow": "^3.0.2",
+    "front-matter": "^2.3.0",
     "gulp-format-md": "^1.0.0",
     "minimist": "^1.2.0",
     "mocha": "^3.5.3",
@@ -87,7 +87,15 @@
     "yaml",
     "yfm"
   ],
+  "browser": {
+    "fs": false
+  },
   "typings": "gray-matter.d.ts",
+  "eslintConfig": {
+    "rules": {
+      "no-console": 0
+    }
+  },
   "verb": {
     "toc": false,
     "layout": "default",

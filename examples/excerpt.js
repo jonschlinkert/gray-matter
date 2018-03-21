@@ -30,7 +30,7 @@ const file2 = matter([
   'in the',
   'excerpt',
   'but not this...'
-].join('\n'), {excerpt: firstFourLines });
+].join('\n'), { excerpt: firstFourLines });
 
 console.log(green('/* excerpt: function(file, options) { ... } */'));
 console.log(file2);
