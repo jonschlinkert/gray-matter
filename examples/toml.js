@@ -1,21 +1,20 @@
-var path = require('path');
-var matter = require('..');
-var toml = require('toml');
-var magenta = require('ansi-magenta');
-var fixture = path.join.bind(path, __dirname, 'fixtures');
+const matter = require('..');
+const toml = require('toml');
 
 /**
  * Parse TOML front-matter
  */
 
-var file = matter([
+const str = [
   '---toml',
   'title = "TOML"',
   'description = "Front matter"',
   'categories = "front matter toml"',
   '---',
   'This is content'
-].join('\n'), {
+].join('\n');
+
+const file = matter(str, {
   engines: {
     toml: toml.parse.bind(toml)
   }

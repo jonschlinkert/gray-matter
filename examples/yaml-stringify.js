@@ -1,25 +1,22 @@
-var path = require('path');
-var matter = require('..');
-var magenta = require('ansi-magenta');
-var fixture = path.join.bind(path, __dirname, 'fixtures');
+const matter = require('..');
 
 /**
  * Stringify back to YAML
  */
 
-var file = matter([
+const file = matter([
   '---',
   'foo: bar',
   '---',
   'This is content'
 ].join('\n'));
 
-var str = file.stringify();
-console.log(str);
+const str1 = file.stringify();
+console.log(str1);
 
 /**
  * custom data
  */
 
-var str = file.stringify({baz: ['one', 'two', 'three']});
-console.log(str);
+const str2 = file.stringify({baz: ['one', 'two', 'three']});
+console.log(str2);

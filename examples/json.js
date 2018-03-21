@@ -1,8 +1,6 @@
-var path = require('path');
-var matter = require('..');
-var magenta = require('ansi-magenta');
+const matter = require('..');
 
-var file = matter([
+const file1 = matter([
   '---json',
   '{',
   '  "name": "gray-matter"',
@@ -10,9 +8,9 @@ var file = matter([
   '---',
   'This is content'
 ].join('\n'));
-console.log(file);
+console.log(file1);
 
-var file = matter([
+const file2 = matter([
   '---json',
   '{',
   '  "name": "gray-matter"',
@@ -20,4 +18,4 @@ var file = matter([
   '---',
   'This is content'
 ].join('\n'));
-console.log(file);
+console.log(file2);

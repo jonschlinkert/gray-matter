@@ -3,16 +3,16 @@
  * the list of links to examples in the readme.
  */
 
-var fs = require('fs');
-var path = require('path');
+const fs = require('fs');
+const path = require('path');
 
 module.exports = function() {
-  var files = fs.readdirSync(__dirname);
-  var links = [];
-  for (var i = 0; i < files.length; i++) {
-    var name = files[i];
-    var ext = path.extname(name);
-    var stem = path.basename(name, ext);
+  const files = fs.readdirSync(__dirname);
+  const links = [];
+  for (let i = 0; i < files.length; i++) {
+    const name = files[i];
+    const ext = path.extname(name);
+    const stem = path.basename(name, ext);
     if (stem !== 'helper' && ext === '.js') {
       links.push('- [' + stem + '](examples/' + name + ')');
     }

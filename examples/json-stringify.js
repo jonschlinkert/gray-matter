@@ -1,9 +1,7 @@
-var path = require('path');
-var matter = require('..');
-var magenta = require('ansi-magenta');
-var fixture = path.join.bind(path, __dirname, 'fixtures');
+const matter = require('..');
+const green = require('ansi-green');
 
-var file = matter([
+const file1 = matter([
   '---json',
   '{',
   '  "name": "gray-matter"',
@@ -12,15 +10,15 @@ var file = matter([
   'This is content'
 ].join('\n'));
 
-console.log(magenta('/* stringified to YAML, from JSON front-matter */'));
-console.log(file.stringify({}, {language: 'yaml'}));
+console.log(green('/* stringified to YAML, from JSON front-matter */'));
+console.log(file1.stringify({}, {language: 'yaml'}));
 
-var file = matter([
+const file2 = matter([
   '---',
   'title: Home',
   '---',
   'This is content'
 ].join('\n'));
 
-console.log(magenta('/* stringified JSON, from YAML front-matter */'));
-console.log(file.stringify({}, {language: 'json', spaces: 2}));
+console.log(green('/* stringified JSON, from YAML front-matter */'));
+console.log(file2.stringify({}, {language: 'json', spaces: 2}));

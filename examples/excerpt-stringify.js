@@ -1,9 +1,7 @@
-var path = require('path');
-var matter = require('..');
-var fixture = path.join.bind(path, __dirname, 'fixtures');
-var magenta = require('ansi-magenta');
+const matter = require('..');
+const magenta = require('ansi-magenta');
 
-var file = matter([
+const file = matter([
   '---',
   'foo: bar',
   '---',
