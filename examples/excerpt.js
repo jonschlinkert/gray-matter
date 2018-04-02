@@ -1,10 +1,8 @@
-var path = require('path');
-var matter = require('..');
-var fixture = path.join.bind(path, __dirname, 'fixtures');
-var magenta = require('ansi-magenta');
+const matter = require('..');
+const green = require('ansi-green');
 
 // excerpt as a boolean
-var file1 = matter([
+const file1 = matter([
   '---',
   'foo: bar',
   '---',
@@ -13,7 +11,7 @@ var file1 = matter([
   'This is content'
 ].join('\n'), {excerpt: true});
 
-console.log(magenta('/* excerpt: true */'));
+console.log(green('/* excerpt: true */'));
 console.log(file1);
 
 // excerpt as a function
@@ -23,16 +21,16 @@ function firstFourLines(file, options) {
   file.excerpt = file.content.split('\n').slice(0, 4).join(' ');
 }
 
-var file2 =  matter([
-'---',
-'foo: bar',
-'---',
-'Only this',
-'will be',
-'in the',
-'excerpt',
-'but not this...'
-].join('\n'), {excerpt: firstFourLines });
+const file2 = matter([
+  '---',
+  'foo: bar',
+  '---',
+  'Only this',
+  'will be',
+  'in the',
+  'excerpt',
+  'but not this...'
+].join('\n'), { excerpt: firstFourLines });
 
-console.log(magenta('/* excerpt: function(file, options) { ... } */'));
+console.log(green('/* excerpt: function(file, options) { ... } */'));
 console.log(file2);

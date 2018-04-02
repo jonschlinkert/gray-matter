@@ -1,9 +1,7 @@
-var path = require('path');
-var matter = require('..');
-var fixture = path.join.bind(path, __dirname, 'fixtures');
-var magenta = require('ansi-magenta');
+const matter = require('..');
+const green = require('ansi-green');
 
-var file = matter([
+const file = matter([
   '---',
   'foo: bar',
   '---',
@@ -12,9 +10,9 @@ var file = matter([
   'This is content'
 ].join('\n'), {excerpt_separator: '<!-- sep -->'});
 
-console.log(magenta('/* file object, with excerpt */'));
+console.log(green('/* file object, with excerpt */'));
 console.log(file);
 
 console.log();
-console.log(magenta('/* stringified, with excerpt */'));
+console.log(green('/* stringified, with excerpt */'));
 console.log(file.stringify());

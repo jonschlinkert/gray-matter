@@ -1,10 +1,8 @@
-var path = require('path');
-var matter = require('..');
-var fixture = path.join.bind(path, __dirname, 'fixtures');
-var magenta = require('ansi-magenta');
+const matter = require('..');
+const green = require('ansi-green');
 
-console.log(magenta('/* excerpt with custom separator */'));
-var file = matter([
+console.log(green('/* excerpt with custom separator */'));
+const file = matter([
   '---',
   'foo: bar',
   '---',

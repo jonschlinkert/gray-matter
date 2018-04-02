@@ -24,9 +24,9 @@ Please see the [changelog](CHANGELOG.md) to learn about breaking changes that we
 Add the HTML in the following example to `example.html`, then add the following code to `example.js` and run `$ node example` (without the `$`):
 
 ```js
-var fs = require('fs');
-var matter = require('gray-matter');
-var str = fs.readFileSync('example.html', 'utf8');
+const fs = require('fs');
+const matter = require('gray-matter');
+const str = fs.readFileSync('example.html', 'utf8');
 console.log(matter(str));
 ```
 
@@ -85,10 +85,10 @@ Some libraries met most of the requirements, but _none met all of them_.
 * Have no problem with complex content, including **non-front-matter** fenced code blocks that contain examples of YAML front matter. Other parsers fail on this.
 * Support stringifying back to front-matter. This is useful for linting, updating properties, etc.
 * Allow custom delimiters, when it's necessary for avoiding delimiter collision.
-* Should return an object with at least these three properties (for debugging):
+* Should return an object with at least these three properties:
   - `data`: the parsed YAML front matter, as a JSON object
   - `content`: the contents as a string, without the front matter
-  - `orig`: the "original" content
+  - `orig`: the "original" content (for debugging)
 
 </details>
 
@@ -97,7 +97,7 @@ Some libraries met most of the requirements, but _none met all of them_.
 Using Node's `require()` system:
 
 ```js
-var matter = require('gray-matter');
+const matter = require('gray-matter');
 ```
 
 Or with [typescript](https://www.typescriptlang.org)
@@ -138,6 +138,7 @@ gray-matter returns a `file` object with the following properties.
 * `file.data` **{Object}**: the object created by parsing front-matter
 * `file.content` **{String}**: the input string, with `matter` stripped
 * `file.excerpt` **{String}**: an excerpt, if [defined on the options](#optionsexcerpt)
+* `file.empty` **{String}**: when the front-matter is "empty" (either all whitespace, nothing at all, or just comments and no data), the original string is set on this property. See [#65](https://github.com/jonschlinkert/gray-matter/issues/65) for details regarding use case.
 
 **Non-enumerable**
 
@@ -146,7 +147,7 @@ In addition, the following non-enumberable properties are added to the object to
 * `file.orig` **{Buffer}**: the original input string (or buffer)
 * `file.language` **{String}**: the front-matter language that was parsed. `yaml` is the default
 * `file.matter` **{String}**: the _raw_, un-parsed front-matter string
-* `file.stringify` **{Function}**: [stringify](#stringify) the file by converting `file.data` to a string in the given language, wrapping it in delimiters and appending it to `file.content`.
+* `file.stringify` **{Function}**: [stringify](#stringify) the file by converting `file.data` to a string in the given language, wrapping it in delimiters and prepending it to `file.content`.
 
 ## Run the examples
 
@@ -168,7 +169,8 @@ Then run any of the [examples](./examples) to see how gray-matter works:
 $ node examples/<example_name>
 ```
 
-* [cache](examples/cache.js)
+**Links to examples**
+
 * [coffee](examples/coffee.js)
 * [excerpt-separator](examples/excerpt-separator.js)
 * [excerpt-stringify](examples/excerpt-stringify.js)
@@ -176,13 +178,16 @@ $ node examples/<example_name>
 * [javascript](examples/javascript.js)
 * [json-stringify](examples/json-stringify.js)
 * [json](examples/json.js)
+* [restore-empty](examples/restore-empty.js)
+* [sections-excerpt](examples/sections-excerpt.js)
+* [sections](examples/sections.js)
 * [toml](examples/toml.js)
 * [yaml-stringify](examples/yaml-stringify.js)
 * [yaml](examples/yaml.js)
 
 ## API
 
-### [matter](index.js#L30)
+### [matter](index.js#L29)
 
 Takes a string or object with `content` property, extracts and parses front-matter from the string, then returns an object with `data`, `content` and other [useful properties](#returned-object).
 
@@ -195,12 +200,12 @@ Takes a string or object with `content` property, extracts and parses front-matt
 **Example**
 
 ```js
-var matter = require('gray-matter');
+const matter = require('gray-matter');
 console.log(matter('---\ntitle: Home\n---\nOther stuff'));
 //=> { data: { title: 'Home'}, content: 'Other stuff' }
 ```
 
-### [.stringify](index.js#L140)
+### [.stringify](index.js#L160)
 
 Stringify an object to YAML or the specified language, and append it to the given string. By default, only YAML and JSON can be stringified. See the [engines](#engines) section to learn how to stringify other languages.
 
@@ -222,7 +227,7 @@ console.log(matter.stringify('foo bar baz', {title: 'Home'}));
 // foo bar baz
 ```
 
-### [.read](index.js#L160)
+### [.read](index.js#L178)
 
 Synchronously read a file from the file system and parse front matter. Returns the same object as the [main function](#matter).
 
@@ -235,10 +240,10 @@ Synchronously read a file from the file system and parse front matter. Returns t
 **Example**
 
 ```js
-var file = matter.read('./content/blog-post.md');
+const file = matter.read('./content/blog-post.md');
 ```
 
-### [.test](index.js#L175)
+### [.test](index.js#L193)
 
 Returns true if the given `string` has front matter.
 
@@ -263,14 +268,8 @@ If set to `excerpt: true`, it will look for the frontmatter delimiter, `---` by 
 **Example**
 
 ```js
-var file = matter([
-  '---',
-  'foo: bar',
-  '---',
-  'This is an excerpt.',
-  '---',
-  'This is content'
-].join('\n'), {excerpt: true});
+const str = '---\nfoo: bar\n---\nThis is an excerpt.\n---\nThis is content';
+const file = matter(str, { excerpt: true });
 ```
 
 Results in:
@@ -293,7 +292,7 @@ function firstFourLines(file, options) {
   file.excerpt = file.content.split('\n').slice(0, 4).join(' ');
 }
 
-var file =  matter([
+const file =  matter([
   '---',
   'foo: bar',
   '---',
@@ -365,13 +364,13 @@ Engines may either be an object with `parse` and (optionally) `stringify` method
 **Examples**
 
 ```js
-var toml = require('toml');
+const toml = require('toml');
 
 /**
  * defined as a function
  */
 
-var file = matter(str, {
+const file = matter(str, {
   engines: {
     toml: toml.parse.bind(toml),
   }
@@ -381,7 +380,7 @@ var file = matter(str, {
  * Or as an object
  */
 
-var file = matter(str, {
+const file = matter(str, {
   engines: {
     toml: {
       parse: toml.parse.bind(toml),
@@ -489,33 +488,26 @@ Decrecated, please use [options.engines](#optionsengines) instead.
 
 ## About
 
-### Related projects
-
-* [assemble](https://www.npmjs.com/package/assemble): Get the rocks out of your socks! Assemble makes you fast at creating web projects… [more](https://github.com/assemble/assemble) | [homepage](https://github.com/assemble/assemble "Get the rocks out of your socks! Assemble makes you fast at creating web projects. Assemble is used by thousands of projects for rapid prototyping, creating themes, scaffolds, boilerplates, e-books, UI components, API documentation, blogs, building websit")
-* [metalsmith](https://www.npmjs.com/package/metalsmith): An extremely simple, pluggable static site generator. | [homepage](https://github.com/segmentio/metalsmith#readme "An extremely simple, pluggable static site generator.")
-* [verb](https://www.npmjs.com/package/verb): Documentation generator for GitHub projects. Verb is extremely powerful, easy to use, and is used… [more](https://github.com/verbose/verb) | [homepage](https://github.com/verbose/verb "Documentation generator for GitHub projects. Verb is extremely powerful, easy to use, and is used on hundreds of projects of all sizes to generate everything from API docs to readmes.")
-
-### Contributing
+<details>
+<summary><strong>Contributing</strong></summary>
 
 Pull requests and stars are always welcome. For bugs and feature requests, [please create an issue](../../issues/new).
 
-### Contributors
+</details>
 
-| **Commits** | **Contributor** |  
-| --- | --- |  
-| 172 | [jonschlinkert](https://github.com/jonschlinkert) |  
-| 7   | [RobLoach](https://github.com/RobLoach) |  
-| 5   | [heymind](https://github.com/heymind) |  
-| 3   | [doowb](https://github.com/doowb) |  
-| 2   | [reccanti](https://github.com/reccanti) |  
-| 2   | [onokumus](https://github.com/onokumus) |  
-| 2   | [moozzyk](https://github.com/moozzyk) |  
-| 1   | [Ajedi32](https://github.com/Ajedi32) |  
-| 1   | [caesar](https://github.com/caesar) |  
-| 1   | [ianstormtaylor](https://github.com/ianstormtaylor) |  
-| 1   | [zachwhaley](https://github.com/zachwhaley) |  
+<details>
+<summary><strong>Running Tests</strong></summary>
 
-### Building docs
+Running and reviewing unit tests is a great way to get familiarized with a library and its API. You can install dependencies and run tests with the following command:
+
+```sh
+$ npm install && npm test
+```
+
+</details>
+
+<details>
+<summary><strong>Building docs</strong></summary>
 
 _(This project's readme.md is generated by [verb](https://github.com/verbose/verb-generate-readme), please don't edit the readme directly. Any changes to the readme must be made in the [.verb.md](.verb.md) readme template.)_
 
@@ -525,20 +517,41 @@ To generate the readme, run the following command:
 $ npm install -g verbose/verb#dev verb-generate-readme && verb
 ```
 
-### Running tests
+</details>
 
-Running and reviewing unit tests is a great way to get familiarized with a library and its API. You can install dependencies and run tests with the following command:
+### Related projects
 
-```sh
-$ npm install && npm test
-```
+You might also be interested in these projects:
+
+* [assemble](https://www.npmjs.com/package/assemble): Get the rocks out of your socks! Assemble makes you fast at creating web projects… [more](https://github.com/assemble/assemble) | [homepage](https://github.com/assemble/assemble "Get the rocks out of your socks! Assemble makes you fast at creating web projects. Assemble is used by thousands of projects for rapid prototyping, creating themes, scaffolds, boilerplates, e-books, UI components, API documentation, blogs, building websit")
+* [metalsmith](https://www.npmjs.com/package/metalsmith): An extremely simple, pluggable static site generator. | [homepage](https://github.com/segmentio/metalsmith#readme "An extremely simple, pluggable static site generator.")
+* [verb](https://www.npmjs.com/package/verb): Documentation generator for GitHub projects. Verb is extremely powerful, easy to use, and is used… [more](https://github.com/verbose/verb) | [homepage](https://github.com/verbose/verb "Documentation generator for GitHub projects. Verb is extremely powerful, easy to use, and is used on hundreds of projects of all sizes to generate everything from API docs to readmes.")
+
+### Contributors
+
+| **Commits** | **Contributor** | 
+| --- | --- |
+| 174 | [jonschlinkert](https://github.com/jonschlinkert) |
+| 7 | [RobLoach](https://github.com/RobLoach) |
+| 5 | [heymind](https://github.com/heymind) |
+| 4 | [doowb](https://github.com/doowb) |
+| 3 | [aljopro](https://github.com/aljopro) |
+| 2 | [reccanti](https://github.com/reccanti) |
+| 2 | [onokumus](https://github.com/onokumus) |
+| 2 | [moozzyk](https://github.com/moozzyk) |
+| 1 | [Ajedi32](https://github.com/Ajedi32) |
+| 1 | [caesar](https://github.com/caesar) |
+| 1 | [ianstormtaylor](https://github.com/ianstormtaylor) |
+| 1 | [qm3ster](https://github.com/qm3ster) |
+| 1 | [zachwhaley](https://github.com/zachwhaley) |
 
 ### Author
 
 **Jon Schlinkert**
 
-* [github/jonschlinkert](https://github.com/jonschlinkert)
-* [twitter/jonschlinkert](https://twitter.com/jonschlinkert)
+* [LinkedIn Profile](https://linkedin.com/in/jonschlinkert)
+* [GitHub Profile](https://github.com/jonschlinkert)
+* [Twitter Profile](https://twitter.com/jonschlinkert)
 
 ### License
 
@@ -547,4 +560,4 @@ Released under the [MIT License](LICENSE).
 
 ***
 
-_This file was generated by [verb-generate-readme](https://github.com/verbose/verb-generate-readme), v0.6.0, on March 03, 2018._
+_This file was generated by [verb-generate-readme](https://github.com/verbose/verb-generate-readme), v0.6.0, on April 01, 2018._

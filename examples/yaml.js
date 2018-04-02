@@ -1,13 +1,10 @@
-var path = require('path');
-var matter = require('..');
-var magenta = require('ansi-magenta');
-var fixture = path.join.bind(path, __dirname, 'fixtures');
+const matter = require('..');
 
 /**
  * Parse YAML front-matter
  */
 
-var file = matter([
+const file = matter([
   '---',
   'foo: bar',
   '---',
