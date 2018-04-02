@@ -1,7 +1,7 @@
 const matter = require('..');
-const magenta = require('ansi-magenta');
+const green = require('ansi-green');
 
-console.log(magenta('/* excerpt with custom separator */'));
+console.log(green('/* excerpt with custom separator */'));
 const file = matter([
   '---',
   'foo: bar',

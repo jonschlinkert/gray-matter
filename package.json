@@ -28,7 +28,7 @@
   ],
   "main": "index.js",
   "engines": {
-    "node": ">=6.0"
+    "node": ">=4.0"
   },
   "scripts": {
     "test": "mocha"
@@ -42,7 +42,6 @@
   },
   "devDependencies": {
     "ansi-green": "^0.1.1",
-    "ansi-magenta": "^0.1.1",
     "benchmarked": "^2.0.0",
     "coffeescript": "^2.2.3",
     "delimiter-regex": "^2.0.0",

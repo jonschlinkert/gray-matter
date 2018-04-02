@@ -1,5 +1,5 @@
 const matter = require('..');
-const magenta = require('ansi-magenta');
+const green = require('ansi-green');
 
 const file = matter([
   '---',
@@ -10,9 +10,9 @@ const file = matter([
   'This is content'
 ].join('\n'), {excerpt_separator: '<!-- sep -->'});
 
-console.log(magenta('/* file object, with excerpt */'));
+console.log(green('/* file object, with excerpt */'));
 console.log(file);
 
 console.log();
-console.log(magenta('/* stringified, with excerpt */'));
+console.log(green('/* stringified, with excerpt */'));
 console.log(file.stringify());
