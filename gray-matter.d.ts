@@ -39,7 +39,7 @@ declare namespace matter {
   interface GrayMatterFile<I extends Input> {
     data: object
     content: string
-    excrept?: string
+    excerpt?: string
     orig: Buffer | I
     language: string
     matter: string
