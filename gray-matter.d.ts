@@ -37,7 +37,7 @@ declare namespace matter {
     delimiters?: string | [string, string]
   }
   interface GrayMatterFile<I extends Input> {
-    data: object
+    data: { [key: string]: any }
     content: string
     excerpt?: string
     orig: Buffer | I
