@@ -230,7 +230,6 @@ matter.language = function(str, options) {
  * Expose `matter`
  */
 
-matter.customDelims = {};
 matter.cache = {};
 matter.clearCache = () => (matter.cache = {});
 module.exports = matter;
