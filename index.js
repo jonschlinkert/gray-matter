@@ -178,7 +178,7 @@ matter.read = function(filepath, options) {
  * Returns true if the given `string` has default front matter.
  * @param  {String} `string`
  * @param  {Object} `options`
- * @return {Boolean} True if front matter exists.
+ * @return {Boolean} True if default front matter exists.
  * @api public
  */
 
