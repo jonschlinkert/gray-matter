@@ -16,36 +16,87 @@
 declare function matter<
   I extends matter.Input,
   O extends matter.GrayMatterOption<I, O>
->(input: I | { content: I }, options?: O): matter.GrayMatterFile<I>
+  >(input: I | { content: I }, options?: O): matter.GrayMatterFile<I>
 
 declare namespace matter {
   type Input = string | Buffer
   interface GrayMatterOption<
     I extends Input,
     O extends GrayMatterOption<I, O>
-  > {
+    > {
     parser?: () => void
     eval?: boolean
     excerpt?: boolean | ((input: I, options: O) => string)
     excerpt_separator?: string
     engines?: {
       [index: string]:
-        | ((string) => object)
-        | { parse: (string) => object; stringify?: (object) => string }
+      | ((string) => object)
+      | { parse: (string) => object; stringify?: (object) => string }
     }
     language?: string
     delimiters?: string | [string, string]
+    sections?: boolean
+    section?: (section: GrayMatterSection, sections?: Array<GrayMatterSection>) => void
   }
-  interface GrayMatterFile<I extends Input> {
-    data: object
+
+  /**
+   * Structure representing the matter section
+   */
+  interface GrayMatterSection {
+    /**
+     * Key of the section
+     */
+    key: string;
+    /**
+     * The object created by parsing section matter
+     */
+    data: { [key: string]: any }
+    /**
+     * The section string, with matter stripped.
+     */
     content: string
-    excerpt?: string
-    orig: Buffer | I
-    language: string
-    matter: string
-    stringify(lang: string): string
   }
-  
+
+  /**
+   * Structure representing the result of parse or read operations
+   */
+  interface GrayMatterFile<I extends Input> {
+    /**
+     * The object created by parsing front-matter
+     */
+    data: { [key: string]: any }
+    /**
+     * The input string, with matter stripped.
+     * If sections were used, there will be in separate property
+     */
+    content: string
+    /**
+     * An excerpt, if defined on the options
+     */
+    excerpt?: string
+    /**
+     * The original input string (or buffer)
+     */
+    orig: Buffer | I
+    /**
+     * The front-matter language that was parsed. yaml is the default
+     */
+    language: string
+    /**
+     * The raw, un-parsed front-matter string
+     */
+    matter: string
+    /**
+     * Stringify the file by converting file.data to a string in the given language, wrapping it in delimiters and prepending it to file.content.
+     * @param {string} `lang` front-matter language to use. Only YAML and JSON can be stringified
+     */
+    stringify(lang: string): string
+    /**
+     * Sections, if defined on the options
+     */
+    sections?: Array<GrayMatterSection>
+  }
+
   /**
    * Stringify an object to YAML or the specified language, and
    * append it to the given string. By default, only YAML and JSON
