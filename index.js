@@ -222,5 +222,7 @@ matter.language = function(str, options) {
  */
 
 matter.cache = {};
-matter.clearCache = function() { matter.cache = {} };
+matter.clearCache = function() {
+  matter.cache = {};
+};
 module.exports = matter;
