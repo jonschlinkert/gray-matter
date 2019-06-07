@@ -13,12 +13,12 @@ var matter = require('..');
 
 describe('vinyl files', function() {
   it('should take a vinyl file', function() {
-    var file = new File({path: 'foo', contents: new Buffer('---\none: two\n---\nbar')});
+    var file = new File({path: 'foo', contents: Buffer.from('---\none: two\n---\nbar')});
 
     var actual = matter(file);
     assert.equal(actual.path, 'foo');
     assert.deepEqual(actual.data, {one: 'two'});
     assert.deepEqual(actual.content, 'bar');
-    assert.deepEqual(actual.contents, new Buffer('---\none: two\n---\nbar'));
+    assert.deepEqual(actual.contents, Buffer.from('---\none: two\n---\nbar'));
   });
 });
