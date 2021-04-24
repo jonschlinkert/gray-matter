@@ -42,10 +42,11 @@ declare namespace matter {
     excerpt?: string
     orig: Buffer | I
     language: string
+    delimiters: [string, string]
     matter: string
     stringify(lang: string): string
   }
-  
+
   /**
    * Stringify an object to YAML or the specified language, and
    * append it to the given string. By default, only YAML and JSON
@@ -108,7 +109,7 @@ declare namespace matter {
   export function language<O extends matter.GrayMatterOption<string, O>>(
     str: string,
     options?: GrayMatterOption<string, O>
-  ): { name: string; raw: string }
+  ): { name: string; raw: string; delimiters: null | [string, string] }
 }
 
 export = matter
