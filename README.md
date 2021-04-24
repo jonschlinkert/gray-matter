@@ -458,10 +458,10 @@ Open and close delimiters can be passed in as an array of strings.
 **Example:**
 
 ```js
-// format delims as a string
-matter.read('file.md', {delims: '~~~'});
+// format delimiters as a string
+matter.read('file.md', {delimiters: '~~~'});
 // or an array (open/close)
-matter.read('file.md', {delims: ['~~~', '~~~']});
+matter.read('file.md', {delimiters: ['~~~', '~~~']});
 ```
 
 would parse:
