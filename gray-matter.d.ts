@@ -26,7 +26,7 @@ declare namespace matter {
   > {
     parser?: () => void
     eval?: boolean
-    excerpt?: boolean | ((input: I, options: O) => string)
+    excerpt?: boolean | ((input: GrayMatterFile<I>, options: O) => string)
     excerpt_separator?: string
     engines?: {
       [index: string]:
