@@ -68,7 +68,7 @@ declare namespace matter {
   export function stringify<O extends GrayMatterOption<string, O>>(
     file: string | { content: string },
     data: object,
-    options?: GrayMatterOption<string, O>
+    options?: GrayMatterOption<string, O> & Record<string, unknown>
   ): string
 
   /**
