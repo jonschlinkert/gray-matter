@@ -36,10 +36,18 @@ declare namespace matter {
     language?: string
     delimiters?: string | [string, string]
   }
+
+  interface GrayMatterSection {
+    [key: string]: string,
+    data: string,
+    content: string
+  }
+
   interface GrayMatterFile<I extends Input> {
     data: { [key: string]: any }
     content: string
     excerpt?: string
+    sections?: GrayMatterSection
     orig: Buffer | I
     language: string
     matter: string
