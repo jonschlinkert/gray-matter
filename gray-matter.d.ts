@@ -1,3 +1,5 @@
+type MatterShapeTemplate = Record<string, unknown>
+
 /**
  * Takes a string or object with `content` property, extracts
  * and parses front-matter from the string, then returns an object
@@ -15,8 +17,9 @@
  */
 declare function matter<
   I extends matter.Input,
-  O extends matter.GrayMatterOption<I, O>
->(input: I | { content: I }, options?: O): matter.GrayMatterFile<I>
+  O extends matter.GrayMatterOption<I, O>,
+  MatterShape extends MatterShapeTemplate
+>(input: I | { content: I }, options?: O): matter.GrayMatterFile<I, MatterShape>
 
 declare namespace matter {
   type Input = string | Buffer
@@ -36,8 +39,8 @@ declare namespace matter {
     language?: string
     delimiters?: string | [string, string]
   }
-  interface GrayMatterFile<I extends Input> {
-    data: { [key: string]: any }
+  interface GrayMatterFile<I extends Input, MatterShape extends MatterShapeTemplate> {
+    data: MatterShape
     content: string
     excerpt?: string
     orig: Buffer | I
@@ -82,10 +85,10 @@ declare namespace matter {
    * @param {Object} `options` [Options](#options) to pass to gray-matter.
    * @return {Object} Returns [an object](#returned-object) with `data` and `content`
    */
-  export function read<O extends GrayMatterOption<string, O>>(
+  export function read<O extends GrayMatterOption<string, O>, MatterShape extends MatterShapeTemplate>(
     fp: string,
     options?: GrayMatterOption<string, O>
-  ): matter.GrayMatterFile<string>
+  ): matter.GrayMatterFile<string, MatterShape>
 
   /**
    * Returns true if the given `string` has front matter.
