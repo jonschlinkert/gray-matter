@@ -105,7 +105,7 @@ Or with [typescript](https://www.typescriptlang.org)
 ```js
 import matter = require('gray-matter');
 // OR
-import * as matter from 'gray-matter';
+import matter from 'gray-matter';
 ```
 
 Pass a string and [options](#options) to gray-matter:
