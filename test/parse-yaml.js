@@ -5,11 +5,9 @@
  * Released under the MIT License.
  */
 
-
-
-import  'mocha';
+import 'mocha';
 import assert from 'assert';
-import matter  from '../dist/index.js';
+import matter from '../dist/index.js';
 
 describe('parse YAML:', function() {
   it('should parse YAML', function() {

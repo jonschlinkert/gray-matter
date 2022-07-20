@@ -5,8 +5,6 @@
  * Released under the MIT License.
  */
 
-
-
 import assert from 'assert';
 import matter from '../dist/index.js';
 

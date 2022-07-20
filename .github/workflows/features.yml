@@ -1,0 +1,17 @@
+name: CI (features & PRs)
+
+on:
+  push:
+    branches:
+      - feature/*
+
+  pull_request:
+    branches:
+      - main
+      - master
+      - develop
+      - feature/*
+
+jobs:
+  testing:
+    uses: yankeeinlondon/gha/.github/workflows/test.yml@main

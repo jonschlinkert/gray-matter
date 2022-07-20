@@ -9,7 +9,7 @@ const str = fs.readFileSync(path.join(__dirname, 'fixtures', 'sections.md'));
 const file = matter(str, {
   section: function(section, file) {
     if (typeof section.data === 'string' && section.data.trim() !== '') {
-      section.data = yaml.safeLoad(section.data);
+      section.data = yaml.load(section.data);
     }
     section.content = section.content.trim() + '\n';
   }

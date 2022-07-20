@@ -5,11 +5,9 @@
  * Released under the MIT License.
  */
 
-
-
-import  'mocha';
+import 'mocha';
 import assert from 'assert';
-import matter  from '../dist/index.js';
+import matter from '../dist/index.js';
 
 describe('parse javascript:', function() {
   it('should parse front matter when options.lang is javascript', function() {

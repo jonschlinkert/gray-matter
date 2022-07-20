@@ -5,10 +5,9 @@
  * Released under the MIT License.
  */
 
-
-import  'mocha';
+import 'mocha';
 import assert from 'assert';
-import matter  from '../dist/index.js';
+import matter from '../dist/index.js';
 
 describe('.stringify', function() {
   it('should stringify front-matter from a file object', function() {

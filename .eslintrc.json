@@ -157,6 +157,7 @@
       }
     ],
     "no-native-reassign": 0,
+    "no-prototype-builtins": 0,
     "no-negated-in-lhs": 2,
     "no-new": 2,
     "no-new-func": 2,

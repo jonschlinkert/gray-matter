@@ -1,9 +1,8 @@
 
-
-import  'mocha';
+import 'mocha';
 import assert from 'assert';
-import utils  from '../lib/utils.js';
-import matter  from '../dist/index.js';
+import utils from '../lib/utils.js';
+import matter from '../dist/index.js';
 
 describe('gray-matter (windows carriage returns)', function() {
   it('should extract YAML front matter', function() {

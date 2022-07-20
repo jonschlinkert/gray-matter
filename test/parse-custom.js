@@ -5,12 +5,9 @@
  * Released under the MIT License.
  */
 
-
-
-import  'mocha';
+import 'mocha';
 import assert from 'assert';
-import utils  from '../lib/utils.js';
-import matter  from '../dist/index.js';
+import matter from '../dist/index.js';
 import YAML from 'js-yaml';
 
 describe('custom parser:', function() {
@@ -18,7 +15,7 @@ describe('custom parser:', function() {
     var actual = matter.read('./test/fixtures/lang-yaml.md', {
       parser: function customParser(str, opts) {
         try {
-          return YAML.safeLoad(str, opts);
+          return YAML.load(str, opts);
         } catch (err) {
           throw new SyntaxError(err);
         }

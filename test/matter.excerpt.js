@@ -5,11 +5,9 @@
  * Released under the MIT License.
  */
 
-
-
-import  'mocha';
+import 'mocha';
 import assert from 'assert';
-import matter  from '../dist/index.js';
+import matter from '../dist/index.js';
 
 describe('.excerpt', function() {
   it('should get an excerpt after front matter', function() {
