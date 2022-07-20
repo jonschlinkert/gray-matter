@@ -47,7 +47,10 @@
     "lint:lib": "eslint ./lib/**/*.js --fix",
     "lint:test": "eslint ./test/**/*.js --fix",
     "test": "mocha",
-    "watch": "tsup lib/index.js --format=esm,cjs --watch"
+    "watch": "tsup lib/index.js --format=esm,cjs --watch",
+    "release": "run-s lint release:latest test:ci audit:fix release:bump",
+    "release:latest": "pnpm install",
+    "release:bump": "bumpp"
   },
   "dependencies": {
     "js-yaml": "^4.1.0",
@@ -58,6 +61,7 @@
   "devDependencies": {
     "ansi-green": "^0.1.1",
     "benchmarked": "^2.0.0",
+    "bumpp": "^8.2.1",
     "coffeescript": "^2.7.0",
     "delimiter-regex": "^2.0.0",
     "eslint": "^8.20.0",
