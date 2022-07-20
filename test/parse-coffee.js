@@ -6,17 +6,17 @@
  */
 import 'mocha';
 import assert from 'assert';
-import matter  from '../dist/index.js';
+import matter from '../dist/index.js';
 import coffee from 'coffeescript';
-import { join } from "node:path";
-import { dirname } from "pathe";
+import { join } from 'node:path';
+import { dirname } from 'pathe';
 import { fileURLToPath } from 'url';
 
 const _dirname = typeof __dirname !== 'undefined'
   ? __dirname
-  : dirname(fileURLToPath(import.meta.url))
+  : dirname(fileURLToPath(import.meta.url));
 
-const fixture = (f) => join(  _dirname, 'fixtures', f);
+const fixture = (f) => join(_dirname, 'fixtures', f);
 var defaults = {
   engines: {
     coffee: {

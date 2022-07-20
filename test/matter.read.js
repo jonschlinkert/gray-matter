@@ -5,20 +5,18 @@
  * Released under the MIT License.
  */
 
-
-
-import  'mocha';
+import 'mocha';
 import assert from 'assert';
-import matter  from '../dist/index.js';
+import matter from '../dist/index.js';
 import { fileURLToPath } from 'url';
-import { dirname } from "pathe";
-import { join } from "node:path";
+import { dirname } from 'pathe';
+import { join } from 'node:path';
 
 const _dirname = typeof __dirname !== 'undefined'
   ? __dirname
-  : dirname(fileURLToPath(import.meta.url))
+  : dirname(fileURLToPath(import.meta.url));
 
-const fixture = (f) => join(  _dirname, 'fixtures', f);
+const fixture = (f) => join(_dirname, 'fixtures', f);
 
 describe('.read', function() {
   it('should extract YAML front matter from files with content.', function() {
