@@ -48,7 +48,7 @@
     "lint:test": "eslint ./test/**/*.js --fix",
     "test": "mocha",
     "watch": "tsup lib/index.js --format=esm,cjs --watch",
-    "release": "run-s lint release:latest test:ci audit:fix release:bump",
+    "release": "run-s lint release:latest test audit release:bump",
     "release:latest": "pnpm install",
     "release:bump": "bumpp"
   },
