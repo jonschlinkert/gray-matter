@@ -4,15 +4,19 @@
  * Copyright (c) 2014-2017, Jon Schlinkert.
  * Released under the MIT License.
  */
+import 'mocha';
+import assert from 'assert';
+import matter  from '../dist/index.js';
+import coffee from 'coffeescript';
+import { join } from "node:path";
+import { dirname } from "pathe";
+import { fileURLToPath } from 'url';
 
-'use strict';
+const _dirname = typeof __dirname !== 'undefined'
+  ? __dirname
+  : dirname(fileURLToPath(import.meta.url))
 
-var path = require('path');
-var assert = require('assert');
-var extend = require('extend-shallow');
-var matter = require('../');
-var fixture = path.join.bind(path, __dirname, 'fixtures');
-var coffee = require('coffeescript');
+const fixture = (f) => join(  _dirname, 'fixtures', f);
 var defaults = {
   engines: {
     coffee: {
@@ -25,7 +29,7 @@ var defaults = {
 };
 
 function parse(name, options) {
-  return matter.read(fixture(name), extend({}, defaults, options));
+  return matter.read(fixture(name), {...defaults, ...options});
 }
 
 describe('parse coffee', function() {

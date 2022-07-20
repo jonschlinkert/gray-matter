@@ -5,10 +5,10 @@
  * Released under the MIT License.
  */
 
-'use strict';
 
-var assert = require('assert');
-var matter = require('../');
+import  'mocha';
+import assert from 'assert';
+import matter  from '../dist/index.js';
 
 describe('.stringify', function() {
   it('should stringify front-matter from a file object', function() {

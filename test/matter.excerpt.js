@@ -5,11 +5,11 @@
  * Released under the MIT License.
  */
 
-'use strict';
 
-require('mocha');
-var assert = require('assert');
-var matter = require('..');
+
+import  'mocha';
+import assert from 'assert';
+import matter  from '../dist/index.js';
 
 describe('.excerpt', function() {
   it('should get an excerpt after front matter', function() {

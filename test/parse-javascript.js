@@ -5,10 +5,11 @@
  * Released under the MIT License.
  */
 
-'use strict';
 
-var assert = require('assert');
-var matter = require('../');
+
+import  'mocha';
+import assert from 'assert';
+import matter  from '../dist/index.js';
 
 describe('parse javascript:', function() {
   it('should parse front matter when options.lang is javascript', function() {

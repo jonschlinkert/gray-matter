@@ -1,9 +1,10 @@
-'use strict';
+import path from 'path';
+import minimist from 'minimist';
+import suite from 'benchmarked';
+import write from 'write';
 
-const path = require('path');
-const argv = require('minimist')(process.argv.slice(2));
-const suite = require('benchmarked');
-const write = require('write');
+const argv = minimist(process.argv.slice(2));
+
 const cwd = path.join.bind(path, argv.cwd || '');
 const dir = path.join.bind(path, __dirname);
 const code = argv.c || argv.code || '{gray,front}-matter.js';

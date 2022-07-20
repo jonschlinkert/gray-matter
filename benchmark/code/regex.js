@@ -1,4 +1,4 @@
-var engines = require('../../lib/engines');
+import engines from '../../lib/engines.js';
 
 module.exports = function matter(str, options) {
   if (str.length === 0) {

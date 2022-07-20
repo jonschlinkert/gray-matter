@@ -1,8 +1,6 @@
-'use strict';
-
-var delims = require('delimiter-regex');
-var extend = require('extend-shallow');
-var parse = require('../../lib/parse');
+import delims from 'delimiter-regex';
+import extend from 'extend-shallow';
+import parse from '../../lib/parse.js';
 
 module.exports = function matter(str, options) {
   if (str.length === 0) {

@@ -1,7 +1,8 @@
-const path = require('path');
-const matter = require('..');
-const coffee = require('coffeescript');
-const green = require('ansi-green');
+import path from 'path';
+import matter from '..';
+import coffee from 'coffeescript';
+import green from 'ansi-green';
+
 const fixture = path.join.bind(path, __dirname, 'fixtures');
 let file;
 

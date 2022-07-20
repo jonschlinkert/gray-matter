@@ -1,6 +1,4 @@
-'use strict';
-
-var matter = require('../../..');
+import matter from "../../../lib/index.js"
 
 module.exports = function(arr) {
   var len = arr.length;

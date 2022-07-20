@@ -1,7 +1,6 @@
-'use strict';
+import fs from "node:fs";
+import path from "node:path";
 
-var fs = require('fs');
-var path = require('path');
 
 var fp = path.join(process.cwd(), 'vendor/bootstrap-blog/_posts');
 if (!fs.existsSync(fp)) {

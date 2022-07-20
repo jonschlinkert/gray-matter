@@ -1,5 +1,5 @@
-var extend = require('extend-shallow');
-var engines = require('../../lib/engines');
+import extend from 'extend-shallow';
+import engines from '../../lib/engines.js';
 
 module.exports = function matter(str, options) {
   if (str.length === 0) {

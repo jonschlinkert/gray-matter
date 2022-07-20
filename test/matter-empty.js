@@ -1,9 +1,6 @@
-'use strict';
-
-require('mocha');
-var assert = require('assert');
-var utils = require('../lib/utils');
-var matter = require('..');
+import 'mocha';
+import assert from 'assert';
+import matter  from '../dist/index.js';
 
 describe('gray-matter', function() {
   it('should work with empty front-matter', function() {

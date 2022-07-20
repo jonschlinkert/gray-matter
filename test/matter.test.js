@@ -5,10 +5,10 @@
  * Released under the MIT License.
  */
 
-'use strict';
 
-var assert = require('assert');
-var matter = require('..');
+
+import assert from 'assert';
+import matter from '../dist/index.js';
 
 describe('.test', function() {
   it('should return `true` if the string has front-matter:', function() {

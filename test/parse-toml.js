@@ -5,12 +5,11 @@
  * Released under the MIT License.
  */
 
-'use strict';
+import  'mocha';
+import assert from 'assert';
+import matter  from '../dist/index.js';
+import toml from 'toml';
 
-var assert = require('assert');
-var matter = require('..');
-var extend = require('extend-shallow');
-var toml = require('toml');
 var defaults = {
   engines: {
     toml: toml.parse.bind(toml)
@@ -18,7 +17,7 @@ var defaults = {
 };
 
 function parse(str, options) {
-  return matter(str, extend({}, defaults, options));
+  return matter(str, {...defaults, ...options});
 }
 
 describe('parse TOML:', function() {

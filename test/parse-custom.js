@@ -5,11 +5,13 @@
  * Released under the MIT License.
  */
 
-'use strict';
 
-var assert = require('assert');
-var YAML = require('js-yaml');
-var matter = require('..');
+
+import  'mocha';
+import assert from 'assert';
+import utils  from '../lib/utils.js';
+import matter  from '../dist/index.js';
+import YAML from 'js-yaml';
 
 describe('custom parser:', function() {
   it('should allow a custom parser to be registered:', function() {

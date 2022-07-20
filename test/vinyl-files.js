@@ -5,11 +5,11 @@
  * Released under the MIT License.
  */
 
-'use strict';
 
-var assert = require('assert');
-var File = require('vinyl');
-var matter = require('..');
+import  'mocha';
+import assert from 'assert';
+import matter  from '../dist/index.js';
+import File from 'vinyl';
 
 describe('vinyl files', function() {
   it('should take a vinyl file', function() {

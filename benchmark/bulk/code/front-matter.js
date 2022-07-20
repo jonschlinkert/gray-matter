@@ -1,6 +1,4 @@
-'use strict';
-
-var frontMatter = require('front-matter');
+import frontMatter from 'front-matter';
 
 module.exports = function(arr) {
   var len = arr.length;
