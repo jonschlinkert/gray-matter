@@ -111,4 +111,4 @@ declare namespace matter {
   ): { name: string; raw: string }
 }
 
-export = matter
+export default matter;
