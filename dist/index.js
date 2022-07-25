@@ -338,6 +338,5 @@ matter.clearCache = function() {
 };
 var lib_default = matter;
 export {
-  lib_default as default,
-  matter
+  lib_default as default
 };

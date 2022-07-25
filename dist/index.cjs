@@ -22,8 +22,7 @@ var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: tru
 // lib/index.js
 var lib_exports = {};
 __export(lib_exports, {
-  default: () => lib_default,
-  matter: () => matter
+  default: () => lib_default
 });
 module.exports = __toCommonJS(lib_exports);
 var import_fs = __toESM(require("fs"), 1);
@@ -365,6 +364,4 @@ matter.clearCache = function() {
 };
 var lib_default = matter;
 // Annotate the CommonJS export names for ESM import in node:
-0 && (module.exports = {
-  matter
-});
+0 && (module.exports = {});
