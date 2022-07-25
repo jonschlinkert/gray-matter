@@ -22,8 +22,12 @@ var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: tru
 // lib/index.js
 var lib_exports = {};
 __export(lib_exports, {
+  clearCache: () => clearCache,
   default: () => lib_default,
-  matter: () => matter
+  engines: () => engines_default,
+  language: () => language,
+  stringify: () => stringify2,
+  test: () => test
 });
 module.exports = __toCommonJS(lib_exports);
 var import_fs = __toESM(require("fs"), 1);
@@ -63,11 +67,11 @@ function aliase(name) {
 var engine_default = engine;
 
 // lib/parse.js
-var parse = (language, str2, options3) => {
+var parse = (language2, str2, options3) => {
   const opts = defaults_default(options3);
-  const engine2 = engine_default(language, opts);
+  const engine2 = engine_default(language2, opts);
   if (typeof engine2.parse !== "function") {
-    throw new TypeError('expected "' + language + '.parse" to be a function');
+    throw new TypeError('expected "' + language2 + '.parse" to be a function');
   }
   return engine2.parse(str2, opts);
 };
@@ -190,10 +194,10 @@ var stringify = (file, data, options3) => {
       return file;
     data = opts.data;
   }
-  const language = file.language || opts.language;
-  const engine2 = engine_default(language, opts);
+  const language2 = file.language || opts.language;
+  const engine2 = engine_default(language2, opts);
   if (typeof engine2.stringify !== "function") {
-    throw new TypeError('expected "' + language + '.stringify" to be a function');
+    throw new TypeError('expected "' + language2 + '.stringify" to be a function');
   }
   data = Object.assign({}, file.data, data);
   const open = opts.delimiters[0];
@@ -297,10 +301,10 @@ function parseMatter(file, options3) {
   }
   str2 = str2.slice(openLen);
   const len = str2.length;
-  const language = matter.language(str2, opts);
-  if (language.name) {
-    file.language = language.name;
-    str2 = str2.slice(language.raw.length);
+  const language2 = matter.language(str2, opts);
+  if (language2.name) {
+    file.language = language2.name;
+    str2 = str2.slice(language2.raw.length);
   }
   let closeIndex = str2.indexOf(close);
   if (closeIndex === -1) {
@@ -332,8 +336,7 @@ function parseMatter(file, options3) {
   }
   return file;
 }
-matter.engines = engines_default;
-matter.stringify = function(file, data, options3) {
+var stringify2 = function(file, data, options3) {
   if (typeof file === "string")
     file = matter(file, options3);
   return stringify_default(file, data, options3);
@@ -344,27 +347,31 @@ matter.read = function(filepath, options3) {
   file.path = filepath;
   return file;
 };
-matter.test = function(str2, options3) {
+var test = function(str2, options3) {
   return utils_default.startsWith(str2, defaults_default(options3).delimiters[0]);
 };
-matter.language = function(str2, options3) {
+var language = function(str2, options3) {
   const opts = defaults_default(options3);
   const open = opts.delimiters[0];
   if (matter.test(str2)) {
     str2 = str2.slice(open.length);
   }
-  const language = str2.slice(0, str2.search(/\r?\n/));
+  const language2 = str2.slice(0, str2.search(/\r?\n/));
   return {
-    raw: language,
-    name: language ? language.trim() : ""
+    raw: language2,
+    name: language2 ? language2.trim() : ""
   };
 };
 matter.cache = {};
-matter.clearCache = function() {
+var clearCache = function() {
   matter.cache = {};
 };
 var lib_default = matter;
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  matter
+  clearCache,
+  engines,
+  language,
+  stringify,
+  test
 });
