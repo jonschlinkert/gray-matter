@@ -1,4 +1,4 @@
-import matter from "../../../lib/index.js"
+import matter from '../../lib/index.js';
 
 module.exports = function(arr) {
   var len = arr.length;

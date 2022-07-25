@@ -1,4 +1,3 @@
-
 import 'mocha';
 import assert from 'assert';
 import utils from '../lib/utils.js';
@@ -52,41 +51,57 @@ describe('gray-matter', function() {
   });
 
   it('should extract YAML front matter and content', function() {
-    var fixture = '---\nabc: xyz\nversion: 2\n---\n\n<span class="alert alert-info">This is an alert</span>\n';
+    var fixture =
+      '---\nabc: xyz\nversion: 2\n---\n\n<span class="alert alert-info">This is an alert</span>\n';
     var actual = matter(fixture);
-    assert.deepEqual(actual.data, {abc: 'xyz', version: 2});
-    assert.equal(actual.content, '\n<span class="alert alert-info">This is an alert</span>\n');
+    assert.deepEqual(actual.data, { abc: 'xyz', version: 2 });
+    assert.equal(
+      actual.content,
+      '\n<span class="alert alert-info">This is an alert</span>\n'
+    );
     assert.equal(actual.orig.toString(), fixture);
   });
 
   it('should use a custom delimiter as a string.', function() {
-    var fixture = '~~~\nabc: xyz\nversion: 2\n~~~\n\n<span class="alert alert-info">This is an alert</span>\n';
-    var actual = matter(fixture, {delims: '~~~'});
-    assert.deepEqual(actual.data, {abc: 'xyz', version: 2});
-    assert.equal(actual.content, '\n<span class="alert alert-info">This is an alert</span>\n');
+    var fixture =
+      '~~~\nabc: xyz\nversion: 2\n~~~\n\n<span class="alert alert-info">This is an alert</span>\n';
+    var actual = matter(fixture, { delims: '~~~' });
+    assert.deepEqual(actual.data, { abc: 'xyz', version: 2 });
+    assert.equal(
+      actual.content,
+      '\n<span class="alert alert-info">This is an alert</span>\n'
+    );
     assert.equal(actual.orig.toString(), fixture);
   });
 
   it('should use custom delimiters as an array.', function() {
-    var fixture = '~~~\nabc: xyz\nversion: 2\n~~~\n\n<span class="alert alert-info">This is an alert</span>\n';
-    var actual = matter(fixture, {delims: ['~~~']});
-    assert.deepEqual(actual.data, {abc: 'xyz', version: 2});
-    assert.equal(actual.content, '\n<span class="alert alert-info">This is an alert</span>\n');
+    var fixture =
+      '~~~\nabc: xyz\nversion: 2\n~~~\n\n<span class="alert alert-info">This is an alert</span>\n';
+    var actual = matter(fixture, { delims: ['~~~'] });
+    assert.deepEqual(actual.data, { abc: 'xyz', version: 2 });
+    assert.equal(
+      actual.content,
+      '\n<span class="alert alert-info">This is an alert</span>\n'
+    );
     assert.equal(actual.orig.toString(), fixture);
   });
 
   it('should correctly identify delimiters and ignore strings that look like delimiters.', function() {
-    var fixture = '---\nname: "troublesome --- value"\n---\nhere is some content\n';
+    var fixture =
+      '---\nname: "troublesome --- value"\n---\nhere is some content\n';
     var actual = matter(fixture);
-    assert.deepEqual(actual.data, {name: 'troublesome --- value'});
+    assert.deepEqual(actual.data, { name: 'troublesome --- value' });
     assert.equal(actual.content, 'here is some content\n');
-    assert.equal(String(actual.orig), '---\nname: "troublesome --- value"\n---\nhere is some content\n');
+    assert.equal(
+      String(actual.orig),
+      '---\nname: "troublesome --- value"\n---\nhere is some content\n'
+    );
   });
 
   it('should correctly parse a string that only has an opening delimiter', function() {
     var fixture = '---\nname: "troublesome --- value"\n';
     var actual = matter(fixture);
-    assert.deepEqual(actual.data, {name: 'troublesome --- value'});
+    assert.deepEqual(actual.data, { name: 'troublesome --- value' });
     assert.equal(actual.content, '');
     assert.equal(String(actual.orig), '---\nname: "troublesome --- value"\n');
   });
@@ -96,6 +111,9 @@ describe('gray-matter', function() {
     var actual = matter(fixture);
     assert.deepEqual(actual.data, {});
     assert.equal(actual.content, '-----------name--------------value\nfoo');
-    assert.equal(String(actual.orig), '-----------name--------------value\nfoo');
+    assert.equal(
+      String(actual.orig),
+      '-----------name--------------value\nfoo'
+    );
   });
 });

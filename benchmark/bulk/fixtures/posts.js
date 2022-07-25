@@ -1,13 +1,12 @@
-import fs from "node:fs";
-import path from "node:path";
-
+import fs from 'node:fs';
+import path from 'node:path';
 
 var fp = path.join(process.cwd(), 'vendor/bootstrap-blog/_posts');
 if (!fs.existsSync(fp)) {
   var msg = [
     '  to run this benchmark you need to pull down the',
     '  the bootstrap-blog first. To do so, run:',
-    '  git clone https://github.com/twbs/bootstrap-blog.git "vendor/bootstrap-blog"',
+    '  git clone https://github.com/twbs/bootstrap-blog.git "vendor/bootstrap-blog"'
   ].join('\n');
   console.log(msg);
   process.exit(0);
