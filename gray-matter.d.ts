@@ -44,6 +44,7 @@ declare namespace matter {
     language: string
     matter: string
     stringify(lang: string): string
+    isEmptry: boolean
   }
   
   /**
