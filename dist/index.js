@@ -1,5 +1,5 @@
 // lib/index.js
-import fs from "fs";
+import * as fs from "fs";
 import sections from "section-matter";
 
 // lib/engines.js

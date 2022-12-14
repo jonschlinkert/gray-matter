@@ -33,7 +33,7 @@ __export(lib_exports, {
   test: () => test
 });
 module.exports = __toCommonJS(lib_exports);
-var import_fs = __toESM(require("fs"), 1);
+var fs = __toESM(require("fs"), 1);
 var import_section_matter = __toESM(require("section-matter"), 1);
 
 // lib/engines.js
@@ -345,7 +345,7 @@ var stringify2 = function(file, data, options3) {
   return stringify_default(file, data, options3);
 };
 matter.read = function(filepath, options3) {
-  const str2 = import_fs.default.readFileSync(filepath, "utf8");
+  const str2 = fs.readFileSync(filepath, "utf8");
   const file = matter(str2, options3);
   file.path = filepath;
   return file;

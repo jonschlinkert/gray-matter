@@ -1,8 +1,7 @@
+import * as fs from 'node:fs';
+import * as path from 'node:path';
+import * as yaml from 'js-yaml';
 
-
-const fs = require('fs');
-const path = require('path');
-const yaml = require('js-yaml');
 const matter = require('..');
 const str = fs.readFileSync(path.join(__dirname, 'fixtures', 'sections.md'));
 
