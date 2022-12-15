@@ -2,7 +2,7 @@ import engines from './engines';
 import { GrayMatterOption, Input } from './types';
 import {utils} from './utils';
 
-const options = <O extends GrayMatterOption<Input,any>>(options: O) => {
+const options = <O extends GrayMatterOption<any,any>>(options: O) => {
   const opts = Object.assign({}, options);
 
   // ensure that delimiters are an array

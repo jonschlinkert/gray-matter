@@ -22,13 +22,13 @@ const matterDict: GrayMatterApi = {
 
   stringify(file, data, options) {
     return typeof file === "string" 
-      ? sfy(matterFn(file, options as any), data, options) 
-      : sfy(file, data, options)
+      ? sfy(matterFn(file, options as any), data, options as any) 
+      : sfy(file, data, options as any)
   },
 
   language(str, options) {
-    const opts = defaults(options);
-    const open = opts.delimiters[0];
+    const opts = defaults(options as any);
+    const open = opts?.delimiters ? opts.delimiters[0] : "---";
   
     if (matterDict.test(str)) {
       str = str.slice(open.length);
@@ -44,8 +44,8 @@ const matterDict: GrayMatterApi = {
 
   
   parseMatter(file, options)  {
-    const opts = defaults(options);
-    const open = opts.delimiters[0];
+    const opts = defaults(options as any);
+    const open = opts.delimiters ? opts.delimiters[0] : '---';
     const close = '\n' + opts.delimiters[1];
     const f: GrayMatterFile<string>  = typeof file === "string" ? {
       content: file,
@@ -127,7 +127,7 @@ const matterDict: GrayMatterApi = {
   },
 
   test(str, options): boolean {
-    return utils.startsWith(str, defaults(options).delimiters[0]);
+    return utils.startsWith(str, defaults(options as any).delimiters[0]);
   },
 
   clearCache()  {
