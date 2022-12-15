@@ -28,3 +28,4 @@ temp
 tmp
 TODO.md
 package-lock.json
+.tsbuildinfo

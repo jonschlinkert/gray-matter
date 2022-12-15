@@ -48,8 +48,9 @@
     "lint:test": "eslint ./test/**/*.ts --fix",
     "lint:tsc": "tsc --noEmit",
     "test": "vitest",
+    "test:ci": "vitest run",
     "watch": "tsup src/index.ts --format=esm,cjs --watch",
-    "release": "run-s lint release:latest test audit release:bump",
+    "release": "run-s lint release:latest test:ci audit release:bump",
     "release:latest": "pnpm install",
     "release:bump": "bumpp"
   },
