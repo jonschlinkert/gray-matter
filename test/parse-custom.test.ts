@@ -5,15 +5,14 @@
  * Released under the MIT License.
  */
 
-import 'mocha';
-import assert from 'assert';
-import matter from '../dist/index.js';
+import { expect, it, describe } from "vitest";
+import matter from '../src/index';
 import YAML from 'js-yaml';
 
 describe('custom parser:', function() {
   it('should allow a custom parser to be registered:', function() {
     var actual = matter.read('./test/fixtures/lang-yaml.md', {
-      parser: function customParser(str, opts) {
+      parser: (str: any, opts: any) => {
         try {
           return YAML.load(str, opts);
         } catch (err) {
@@ -22,9 +21,9 @@ describe('custom parser:', function() {
       }
     });
 
-    assert.equal(actual.data.title, 'YAML');
-    assert(actual.hasOwnProperty('data'));
-    assert(actual.hasOwnProperty('content'));
-    assert(actual.hasOwnProperty('orig'));
+    expect(actual.data.title).toEqual('YAML');
+    expect(actual.hasOwnProperty('data'));
+    expect(actual.hasOwnProperty('content'));
+    expect(actual.hasOwnProperty('orig'));
   });
 });

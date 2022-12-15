@@ -1,7 +1,8 @@
 import engines from './engines';
-import utils from './utils';
+import { GrayMatterOption, Input } from './types';
+import {utils} from './utils';
 
-const options = (options) => {
+const options = <O extends GrayMatterOption<Input,any>>(options: O) => {
   const opts = Object.assign({}, options);
 
   // ensure that delimiters are an array
@@ -11,8 +12,8 @@ const options = (options) => {
   }
 
   opts.language = (opts.language || opts.lang || 'yaml').toLowerCase();
-  opts.engines = Object.assign({}, engines, opts.parsers, opts.engines);
-  return opts;
+  opts.engines = Object.assign({}, engines, opts.parser, opts.engines);
+  return opts as O;
 };
 
 export default options;

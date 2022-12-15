@@ -42,23 +42,26 @@
   },
   "scripts": {
     "audit": "pnpm audit --fix",
-    "build": "tsup lib/index.js --format=esm,cjs --clean && cp gray-matter.d.ts dist/index.d.ts",
+    "build": "tsup src/index.ts --format=esm,cjs --clean && cp gray-matter.d.ts dist/index.d.ts",
     "lint": "run-p lint:*",
     "lint:lib": "eslint ./lib/**/*.js --fix",
     "lint:test": "eslint ./test/**/*.js --fix",
-    "test": "mocha",
+    "test": "vitest",
     "watch": "tsup lib/index.js --format=esm,cjs --watch",
     "release": "run-s lint release:latest test audit release:bump",
     "release:latest": "pnpm install",
     "release:bump": "bumpp"
   },
   "dependencies": {
+    "inferred-types": "^0.37.6",
     "js-yaml": "^4.1.0",
     "kind-of": "^6.0.3",
     "section-matter": "^1.0.0",
-    "strip-bom-string": "^1.0.0"
+    "strip-bom-string": "^1.0.0",
+    "vitest": "^0.25.8"
   },
   "devDependencies": {
+    "@types/kind-of": "^6.0.0",
     "ansi-green": "^0.1.1",
     "benchmarked": "^2.0.0",
     "bumpp": "^8.2.1",
@@ -70,14 +73,14 @@
     "front-matter": "^4.0.2",
     "gulp-format-md": "^2.0.0",
     "minimist": "^1.2.7",
-    "mocha": "^10.2.0",
     "npm-run-all": "^4.1.5",
     "pathe": "^1.0.0",
     "prettier": "^2.8.1",
     "toml": "^3.0.0",
     "tsup": "^6.5.0",
     "typescript": "^4.9.4",
-    "vinyl": "^3.0.0",
+    "vinyl": "^2.2.1",
+    "vite": "^4.0.1",
     "write": "^2.0.0"
   },
   "keywords": [

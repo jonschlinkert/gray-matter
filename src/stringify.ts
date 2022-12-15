@@ -1,17 +1,22 @@
 import typeOf from 'kind-of';
 import getEngine from './engine';
 import defaults from './defaults';
+import { GrayMatterOption, Input } from './types';
 
 function newline(str) {
   return str.slice(-1) !== '\n' ? str + '\n' : str;
 }
 
-const stringify = (file, data, options) => {
+const stringify = <I extends Input, O extends GrayMatterOption<I, O>>(
+  file: any, 
+  data: Record<string, any> = {}, 
+  options: O = {} as O
+) => {
   if (data == null && options == null) {
     switch (typeOf(file)) {
       case 'object':
         data = file.data;
-        options = {};
+        options = {} as O;
         break;
       case 'string':
         return file;
@@ -25,7 +30,7 @@ const stringify = (file, data, options) => {
   const opts = defaults(options);
   if (data == null) {
     if (!opts.data) return file;
-    data = opts.data;
+    data = opts?.data;
   }
 
   const language = file.language || opts.language;
@@ -35,8 +40,15 @@ const stringify = (file, data, options) => {
   }
 
   data = Object.assign({}, file.data, data);
-  const open = opts.delimiters[0];
-  const close = opts.delimiters[1];
+  const open = opts?.delimiters 
+    ? opts.delimiters[0]
+    : opts?.delims ? opts?.delims[0] : undefined;
+  const close = opts?.delimiters 
+   ? opts.delimiters[1] 
+    ? opts.delimiters[1]
+    : opts?.delims ? opts.delims[1] : undefined
+  : undefined;
+
   const matter = engine.stringify(data, options).trim();
   let buf = '';
 

@@ -1,6 +1,6 @@
 import typeOf from 'kind-of';
 import stringify from './stringify';
-import utils from './utils';
+import {utils} from './utils';
 
 /**
  * Normalize the given value to ensure an object is returned

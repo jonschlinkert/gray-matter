@@ -22,24 +22,22 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
 ));
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// lib/index.js
-var lib_exports = {};
-__export(lib_exports, {
-  clearCache: () => clearCache,
-  default: () => lib_default,
+// src/index.ts
+var src_exports = {};
+__export(src_exports, {
+  default: () => src_default,
   engines: () => engines_default,
-  language: () => language,
-  stringify: () => stringify2,
-  test: () => test
+  matter: () => matter,
+  utils: () => utils
 });
-module.exports = __toCommonJS(lib_exports);
+module.exports = __toCommonJS(src_exports);
 var fs = __toESM(require("fs"), 1);
 var import_section_matter = __toESM(require("section-matter"), 1);
 
-// lib/engines.js
+// src/engines.ts
 var import_js_yaml = __toESM(require("js-yaml"), 1);
 
-// lib/engine.js
+// src/engine.ts
 var engine = (name, options3) => {
   let engine2 = options3.engines[name] || options3.engines[aliase(name)];
   if (typeof engine2 === "undefined") {
@@ -69,18 +67,18 @@ function aliase(name) {
 }
 var engine_default = engine;
 
-// lib/parse.js
-var parse = (language2, str2, options3) => {
+// src/parse.ts
+var parse = (language, str2, options3) => {
   const opts = defaults_default(options3);
-  const engine2 = engine_default(language2, opts);
+  const engine2 = engine_default(language, opts);
   if (typeof engine2.parse !== "function") {
-    throw new TypeError('expected "' + language2 + '.parse" to be a function');
+    throw new TypeError('expected "' + language + '.parse" to be a function');
   }
   return engine2.parse(str2, opts);
 };
 var parse_default = parse;
 
-// lib/engines.js
+// src/engines.ts
 var engines = {
   yaml: {
     parse: import_js_yaml.default.load.bind(import_js_yaml.default),
@@ -112,56 +110,49 @@ var engines = {
 };
 var engines_default = engines;
 
-// lib/utils.js
+// src/utils.ts
 var import_strip_bom_string = __toESM(require("strip-bom-string"), 1);
 var import_kind_of = __toESM(require("kind-of"), 1);
-function define(obj, key, val) {
-  Reflect.defineProperty(obj, key, {
-    enumerable: false,
-    configurable: true,
-    writable: true,
-    value: val
-  });
-}
-function isBuffer(val) {
-  return (0, import_kind_of.default)(val) === "buffer";
-}
-function isObject(val) {
-  return (0, import_kind_of.default)(val) === "object";
-}
-function toBuffer(input) {
-  return typeof input === "string" ? Buffer.from(input) : input;
-}
-function toString(input) {
-  if (isBuffer(input))
-    return (0, import_strip_bom_string.default)(String(input));
-  if (typeof input !== "string") {
-    throw new TypeError("expected input to be a string or buffer");
+var utils = {
+  define: (obj, key, val) => {
+    Reflect.defineProperty(obj, key, {
+      enumerable: false,
+      configurable: true,
+      writable: true,
+      value: val
+    });
+  },
+  isBuffer: (val) => {
+    return (0, import_kind_of.default)(val) === "buffer";
+  },
+  isObject: (val) => {
+    return (0, import_kind_of.default)(val) === "object";
+  },
+  toBuffer(input) {
+    return typeof input === "string" ? Buffer.from(input) : input;
+  },
+  toString(input) {
+    if (utils.isBuffer(input))
+      return (0, import_strip_bom_string.default)(String(input));
+    if (typeof input !== "string") {
+      throw new TypeError("expected input to be a string or buffer");
+    }
+    return (0, import_strip_bom_string.default)(input);
+  },
+  arrayify(val) {
+    return val ? Array.isArray(val) ? val : [val] : [];
+  },
+  startsWith(str2, substr, len) {
+    if (typeof len !== "number")
+      len = substr.length;
+    return str2.slice(0, len) === substr;
   }
-  return (0, import_strip_bom_string.default)(input);
-}
-function arrayify(val) {
-  return val ? Array.isArray(val) ? val : [val] : [];
-}
-function startsWith(str2, substr, len) {
-  if (typeof len !== "number")
-    len = substr.length;
-  return str2.slice(0, len) === substr;
-}
-var utils_default = {
-  define,
-  isBuffer,
-  isObject,
-  toBuffer,
-  toString,
-  arrayify,
-  startsWith
 };
 
-// lib/defaults.js
+// src/defaults.ts
 var options2 = (options3) => {
   const opts = Object.assign({}, options3);
-  opts.delimiters = utils_default.arrayify(opts.delims || opts.delimiters || "---");
+  opts.delimiters = utils.arrayify(opts.delims || opts.delimiters || "---");
   if (opts.delimiters.length === 1) {
     opts.delimiters.push(opts.delimiters[0]);
   }
@@ -171,12 +162,12 @@ var options2 = (options3) => {
 };
 var defaults_default = options2;
 
-// lib/stringify.js
+// src/stringify.ts
 var import_kind_of2 = __toESM(require("kind-of"), 1);
 function newline(str2) {
   return str2.slice(-1) !== "\n" ? str2 + "\n" : str2;
 }
-var stringify = (file, data, options3) => {
+var stringify = (file, data = {}, options3 = {}) => {
   if (data == null && options3 == null) {
     switch ((0, import_kind_of2.default)(file)) {
       case "object":
@@ -197,10 +188,10 @@ var stringify = (file, data, options3) => {
       return file;
     data = opts.data;
   }
-  const language2 = file.language || opts.language;
-  const engine2 = engine_default(language2, opts);
+  const language = file.language || opts.language;
+  const engine2 = engine_default(language, opts);
   if (typeof engine2.stringify !== "function") {
-    throw new TypeError('expected "' + language2 + '.stringify" to be a function');
+    throw new TypeError('expected "' + language + '.stringify" to be a function');
   }
   data = Object.assign({}, file.data, data);
   const open = opts.delimiters[0];
@@ -219,7 +210,7 @@ var stringify = (file, data, options3) => {
 };
 var stringify_default = stringify;
 
-// lib/excerpt.js
+// src/excerpt.ts
 var excerpt = (file, options3) => {
   const opts = defaults_default(options3);
   if (file.data == null) {
@@ -241,7 +232,7 @@ var excerpt = (file, options3) => {
 };
 var excerpt_default = excerpt;
 
-// lib/to-file.js
+// src/to-file.ts
 var import_kind_of3 = __toESM(require("kind-of"), 1);
 var toFile = (file) => {
   if ((0, import_kind_of3.default)(file) !== "object") {
@@ -253,128 +244,136 @@ var toFile = (file) => {
   if (file.contents && file.content == null) {
     file.content = file.contents;
   }
-  utils_default.define(file, "orig", utils_default.toBuffer(file.content));
-  utils_default.define(file, "language", file.language || "");
-  utils_default.define(file, "matter", file.matter || "");
-  utils_default.define(file, "stringify", function(data, options3) {
+  utils.define(file, "orig", utils.toBuffer(file.content));
+  utils.define(file, "language", file.language || "");
+  utils.define(file, "matter", file.matter || "");
+  utils.define(file, "stringify", function(data, options3) {
     if (options3 && options3.language) {
       file.language = options3.language;
     }
     return stringify_default(file, data, options3);
   });
-  file.content = utils_default.toString(file.content);
+  file.content = utils.toString(file.content);
   file.isEmpty = false;
   file.excerpt = "";
   return file;
 };
 var to_file_default = toFile;
 
-// lib/index.js
-function matter(input, options3) {
+// src/index.ts
+var import_inferred_types = require("inferred-types");
+var matterDict = {
+  cache: {},
+  read(filepath, options3) {
+    const str2 = fs.readFileSync(filepath, "utf8");
+    const file = matterFn(str2, options3);
+    file.path = filepath;
+    return file;
+  },
+  stringify(file, data, options3) {
+    return typeof file === "string" ? stringify_default(matterFn(file, options3), data, options3) : stringify_default(file, data, options3);
+  },
+  language(str2, options3) {
+    const opts = defaults_default(options3);
+    const open = opts.delimiters[0];
+    if (matterDict.test(str2)) {
+      str2 = str2.slice(open.length);
+    }
+    const language = str2.slice(0, str2.search(/\r?\n/));
+    return {
+      raw: language,
+      name: language ? language.trim() : ""
+    };
+  },
+  parseMatter(file, options3) {
+    const opts = defaults_default(options3);
+    const open = opts.delimiters[0];
+    const close = "\n" + opts.delimiters[1];
+    const f = typeof file === "string" ? {
+      content: file,
+      path: "",
+      language: "",
+      data: {},
+      contents: void 0,
+      matter: "",
+      orig: ""
+    } : file;
+    if (opts.language) {
+      f.language = opts.language;
+    }
+    const openLen = open.length;
+    if (!utils.startsWith(f.content, open, openLen)) {
+      excerpt_default(file, opts);
+      return file;
+    }
+    if (f.content.charAt(openLen) === open.slice(-1)) {
+      return file;
+    }
+    f.content = f.content.slice(openLen);
+    const len = f.content.length;
+    const language = matter.language(f.content, opts) || opts.language;
+    if (language.name) {
+      f.language = language.name;
+      f.content = f.content.slice(language.raw.length);
+    }
+    let closeIndex = f.content.indexOf(close);
+    if (closeIndex === -1) {
+      closeIndex = len;
+    }
+    f.matter = f.content.slice(0, closeIndex);
+    const block = f.matter.replace(/^\s*#[^\n]+/gm, "").trim();
+    if (block === "") {
+      f.isEmpty = true;
+      f.empty = f.content;
+      f.data = {};
+    } else {
+      f.data = parse_default(f.language, f.matter, opts);
+    }
+    if (closeIndex === len) {
+      f.content = "";
+    } else {
+      f.content = f.content.slice(closeIndex + close.length);
+      if (f.content[0] === "\r") {
+        f.content = f.content.slice(1);
+      }
+      if (f.content[0] === "\n") {
+        f.content = f.content.slice(1);
+      }
+    }
+    excerpt_default(f, opts);
+    if ((opts == null ? void 0 : opts.sections) === true || typeof opts.section === "function") {
+      (0, import_section_matter.default)(f, opts.section);
+    }
+    return f;
+  },
+  test(str2, options3) {
+    return utils.startsWith(str2, defaults_default(options3).delimiters[0]);
+  },
+  clearCache() {
+    matterDict.cache = {};
+  }
+};
+var matterFn = (input, options3) => {
   if (input === "") {
     return { data: {}, content: input, excerpt: "", orig: input };
   }
   let file = to_file_default(input);
-  const cached = matter.cache[file.content];
+  const cached = matterDict.cache[file.content];
   if (!options3) {
     if (cached) {
       file = Object.assign({}, cached);
       file.orig = cached.orig;
       return file;
     }
-    matter.cache[file.content] = file;
+    matterDict.cache[file.content] = file;
   }
-  return parseMatter(file, options3);
-}
-function parseMatter(file, options3) {
-  const opts = defaults_default(options3);
-  const open = opts.delimiters[0];
-  const close = "\n" + opts.delimiters[1];
-  let str2 = file.content;
-  if (opts.language) {
-    file.language = opts.language;
-  }
-  const openLen = open.length;
-  if (!utils_default.startsWith(str2, open, openLen)) {
-    excerpt_default(file, opts);
-    return file;
-  }
-  if (str2.charAt(openLen) === open.slice(-1)) {
-    return file;
-  }
-  str2 = str2.slice(openLen);
-  const len = str2.length;
-  const language2 = matter.language(str2, opts);
-  if (language2.name) {
-    file.language = language2.name;
-    str2 = str2.slice(language2.raw.length);
-  }
-  let closeIndex = str2.indexOf(close);
-  if (closeIndex === -1) {
-    closeIndex = len;
-  }
-  file.matter = str2.slice(0, closeIndex);
-  const block = file.matter.replace(/^\s*#[^\n]+/gm, "").trim();
-  if (block === "") {
-    file.isEmpty = true;
-    file.empty = file.content;
-    file.data = {};
-  } else {
-    file.data = parse_default(file.language, file.matter, opts);
-  }
-  if (closeIndex === len) {
-    file.content = "";
-  } else {
-    file.content = str2.slice(closeIndex + close.length);
-    if (file.content[0] === "\r") {
-      file.content = file.content.slice(1);
-    }
-    if (file.content[0] === "\n") {
-      file.content = file.content.slice(1);
-    }
-  }
-  excerpt_default(file, opts);
-  if (opts.sections === true || typeof opts.section === "function") {
-    (0, import_section_matter.default)(file, opts.section);
-  }
-  return file;
-}
-var stringify2 = function(file, data, options3) {
-  if (typeof file === "string")
-    file = matter(file, options3);
-  return stringify_default(file, data, options3);
+  return matterDict.parseMatter(file, options3);
 };
-matter.read = function(filepath, options3) {
-  const str2 = fs.readFileSync(filepath, "utf8");
-  const file = matter(str2, options3);
-  file.path = filepath;
-  return file;
-};
-var test = function(str2, options3) {
-  return utils_default.startsWith(str2, defaults_default(options3).delimiters[0]);
-};
-var language = function(str2, options3) {
-  const opts = defaults_default(options3);
-  const open = opts.delimiters[0];
-  if (matter.test(str2)) {
-    str2 = str2.slice(open.length);
-  }
-  const language2 = str2.slice(0, str2.search(/\r?\n/));
-  return {
-    raw: language2,
-    name: language2 ? language2.trim() : ""
-  };
-};
-matter.cache = {};
-var clearCache = function() {
-  matter.cache = {};
-};
-var lib_default = matter;
+var matter = (0, import_inferred_types.createFnWithProps)(matterFn, matterDict);
+var src_default = matter;
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  clearCache,
   engines,
-  language,
-  stringify,
-  test
+  matter,
+  utils
 });

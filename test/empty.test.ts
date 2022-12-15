@@ -1,32 +1,32 @@
-import 'mocha';
-import assert from 'assert';
-import matter from '../dist/index.js';
+import { expect, it, describe } from "vitest";
+
+import matter from '../src/index';
 
 describe('gray-matter', function() {
   it('should work with empty front-matter', function() {
     var file1 = matter('---\n---\nThis is content');
-    assert.equal(file1.content, 'This is content');
-    assert.deepEqual(file1.data, {});
+    expect(file1.content).toEqual('This is content');
+    expect(file1.data).toEqual({});
 
     var file2 = matter('---\n\n---\nThis is content');
-    assert.equal(file2.content, 'This is content');
-    assert.deepEqual(file2.data, {});
+    expect(file2.content).toEqual('This is content');
+    expect(file2.data).toEqual({});
 
     var file3 = matter('---\n\n\n\n\n\n---\nThis is content');
-    assert.equal(file3.content, 'This is content');
-    assert.deepEqual(file3.data, {});
+    expect(file3.content).toEqual('This is content');
+    expect(file3.data).toEqual({});
   });
 
   it('should add content with empty front matter to file.empty', function() {
-    assert.deepEqual(matter('---\n---').empty, '---\n---');
+    expect(matter('---\n---').empty).toEqual('---\n---');
   });
 
   it('should update file.isEmpty to true', function() {
-    assert.deepEqual(matter('---\n---').isEmpty, true);
+    expect(matter('---\n---').isEmpty).toEqual(true);
   });
 
   it('should work when front-matter has comments', function() {
     const fixture = '---\n # this is a comment\n# another one\n---';
-    assert.deepEqual(matter(fixture).empty, fixture);
+    expect(matter(fixture).empty).toBe(fixture);
   });
 });

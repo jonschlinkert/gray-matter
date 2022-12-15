@@ -5,9 +5,9 @@
  * Released under the MIT License.
  */
 
-import 'mocha';
-import assert from 'assert';
-import matter from '../dist/index.js';
+import { expect, it, describe } from "vitest";
+
+import matter from '../src/index';
 
 describe('.stringify', function() {
   it('should stringify front-matter from a file object', function() {
@@ -16,7 +16,7 @@ describe('.stringify', function() {
       data: {name: 'gray-matter'}
     };
 
-    assert.equal(matter.stringify(file), [
+    expect(matter.stringify(file.content, file.data)).toEqual([
       '---',
       'name: gray-matter',
       '---',
@@ -25,13 +25,13 @@ describe('.stringify', function() {
   });
 
   it('should stringify from a string', function() {
-    assert.equal(matter.stringify('Name: {{name}}\n'), 'Name: {{name}}\n');
+    expect(matter.stringify('Name: {{name}}\n')).toEqual('Name: {{name}}\n');
   });
 
   it('should use custom delimiters to stringify', function() {
     var data = {name: 'gray-matter'};
-    var actual = matter.stringify('Name: {{name}}', data, {delims: '~~~'});
-    assert.equal(actual, [
+    var actual = matter.stringify('Name: {{name}}', data, {delimiters: '~~~'});
+    expect(actual).toEqual([
       '~~~',
       'name: gray-matter',
       '~~~',
@@ -42,7 +42,7 @@ describe('.stringify', function() {
   it('should stringify a file object', function() {
     var file = { content: 'Name: {{name}}', data: {name: 'gray-matter'} };
     var actual = matter.stringify(file);
-    assert.equal(actual, [
+    expect(actual).toEqual([
       '---',
       'name: gray-matter',
       '---',
@@ -54,7 +54,7 @@ describe('.stringify', function() {
     var file = { content: 'Name: {{name}}', data: {name: 'gray-matter'} };
     file.excerpt = 'This is an excerpt.';
 
-    assert.equal(matter.stringify(file), [
+    expect(matter.stringify(file)).toEqual([
       '---',
       'name: gray-matter',
       '---',
@@ -68,7 +68,7 @@ describe('.stringify', function() {
     var file = { content: 'Name: {{name}}\n\nThis is an excerpt.', data: {name: 'gray-matter'} };
     file.excerpt = 'This is an excerpt.';
 
-    assert.equal(matter.stringify(file), [
+    expect(matter.stringify(file)).toEqual([
       '---',
       'name: gray-matter',
       '---',

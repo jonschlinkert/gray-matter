@@ -5,36 +5,36 @@
  * Released under the MIT License.
  */
 
-import 'mocha';
-import assert from 'assert';
-import matter from '../dist/index.js';
+import { expect, it, describe } from "vitest";
+
+import matter from '../src/index';
 
 describe('.language', function() {
   it('should detect the name of the language to parse', function() {
-    assert.deepEqual(matter.language('---\nfoo: bar\n---'), {
+    expect(matter.language('---\nfoo: bar\n---')).toEqual({
       raw: '',
       name: ''
     });
-    assert.deepEqual(matter.language('---js\nfoo: bar\n---'), {
+    expect(matter.language('---js\nfoo: bar\n---')).toEqual({
       raw: 'js',
       name: 'js'
     });
-    assert.deepEqual(matter.language('---coffee\nfoo: bar\n---'), {
+    expect(matter.language('---coffee\nfoo: bar\n---')).toEqual({
       raw: 'coffee',
       name: 'coffee'
     });
   });
 
   it('should work around whitespace', function() {
-    assert.deepEqual(matter.language('--- \nfoo: bar\n---'), {
+    expect(matter.language('--- \nfoo: bar\n---')).toEqual({
       raw: ' ',
       name: ''
     });
-    assert.deepEqual(matter.language('--- js \nfoo: bar\n---'), {
+    expect(matter.language('--- js \nfoo: bar\n---')).toEqual({
       raw: ' js ',
       name: 'js'
     });
-    assert.deepEqual(matter.language('---  coffee \nfoo: bar\n---'), {
+    expect(matter.language('---  coffee \nfoo: bar\n---')).toEqual({
       raw: '  coffee ',
       name: 'coffee'
     });

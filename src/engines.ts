@@ -1,5 +1,5 @@
 import yaml from 'js-yaml';
-import parse from '../lib/parse.js';
+import parse from './parse';
 
 /**
  * Default engines
