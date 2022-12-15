@@ -1,10 +1,10 @@
-import typeOf from 'kind-of';
-import getEngine from './engine';
-import defaults from './defaults';
-import { GrayMatterOption, Input } from './types';
+import typeOf from "kind-of";
+import getEngine from "./engine";
+import defaults from "./defaults";
+import { GrayMatterOption, Input } from "./types";
 
 function newline(str: any) {
-  return str.slice(-1) !== '\n' ? str + '\n' : str;
+  return str.slice(-1) === "\n" ? str : str + "\n";
 }
 
 const stringify = <I extends Input, O extends GrayMatterOption<I, O>>(
@@ -14,14 +14,16 @@ const stringify = <I extends Input, O extends GrayMatterOption<I, O>>(
 ) => {
   if (data == null && options == null) {
     switch (typeOf(file)) {
-      case 'object':
+      case "object": {
         data = file.data;
         options = {} as O;
         break;
-      case 'string':
+      }
+      case "string": {
         return file;
+      }
       default: {
-        throw new TypeError('expected file to be a string or object');
+        throw new TypeError("expected file to be a string or object");
       }
     }
   }
@@ -29,13 +31,13 @@ const stringify = <I extends Input, O extends GrayMatterOption<I, O>>(
   const str = file.content;
   const opts = defaults(options);
   if (data == null) {
-    if (!(opts as any).data) return file;
+    if (!(opts as any).data) {return file;}
     data = (opts as any)?.data;
   }
 
   const language = file.language || opts.language;
   const engine = getEngine(language, opts);
-  if (typeof engine.stringify !== 'function') {
+  if (typeof engine.stringify !== "function") {
     throw new TypeError('expected "' + language + '.stringify" to be a function');
   }
 
@@ -50,17 +52,15 @@ const stringify = <I extends Input, O extends GrayMatterOption<I, O>>(
   : undefined;
 
   const matter = engine.stringify(data, options).trim();
-  let buf = '';
+  let buf = "";
 
-  if (matter !== '{}') {
+  if (matter !== "{}") {
     buf = newline(open) + newline(matter) + newline(close);
   }
 
-  if (typeof file.excerpt === 'string' && file.excerpt !== '') {
-    if (str.indexOf(file.excerpt.trim()) === -1) {
+  if (typeof file.excerpt === "string" && file.excerpt !== "" && !str.includes(file.excerpt.trim())) {
       buf += newline(file.excerpt) + newline(close);
     }
-  }
 
   return buf + newline(str);
 };

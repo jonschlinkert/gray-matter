@@ -7,13 +7,17 @@
 
 import { expect, it, describe } from "vitest";
 
-import matter from '../src/index';
+import { matter } from "../src/index";
 
-describe('.test', function() {
-  it('should return `true` if the string has front-matter:', function() {
-    expect(matter.test('---\nabc: xyz\n---')).toBeTruthy();
-    expect(!matter.test('---\nabc: xyz\n---', {delimiters: '~~~'})).toBeTruthy();
-    expect(matter.test('~~~\nabc: xyz\n~~~', {delimiters: '~~~'})).toBeTruthy();
-    expect(!matter.test('\nabc: xyz\n---')).toBeTruthy();
+describe(".test", function () {
+  it("should return `true` if the string has front-matter:", function () {
+    expect(matter.test("---\nabc: xyz\n---")).toBeTruthy();
+    expect(
+      !matter.test("---\nabc: xyz\n---", { delimiters: "~~~" })
+    ).toBeTruthy();
+    expect(
+      matter.test("~~~\nabc: xyz\n~~~", { delimiters: "~~~" })
+    ).toBeTruthy();
+    expect(!matter.test("\nabc: xyz\n---")).toBeTruthy();
   });
 });

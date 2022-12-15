@@ -1,26 +1,26 @@
-export type Input = string | Buffer
-  
+export type Input = string | Buffer;
+
 export interface GrayMatterFile<I extends Input> {
   path: string;
-  data: { [key: string]: any }
-  content: string
+  data: { [key: string]: any };
+  content: string;
   contents: any;
-  excerpt?: string
-  orig: I
-  language: string
-  matter: string
+  excerpt?: string;
+  orig: I;
+  language: string;
+  matter: string;
   isEmpty?: boolean;
   empty?: any;
-  stringify(lang: string): string
+  stringify(lang: string): string;
 }
 
 export interface GrayMatterOption<
   I extends Input,
   O extends GrayMatterOption<I, O>
 > {
-  parser?: <A extends any[], R>(...args: A) => R
-  eval?: boolean
-  excerpt?: boolean | ((input: GrayMatterFile<I>, options: O) => string)
+  parser?: <A extends any[], R>(...args: A) => R;
+  eval?: boolean;
+  excerpt?: boolean | ((input: GrayMatterFile<I>, options: O) => string);
   excerpt_separator?: string;
   sections?: boolean;
   section?: any;
@@ -28,31 +28,34 @@ export interface GrayMatterOption<
   engines?: {
     [index: string]:
       | ((input: string) => object)
-      | { parse: (input: string) => object; stringify?: (data: object) => string }
-  }
+      | {
+          parse: (input: string) => object;
+          stringify?: (data: object) => string;
+        };
+  };
   language?: string;
   /** @deprecated use `language` instead */
   lang?: string;
-  delimiters?: string | string[]
+  delimiters?: string | string[];
   /** @deprecated use `delimiters` instead */
-  delims?: string | string[]
+  delims?: string | string[];
 }
 
 /**
-* Takes a string or object with `content` property, extracts
-* and parses front-matter from the string, then returns an object
-* with `data`, `content` and other [useful properties](#returned-object).
-*
-* ```js
-* var matter = require('gray-matter');
-* console.log(matter('---\ntitle: Home\n---\nOther stuff'));
-* //=> { data: { title: 'Home'}, content: 'Other stuff' }
-* ```   
-*/
-export type GrayMatterFn = <
-   I extends Input,
-   O extends GrayMatterOption<I, O>
- >(input: I | { content: I }, options?: O) => GrayMatterFile<I>
+ * Takes a string or object with `content` property, extracts
+ * and parses front-matter from the string, then returns an object
+ * with `data`, `content` and other [useful properties](#returned-object).
+ *
+ * ```js
+ * var matter = require('gray-matter');
+ * console.log(matter('---\ntitle: Home\n---\nOther stuff'));
+ * //=> { data: { title: 'Home'}, content: 'Other stuff' }
+ * ```
+ */
+export type GrayMatterFn = <I extends Input, O extends GrayMatterOption<I, O>>(
+  input: I | { content: I },
+  options?: O
+) => GrayMatterFile<I>;
 
 export interface GrayMatterApi {
   /**
@@ -62,7 +65,7 @@ export interface GrayMatterApi {
   language<I extends Input, O extends GrayMatterOption<I, O>>(
     str: string,
     options?: GrayMatterOption<I, O>
-  ): { name: string; raw: string; [key: string]: any};
+  ): { name: string; raw: string; [key: string]: any };
 
   /**
    * Returns `true` if the given _string_ has front-matter.
@@ -78,13 +81,12 @@ export interface GrayMatterApi {
    *
    * ```js
    * var file = matter.read('./content/blog-post.md');
-   * ```   
+   * ```
    */
   read<I extends Input, O extends GrayMatterOption<I, O>>(
     fp: string,
     options?: GrayMatterOption<I, O>
   ): GrayMatterFile<string>;
-
 
   /**
    * Stringify an object to YAML or the specified language, and
@@ -103,9 +105,9 @@ export interface GrayMatterApi {
    */
   stringify<I extends Input, O extends GrayMatterOption<I, O>>(
     file: string | GrayMatterFile<I>,
-    data: object,
+    data?: object,
     options?: GrayMatterOption<I, O>
-  ): string
+  ): string;
 
   /**
    * Parses the gray-matter
@@ -117,6 +119,5 @@ export interface GrayMatterApi {
 
   clearCache(): void;
 
-  cache: Record<string, any>
+  cache: Record<string, any>;
 }
-

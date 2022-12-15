@@ -6,24 +6,24 @@
  */
 
 import { expect, it, describe } from "vitest";
-import matter from '../src/index';
-import YAML from 'js-yaml';
+import { matter } from "../src/index";
+import YAML from "js-yaml";
 
-describe('custom parser:', function() {
-  it('should allow a custom parser to be registered:', function() {
-    var actual = matter.read('./test/fixtures/lang-yaml.md', {
+describe("custom parser:", function () {
+  it("should allow a custom parser to be registered:", function () {
+    var actual = matter.read("./test/fixtures/lang-yaml.md", {
       parser: (str: any, opts: any) => {
         try {
           return YAML.load(str, opts);
-        } catch (err) {
-          throw new SyntaxError(err);
+        } catch (error) {
+          throw new SyntaxError((error as Error).message);
         }
-      }
-    });
+      },
+    } as any);
 
-    expect(actual.data.title).toEqual('YAML');
-    expect(actual.hasOwnProperty('data'));
-    expect(actual.hasOwnProperty('content'));
-    expect(actual.hasOwnProperty('orig'));
+    expect(actual.data.title).toEqual("YAML");
+    expect(actual.hasOwnProperty("data"));
+    expect(actual.hasOwnProperty("content"));
+    expect(actual.hasOwnProperty("orig"));
   });
 });

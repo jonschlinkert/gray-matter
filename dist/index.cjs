@@ -38,33 +38,36 @@ var fs = __toESM(require("fs"), 1);
 var import_js_yaml = __toESM(require("js-yaml"), 1);
 
 // src/engine.ts
+function aliase(name) {
+  switch (name.toLowerCase()) {
+    case "js":
+    case "javascript": {
+      return "javascript";
+    }
+    case "coffee":
+    case "coffeescript":
+    case "cson": {
+      return "coffee";
+    }
+    case "yaml":
+    case "yml": {
+      return "yaml";
+    }
+    default: {
+      return name;
+    }
+  }
+}
 var engine = (name, options3) => {
   let engine2 = options3.engines[name] || options3.engines[aliase(name)];
-  if (typeof engine2 === "undefined") {
-    throw new Error('gray-matter engine "' + name + '" is not registered');
+  if (engine2 === void 0) {
+    throw new TypeError('gray-matter engine "' + name + '" is not registered');
   }
   if (typeof engine2 === "function") {
     engine2 = { parse: engine2 };
   }
   return engine2;
 };
-function aliase(name) {
-  switch (name.toLowerCase()) {
-    case "js":
-    case "javascript":
-      return "javascript";
-    case "coffee":
-    case "coffeescript":
-    case "cson":
-      return "coffee";
-    case "yaml":
-    case "yml":
-      return "yaml";
-    default: {
-      return name;
-    }
-  }
-}
 var engine_default = engine;
 
 // src/parse.ts
@@ -97,11 +100,11 @@ var engines = {
         str = "(function() {\nreturn " + str.trim() + ";\n}());";
       }
       return eval(str) || {};
-    } catch (err) {
-      if (wrap !== false && /(unexpected|identifier)/i.test(err.message)) {
+    } catch (error) {
+      if (wrap !== false && /(unexpected|identifier)/i.test(error.message)) {
         return parse_default(str, options, false);
       }
-      throw new SyntaxError(err.message);
+      throw new SyntaxError(error.message);
     }
   },
   stringify() {
@@ -132,8 +135,9 @@ var utils = {
     return typeof input === "string" ? Buffer.from(input) : input;
   },
   toString(input) {
-    if (utils.isBuffer(input))
+    if (utils.isBuffer(input)) {
       return (0, import_strip_bom_string.default)(String(input));
+    }
     if (typeof input !== "string") {
       throw new TypeError("expected input to be a string or buffer");
     }
@@ -143,8 +147,9 @@ var utils = {
     return val ? Array.isArray(val) ? val : [val] : [];
   },
   startsWith(str2, substr, len) {
-    if (typeof len !== "number")
+    if (typeof len !== "number") {
       len = substr.length;
+    }
     return str2.slice(0, len) === substr;
   }
 };
@@ -165,17 +170,19 @@ var defaults_default = options2;
 // src/stringify.ts
 var import_kind_of2 = __toESM(require("kind-of"), 1);
 function newline(str2) {
-  return str2.slice(-1) !== "\n" ? str2 + "\n" : str2;
+  return str2.slice(-1) === "\n" ? str2 : str2 + "\n";
 }
 var stringify = (file, data = {}, options3 = {}) => {
   if (data == null && options3 == null) {
     switch ((0, import_kind_of2.default)(file)) {
-      case "object":
+      case "object": {
         data = file.data;
         options3 = {};
         break;
-      case "string":
+      }
+      case "string": {
         return file;
+      }
       default: {
         throw new TypeError("expected file to be a string or object");
       }
@@ -184,8 +191,9 @@ var stringify = (file, data = {}, options3 = {}) => {
   const str2 = file.content;
   const opts = defaults_default(options3);
   if (data == null) {
-    if (!opts.data)
+    if (!opts.data) {
       return file;
+    }
     data = opts?.data;
   }
   const language = file.language || opts.language;
@@ -201,10 +209,8 @@ var stringify = (file, data = {}, options3 = {}) => {
   if (matter2 !== "{}") {
     buf = newline(open) + newline(matter2) + newline(close);
   }
-  if (typeof file.excerpt === "string" && file.excerpt !== "") {
-    if (str2.indexOf(file.excerpt.trim()) === -1) {
-      buf += newline(file.excerpt) + newline(close);
-    }
+  if (typeof file.excerpt === "string" && file.excerpt !== "" && !str2.includes(file.excerpt.trim())) {
+    buf += newline(file.excerpt) + newline(close);
   }
   return buf + newline(str2);
 };
@@ -262,6 +268,7 @@ var to_file_default = toFile;
 
 // src/index.ts
 var import_inferred_types = require("inferred-types");
+var import_section_matter = __toESM(require("section-matter"), 1);
 var matterDict = {
   cache: {},
   read(filepath, options3) {
@@ -341,6 +348,9 @@ var matterDict = {
       }
     }
     excerpt_default(f, opts);
+    if (opts?.sections === true || typeof opts.section === "function") {
+      (0, import_section_matter.default)(f, opts.section);
+    }
     return f;
   },
   test(str2, options3) {

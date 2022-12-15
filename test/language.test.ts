@@ -7,36 +7,36 @@
 
 import { expect, it, describe } from "vitest";
 
-import matter from '../src/index';
+import { matter } from "../src/index";
 
-describe('.language', function() {
-  it('should detect the name of the language to parse', function() {
-    expect(matter.language('---\nfoo: bar\n---')).toEqual({
-      raw: '',
-      name: ''
+describe(".language", function () {
+  it("should detect the name of the language to parse", function () {
+    expect(matter.language("---\nfoo: bar\n---")).toEqual({
+      raw: "",
+      name: "",
     });
-    expect(matter.language('---js\nfoo: bar\n---')).toEqual({
-      raw: 'js',
-      name: 'js'
+    expect(matter.language("---js\nfoo: bar\n---")).toEqual({
+      raw: "js",
+      name: "js",
     });
-    expect(matter.language('---coffee\nfoo: bar\n---')).toEqual({
-      raw: 'coffee',
-      name: 'coffee'
+    expect(matter.language("---coffee\nfoo: bar\n---")).toEqual({
+      raw: "coffee",
+      name: "coffee",
     });
   });
 
-  it('should work around whitespace', function() {
-    expect(matter.language('--- \nfoo: bar\n---')).toEqual({
-      raw: ' ',
-      name: ''
+  it("should work around whitespace", function () {
+    expect(matter.language("--- \nfoo: bar\n---")).toEqual({
+      raw: " ",
+      name: "",
     });
-    expect(matter.language('--- js \nfoo: bar\n---')).toEqual({
-      raw: ' js ',
-      name: 'js'
+    expect(matter.language("--- js \nfoo: bar\n---")).toEqual({
+      raw: " js ",
+      name: "js",
     });
-    expect(matter.language('---  coffee \nfoo: bar\n---')).toEqual({
-      raw: '  coffee ',
-      name: 'coffee'
+    expect(matter.language("---  coffee \nfoo: bar\n---")).toEqual({
+      raw: "  coffee ",
+      name: "coffee",
     });
   });
 });

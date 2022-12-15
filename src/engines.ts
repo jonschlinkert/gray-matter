@@ -1,5 +1,5 @@
-import yaml from 'js-yaml';
-import parse from './parse';
+import yaml from "js-yaml";
+import parse from "./parse";
 
 /**
  * Default engines
@@ -22,19 +22,19 @@ const engines = {
     /* eslint no-eval: 0 */
     try {
       if (wrap !== false) {
-        str = '(function() {\nreturn ' + str.trim() + ';\n}());';
+        str = "(function() {\nreturn " + str.trim() + ";\n}());";
       }
       return eval(str) || {};
-    } catch (err) {
-      if (wrap !== false && /(unexpected|identifier)/i.test((err as Error).message)) {
+    } catch (error) {
+      if (wrap !== false && /(unexpected|identifier)/i.test((error as Error).message)) {
         return parse(str, options, false);
       }
-      throw new SyntaxError((err as Error).message);
+      throw new SyntaxError((error as Error).message);
     }
   },
 
   stringify() {
-    throw new Error('stringifying JavaScript is not supported');
+    throw new Error("stringifying JavaScript is not supported");
   }
 };
 

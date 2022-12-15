@@ -1,49 +1,5 @@
 import yaml from 'js-yaml';
 
-declare const utils: {
-    define: (obj: any, key: any, val: any) => void;
-    /**
-     * Returns true if `val` is a buffer
-     */
-    isBuffer: (val: any) => boolean;
-    /**
-     * Returns true if `val` is an object
-     */
-    isObject: (val: any) => boolean;
-    /**
-   * Cast `input` to a buffer
-   */
-    toBuffer(input: any): any;
-    /**
-   * Cast `val` to a string.
-   */
-    toString(input: any): any;
-    /**
-   * Cast `val` to an array.
-   */
-    arrayify(val: any): any[];
-    /**
-   * Returns true if `str` starts with `substr`.
-   */
-    startsWith(str: string, substr: string, len?: number): boolean;
-};
-
-/**
- * Default engines
- */
-declare const engines: {
-    yaml: {
-        parse: typeof yaml.load;
-        stringify: typeof yaml.dump;
-    };
-    json: {
-        parse: (text: string, reviver?: ((this: any, key: string, value: any) => any) | undefined) => any;
-        stringify: (obj: any, options: any) => string;
-    };
-    javascript(str: any, options: any, wrap: any): any;
-    stringify(): never;
-};
-
 type Input = string | Buffer;
 interface GrayMatterFile<I extends Input> {
     path: string;
@@ -82,16 +38,16 @@ interface GrayMatterOption<I extends Input, O extends GrayMatterOption<I, O>> {
     delims?: string | string[];
 }
 /**
-* Takes a string or object with `content` property, extracts
-* and parses front-matter from the string, then returns an object
-* with `data`, `content` and other [useful properties](#returned-object).
-*
-* ```js
-* var matter = require('gray-matter');
-* console.log(matter('---\ntitle: Home\n---\nOther stuff'));
-* //=> { data: { title: 'Home'}, content: 'Other stuff' }
-* ```
-*/
+ * Takes a string or object with `content` property, extracts
+ * and parses front-matter from the string, then returns an object
+ * with `data`, `content` and other [useful properties](#returned-object).
+ *
+ * ```js
+ * var matter = require('gray-matter');
+ * console.log(matter('---\ntitle: Home\n---\nOther stuff'));
+ * //=> { data: { title: 'Home'}, content: 'Other stuff' }
+ * ```
+ */
 type GrayMatterFn = <I extends Input, O extends GrayMatterOption<I, O>>(input: I | {
     content: I;
 }, options?: O) => GrayMatterFile<I>;
@@ -133,7 +89,7 @@ interface GrayMatterApi {
      * // foo bar baz
      * ```
      */
-    stringify<I extends Input, O extends GrayMatterOption<I, O>>(file: string | GrayMatterFile<I>, data: object, options?: GrayMatterOption<I, O>): string;
+    stringify<I extends Input, O extends GrayMatterOption<I, O>>(file: string | GrayMatterFile<I>, data?: object, options?: GrayMatterOption<I, O>): string;
     /**
      * Parses the gray-matter
      */
@@ -141,6 +97,50 @@ interface GrayMatterApi {
     clearCache(): void;
     cache: Record<string, any>;
 }
+
+/**
+ * Default engines
+ */
+declare const engines: {
+    yaml: {
+        parse: typeof yaml.load;
+        stringify: typeof yaml.dump;
+    };
+    json: {
+        parse: (text: string, reviver?: ((this: any, key: string, value: any) => any) | undefined) => any;
+        stringify: (obj: any, options: any) => string;
+    };
+    javascript(str: any, options: any, wrap: any): any;
+    stringify(): never;
+};
+
+declare const utils: {
+    define: (obj: any, key: any, val: any) => void;
+    /**
+     * Returns true if `val` is a buffer
+     */
+    isBuffer: (val: any) => boolean;
+    /**
+     * Returns true if `val` is an object
+     */
+    isObject: (val: any) => boolean;
+    /**
+   * Cast `input` to a buffer
+   */
+    toBuffer(input: any): any;
+    /**
+   * Cast `val` to a string.
+   */
+    toString(input: any): any;
+    /**
+   * Cast `val` to an array.
+   */
+    arrayify(val: any): any[];
+    /**
+   * Returns true if `str` starts with `substr`.
+   */
+    startsWith(str: string, substr: string, len?: number): boolean;
+};
 
 declare const matter: GrayMatterApi & GrayMatterFn;
 

@@ -1,6 +1,6 @@
-import typeOf from 'kind-of';
-import stringify from './stringify';
-import {utils} from './utils';
+import typeOf from "kind-of";
+import stringify from "./stringify";
+import {utils} from "./utils";
 
 /**
  * Normalize the given value to ensure an object is returned
@@ -8,11 +8,11 @@ import {utils} from './utils';
  */
 
 const toFile = (file: any) => {
-  if (typeOf(file) !== 'object') {
+  if (typeOf(file) !== "object") {
     file = { content: file };
   }
 
-  if (typeOf(file.data) !== 'object') {
+  if (typeOf(file.data) !== "object") {
     file.data = {};
   }
 
@@ -23,10 +23,10 @@ const toFile = (file: any) => {
   }
 
   // set non-enumerable properties on the file object
-  utils.define(file, 'orig', utils.toBuffer(file.content));
-  utils.define(file, 'language', file.language || '');
-  utils.define(file, 'matter', file.matter || '');
-  utils.define(file, 'stringify', (data: Record<string, any>, options: any) => {
+  utils.define(file, "orig", utils.toBuffer(file.content));
+  utils.define(file, "language", file.language || "");
+  utils.define(file, "matter", file.matter || "");
+  utils.define(file, "stringify", (data: Record<string, any>, options: any) => {
     if (options && options.language) {
       file.language = options.language;
     }
@@ -36,7 +36,7 @@ const toFile = (file: any) => {
   // strip BOM and ensure that "file.content" is a string
   file.content = utils.toString(file.content);
   file.isEmpty = false;
-  file.excerpt = '';
+  file.excerpt = "";
   return file;
 };
 
