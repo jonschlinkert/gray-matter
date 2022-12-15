@@ -1,6 +1,5 @@
 // src/index.ts
 import * as fs from "fs";
-import sections from "section-matter";
 
 // src/engines.ts
 import yaml from "js-yaml";
@@ -69,7 +68,7 @@ var engines = {
       if (wrap !== false && /(unexpected|identifier)/i.test(err.message)) {
         return parse_default(str, options, false);
       }
-      throw new SyntaxError(err);
+      throw new SyntaxError(err.message);
     }
   },
   stringify() {
@@ -125,7 +124,7 @@ var options2 = (options3) => {
     opts.delimiters.push(opts.delimiters[0]);
   }
   opts.language = (opts.language || opts.lang || "yaml").toLowerCase();
-  opts.engines = Object.assign({}, engines_default, opts.parsers, opts.engines);
+  opts.engines = Object.assign({}, engines_default, opts.parser, opts.engines);
   return opts;
 };
 var defaults_default = options2;
@@ -154,7 +153,7 @@ var stringify = (file, data = {}, options3 = {}) => {
   if (data == null) {
     if (!opts.data)
       return file;
-    data = opts.data;
+    data = opts?.data;
   }
   const language = file.language || opts.language;
   const engine2 = engine_default(language, opts);
@@ -162,8 +161,8 @@ var stringify = (file, data = {}, options3 = {}) => {
     throw new TypeError('expected "' + language + '.stringify" to be a function');
   }
   data = Object.assign({}, file.data, data);
-  const open = opts.delimiters[0];
-  const close = opts.delimiters[1];
+  const open = opts?.delimiters ? opts.delimiters[0] : opts?.delims ? opts?.delims[0] : void 0;
+  const close = opts?.delimiters ? opts.delimiters[1] ? opts.delimiters[1] : opts?.delims ? opts.delims[1] : void 0 : void 0;
   const matter2 = engine2.stringify(data, options3).trim();
   let buf = "";
   if (matter2 !== "{}") {
@@ -215,7 +214,7 @@ var toFile = (file) => {
   utils.define(file, "orig", utils.toBuffer(file.content));
   utils.define(file, "language", file.language || "");
   utils.define(file, "matter", file.matter || "");
-  utils.define(file, "stringify", function(data, options3) {
+  utils.define(file, "stringify", (data, options3) => {
     if (options3 && options3.language) {
       file.language = options3.language;
     }
@@ -243,7 +242,7 @@ var matterDict = {
   },
   language(str2, options3) {
     const opts = defaults_default(options3);
-    const open = opts.delimiters[0];
+    const open = opts?.delimiters ? opts.delimiters[0] : "---";
     if (matterDict.test(str2)) {
       str2 = str2.slice(open.length);
     }
@@ -255,7 +254,7 @@ var matterDict = {
   },
   parseMatter(file, options3) {
     const opts = defaults_default(options3);
-    const open = opts.delimiters[0];
+    const open = opts.delimiters ? opts.delimiters[0] : "---";
     const close = "\n" + opts.delimiters[1];
     const f = typeof file === "string" ? {
       content: file,
@@ -309,9 +308,6 @@ var matterDict = {
       }
     }
     excerpt_default(f, opts);
-    if ((opts == null ? void 0 : opts.sections) === true || typeof opts.section === "function") {
-      sections(f, opts.section);
-    }
     return f;
   },
   test(str2, options3) {

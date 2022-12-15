@@ -3,7 +3,7 @@ import getEngine from './engine';
 import defaults from './defaults';
 import { GrayMatterOption, Input } from './types';
 
-function newline(str) {
+function newline(str: any) {
   return str.slice(-1) !== '\n' ? str + '\n' : str;
 }
 
@@ -29,8 +29,8 @@ const stringify = <I extends Input, O extends GrayMatterOption<I, O>>(
   const str = file.content;
   const opts = defaults(options);
   if (data == null) {
-    if (!opts.data) return file;
-    data = opts?.data;
+    if (!(opts as any).data) return file;
+    data = (opts as any)?.data;
   }
 
   const language = file.language || opts.language;

@@ -32,7 +32,7 @@ export const utils = {
   /**
  * Cast `val` to a string.
  */
-  toString(input) {
+  toString(input: any) {
     if (utils.isBuffer(input)) return stripBom(String(input));
     if (typeof input !== 'string') {
       throw new TypeError('expected input to be a string or buffer');
@@ -42,7 +42,7 @@ export const utils = {
   /**
  * Cast `val` to an array.
  */
-  arrayify(val) {
+  arrayify(val: any) {
     return val ? (Array.isArray(val) ? val : [val]) : [];
   },
   /**

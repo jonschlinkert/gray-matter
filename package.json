@@ -14,7 +14,8 @@
     "Pawel Kadluczka (http://blog.3d-logic.com)",
     "Rob Loach (http://robloach.net)",
     "(https://github.com/heymind)",
-    "Zach Whaley (http://zachwhaleys.website)"
+    "Zach Whaley (http://zachwhaleys.website)",
+    "Ken Snyder (https://ken.net)"
   ],
   "repository": "jonschlinkert/gray-matter",
   "bugs": {
@@ -27,12 +28,11 @@
     "dist"
   ],
   "type": "module",
-  "types": "dist/index.d.ts",
-  "main": "dist/index.cjs",
-  "module": "dist/index.js",
+  "types": "./dist/index.d.ts",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
       "require": "./dist/index.cjs",
       "import": "./dist/index.js"
     }
@@ -42,7 +42,7 @@
   },
   "scripts": {
     "audit": "pnpm audit --fix",
-    "build": "tsup src/index.ts --format=esm,cjs --clean && cp gray-matter.d.ts dist/index.d.ts",
+    "build": "tsup src/index.ts --format=esm,cjs --clean --dts",
     "lint": "run-p lint:*",
     "lint:lib": "eslint ./lib/**/*.js --fix",
     "lint:test": "eslint ./test/**/*.js --fix",
@@ -61,6 +61,7 @@
     "vitest": "^0.25.8"
   },
   "devDependencies": {
+    "@types/js-yaml": "^4.0.5",
     "@types/kind-of": "^6.0.0",
     "ansi-green": "^0.1.1",
     "benchmarked": "^2.0.0",

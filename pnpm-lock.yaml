@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@types/js-yaml': ^4.0.5
   '@types/kind-of': ^6.0.0
   ansi-green: ^0.1.1
   benchmarked: ^2.0.0
@@ -38,6 +39,7 @@ dependencies:
   vitest: 0.25.8
 
 devDependencies:
+  '@types/js-yaml': 4.0.5
   '@types/kind-of': 6.0.0
   ansi-green: 0.1.1
   benchmarked: 2.0.0
@@ -329,6 +331,10 @@ packages:
   /@types/chai/4.3.4:
     resolution: {integrity: sha512-KnRanxnpfpjUTqTCXslZSEdLfXExwgNxYPdiO2WGUj8+HDjFi8R3k5RVKPeSCzLjCcshCAtVO2QBbVuAV4kTnw==}
     dev: false
+
+  /@types/js-yaml/4.0.5:
+    resolution: {integrity: sha512-FhpRzf927MNQdRZP0J5DLIdTXhjLYzeUTmLAu69mnVksLH9CJY3IuSeEgbKUki7GQZm0WqDkGzyxju2EZGD2wA==}
+    dev: true
 
   /@types/kind-of/6.0.0:
     resolution: {integrity: sha512-OBts6MHCrq558cvND5nsWhoThwJaNu5lmGnSp3H0gFzQQc5QYM9p7HajIdS+2bgDquGX1qLZCPlyuYSxMDffAg==}

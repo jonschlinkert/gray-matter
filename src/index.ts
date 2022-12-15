@@ -1,14 +1,13 @@
 import * as fs from 'node:fs';
-import sections from 'section-matter';
 import defaults from './defaults';
 import sfy from './stringify';
 import excerpt from './excerpt';
 import toFile from './to-file';
 import parse from './parse';
 import {utils} from './utils';
-import { createFnWithProps, AnyFunction } from "inferred-types";
+import { createFnWithProps } from "inferred-types";
 import engines from './engines';
-import { GrayMatterApi, GrayMatterFile, GrayMatterFn, GrayMatterOption } from './types';
+import { GrayMatterApi, GrayMatterFile, GrayMatterFn } from './types';
 
 const matterDict: GrayMatterApi = {
   cache: {},
@@ -47,7 +46,9 @@ const matterDict: GrayMatterApi = {
     const opts = defaults(options as any);
     const open = opts.delimiters ? opts.delimiters[0] : '---';
     const close = '\n' + opts.delimiters[1];
-    const f: GrayMatterFile<string>  = typeof file === "string" ? {
+    const f  = (
+      typeof file === "string" 
+      ? {
       content: file,
       path: "",
       language: "",
@@ -55,7 +56,9 @@ const matterDict: GrayMatterApi = {
       contents: undefined,
       matter: "",
       orig: ""
-    } : file;
+    } 
+      : file
+    ) as GrayMatterFile<any>;
   
     if (opts.language) {
       f.language = opts.language;
@@ -120,9 +123,9 @@ const matterDict: GrayMatterApi = {
   
     excerpt(f, opts);
   
-    if (opts?.sections === true || typeof opts.section === 'function') {
-      sections(f, opts.section);
-    }
+    // if (opts?.sections === true || typeof opts.section === 'function') {
+    //   sections(f, opts.section);
+    // }
     return f;
   },
 

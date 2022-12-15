@@ -1,6 +1,7 @@
 import defaults from './defaults';
+import { GrayMatterFile, GrayMatterOption } from './types';
 
-const excerpt = (file, options) => {
+const excerpt = (file: any, options: GrayMatterOption<any,any>) => {
   const opts = defaults(options);
 
   if (file.data == null) {
@@ -18,7 +19,7 @@ const excerpt = (file, options) => {
 
   const delimiter = typeof opts.excerpt === 'string'
     ? opts.excerpt
-    : (sep || opts.delimiters[0]);
+    : (sep || (opts.delimiters as any)[0]);
 
   // if enabled, get the excerpt defined after front-matter
   const idx = file.content.indexOf(delimiter);

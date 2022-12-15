@@ -7,7 +7,7 @@ import {utils} from './utils';
  * with the expected properties.
  */
 
-const toFile = (file) => {
+const toFile = (file: any) => {
   if (typeOf(file) !== 'object') {
     file = { content: file };
   }
@@ -26,7 +26,7 @@ const toFile = (file) => {
   utils.define(file, 'orig', utils.toBuffer(file.content));
   utils.define(file, 'language', file.language || '');
   utils.define(file, 'matter', file.matter || '');
-  utils.define(file, 'stringify', function(data, options) {
+  utils.define(file, 'stringify', (data: Record<string, any>, options: any) => {
     if (options && options.language) {
       file.language = options.language;
     }
