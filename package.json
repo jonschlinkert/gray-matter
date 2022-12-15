@@ -1,5 +1,6 @@
 {
   "name": "@yankeeinlondon/gray-matter",
+  "type": "module",
   "description": "Parse front-matter from a string or file. Fast, reliable and easy to use. Parses YAML front matter by default, but also has support for YAML, JSON, TOML or Coffee Front-Matter, with options to set custom delimiters. Used by metalsmith, assemble, verb and many other projects.",
   "version": "6.0.0",
   "homepage": "https://github.com/jonschlinkert/gray-matter",
@@ -27,9 +28,7 @@
     "README.md",
     "dist"
   ],
-  "type": "module",
   "types": "./dist/index.d.ts",
-  "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "exports": {
     ".": {
@@ -38,18 +37,18 @@
     }
   },
   "engines": {
-    "node": ">=12.0"
+    "node": ">=14.0"
   },
   "scripts": {
     "audit": "pnpm audit --fix",
-    "build": "tsup src/index.ts --format=esm,cjs --clean --dts",
+    "build": "tsup src/index.ts --format=esm --clean --dts",
     "lint": "run-p lint:*",
     "lint:src": "eslint ./src/**/*.ts --fix",
     "lint:test": "eslint ./test/**/*.ts --fix",
     "lint:tsc": "tsc --noEmit",
     "test": "vitest",
     "test:ci": "vitest run",
-    "watch": "tsup src/index.ts --format=esm,cjs --watch",
+    "watch": "tsup src/index.ts --format=esm --watch",
     "release": "run-s lint release:latest test:ci audit release:bump",
     "release:latest": "pnpm install",
     "release:bump": "bumpp"
