@@ -231,5 +231,7 @@ matter.language = function(str, options) {
  */
 
 matter.cache = {};
-matter.clearCache = () => (matter.cache = {});
+matter.clearCache = function() {
+  matter.cache = {};
+};
 module.exports = matter;

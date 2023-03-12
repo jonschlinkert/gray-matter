@@ -30,14 +30,14 @@ declare namespace matter {
     excerpt_separator?: string
     engines?: {
       [index: string]:
-        | ((string) => object)
-        | { parse: (string) => object; stringify?: (object) => string }
+        | ((input: string) => object)
+        | { parse: (input: string) => object; stringify?: (data: object) => string }
     }
     language?: string
     delimiters?: string | [string, string]
   }
   interface GrayMatterFile<I extends Input> {
-    data: object
+    data: { [key: string]: any }
     content: string
     excerpt?: string
     orig: Buffer | I

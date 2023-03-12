@@ -21,10 +21,25 @@ describe('gray-matter', function() {
     assert.equal(actual.orig.toString(), fixture);
   });
 
-  it('should throw parsing errors', function() {
+  it('extra characters should throw parsing errors', function() {
     assert.throws(function() {
       matter('---whatever\nabc: xyz\n---');
     });
+  });
+
+  it('boolean yaml types should still return the empty object', function() {
+    var actual = matter('--- true\n---');
+    assert.deepEqual(actual.data, {});
+  });
+
+  it('string yaml types should still return the empty object', function() {
+    var actual = matter('--- true\n---');
+    assert.deepEqual(actual.data, {});
+  });
+
+  it('number yaml types should still return the empty object', function() {
+    var actual = matter('--- 42\n---');
+    assert.deepEqual(actual.data, {});
   });
 
   it('should throw an error when a string is not passed:', function() {
