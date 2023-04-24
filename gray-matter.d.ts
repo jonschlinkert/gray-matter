@@ -19,6 +19,10 @@ declare function matter<
 >(input: I | { content: I }, options?: O): matter.GrayMatterFile<I>
 
 declare namespace matter {
+  type Engine = 
+    | ((input: string) => object)
+    | { parse: (input: string) => object; stringify?: (data: object) => string }
+
   type Input = string | Buffer
   interface GrayMatterOption<
     I extends Input,
@@ -28,11 +32,7 @@ declare namespace matter {
     eval?: boolean
     excerpt?: boolean | ((input: I, options: O) => string)
     excerpt_separator?: string
-    engines?: {
-      [index: string]:
-        | ((input: string) => object)
-        | { parse: (input: string) => object; stringify?: (data: object) => string }
-    }
+    engines?: { [index: string]: Engine }
     language?: string
     delimiters?: string | [string, string]
   }
@@ -45,6 +45,12 @@ declare namespace matter {
     matter: string
     stringify(lang: string): string
   }
+
+  export const engines: {
+    json: Engine,
+    yaml: Engine,
+    js: Engine
+  }; 
   
   /**
    * Stringify an object to YAML or the specified language, and
