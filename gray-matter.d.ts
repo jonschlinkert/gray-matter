@@ -49,7 +49,7 @@ declare namespace matter {
   export const engines: {
     json: Engine,
     yaml: Engine,
-    js: Engine
+    javascript: Engine
   }; 
   
   /**
