@@ -1,4 +1,4 @@
-# gray-matter [![NPM version](https://img.shields.io/npm/v/gray-matter.svg?style=flat)](https://www.npmjs.com/package/gray-matter) [![NPM monthly downloads](https://img.shields.io/npm/dm/gray-matter.svg?style=flat)](https://npmjs.org/package/gray-matter) [![NPM total downloads](https://img.shields.io/npm/dt/gray-matter.svg?style=flat)](https://npmjs.org/package/gray-matter) [![Linux Build Status](https://img.shields.io/travis/jonschlinkert/gray-matter.svg?style=flat&label=Travis)](https://travis-ci.org/jonschlinkert/gray-matter)
+# gray-matter [![NPM version](https://img.shields.io/npm/v/gray-matter.svg?style=flat)](https://www.npmjs.com/package/gray-matter) [![NPM monthly downloads](https://img.shields.io/npm/dm/gray-matter.svg?style=flat)](https://npmjs.org/package/gray-matter) [![NPM total downloads](https://img.shields.io/npm/dt/gray-matter.svg?style=flat)](https://npmjs.org/package/gray-matter)
 
 > Parse front-matter from a string or file. Fast, reliable and easy to use. Parses YAML front matter by default, but also has support for YAML, JSON, TOML or Coffee Front-Matter, with options to set custom delimiters. Used by metalsmith, assemble, verb and many other projects.
 
@@ -15,6 +15,20 @@ $ npm install --save gray-matter
 ## Heads up!
 
 Please see the [changelog](CHANGELOG.md) to learn about breaking changes that were made in v3.0.
+
+<br />
+
+# Sponsors
+
+Thanks to the following companies, organizations, and individuals for supporting the ongoing maintenance and development of gray-matter! [Become a Sponsor](https://github.com/sponsors/jonschlinkert) to add your logo to this README, or any of [my other projects](https://github.com/jonschlinkert?tab=repositories&q=&type=&language=&sort=stargazers)
+
+## Gold Sponsors
+
+| [<img src="https://github.com/jonschlinkert/gray-matter/assets/383994/12afc199-d1c3-450b-a75d-c5456c8201dc" alt="https://jaake.tech/" width="100"/>](https://jaake.tech/) |
+|:---:|
+| [https://jaake.tech/](https://jaake.tech/) |
+
+<br />
 
 ## What does this do?
 
@@ -47,9 +61,9 @@ Into an object like this:
 ```js
 {
   content: '<h1>Hello world!</h1>',
-  data: { 
-    title: 'Hello', 
-    slug: 'home' 
+  data: {
+    title: 'Hello',
+    slug: 'home'
   }
 }
 ```
@@ -119,9 +133,9 @@ Returns:
 ```js
 {
   content: '\nThis is content.',
-  data: { 
-    title: 'Front Matter' 
-  } 
+  data: {
+    title: 'Front Matter'
+  }
 }
 ```
 
@@ -276,10 +290,10 @@ const file = matter(str, { excerpt: true });
 Results in:
 
 ```js
-{ 
+{
   content: 'This is an excerpt.\n---\nThis is content',
   data: { foo: 'bar' },
-  excerpt: 'This is an excerpt.\n' 
+  excerpt: 'This is an excerpt.\n'
 }
 ```
 
@@ -308,7 +322,7 @@ const file =  matter([
 Results in:
 
 ```js
-{ 
+{
   content: 'Only this\nwill be\nin the\nexcerpt\nbut not this...',
   data: { foo: 'bar' },
   excerpt: 'Only this will be in the excerpt'
@@ -343,10 +357,10 @@ My awesome blog.
 Results in:
 
 ```js
-{ 
-  data: { title: 'Blog'}, 
-  excerpt: 'My awesome blog.', 
-  content: 'My awesome blog.\n<!-- end -->\n<h1>Hello world</h1>' 
+{
+  data: { title: 'Blog'},
+  excerpt: 'My awesome blog.',
+  content: 'My awesome blog.\n<!-- end -->\n<h1>Hello world</h1>'
 }
 ```
 
@@ -525,41 +539,44 @@ $ npm install -g verbose/verb#dev verb-generate-readme && verb
 You might also be interested in these projects:
 
 * [assemble](https://www.npmjs.com/package/assemble): Get the rocks out of your socks! Assemble makes you fast at creating web projects… [more](https://github.com/assemble/assemble) | [homepage](https://github.com/assemble/assemble "Get the rocks out of your socks! Assemble makes you fast at creating web projects. Assemble is used by thousands of projects for rapid prototyping, creating themes, scaffolds, boilerplates, e-books, UI components, API documentation, blogs, building websit")
-* [metalsmith](https://www.npmjs.com/package/metalsmith): An extremely simple, pluggable static site generator. | [homepage](https://github.com/segmentio/metalsmith#readme "An extremely simple, pluggable static site generator.")
+* [metalsmith](https://www.npmjs.com/package/metalsmith): An extremely simple, pluggable static site generator. | [homepage](https://metalsmith.io "An extremely simple, pluggable static site generator.")
 * [verb](https://www.npmjs.com/package/verb): Documentation generator for GitHub projects. Verb is extremely powerful, easy to use, and is used… [more](https://github.com/verbose/verb) | [homepage](https://github.com/verbose/verb "Documentation generator for GitHub projects. Verb is extremely powerful, easy to use, and is used on hundreds of projects of all sizes to generate everything from API docs to readmes.")
-* [gray-matter-loader](https://github.com/atlassian/gray-matter-loader): A webpack loader for gray-matter. [homepage](https://github.com/atlassian/gray-matter-loader#gray-matter-loader)
 
 ### Contributors
 
-| **Commits** | **Contributor** | 
+| **Commits** | **Contributor** |
 | --- | --- |
-| 174 | [jonschlinkert](https://github.com/jonschlinkert) |
-| 7 | [RobLoach](https://github.com/RobLoach) |
-| 5 | [heymind](https://github.com/heymind) |
-| 4 | [doowb](https://github.com/doowb) |
-| 3 | [aljopro](https://github.com/aljopro) |
-| 2 | [reccanti](https://github.com/reccanti) |
-| 2 | [onokumus](https://github.com/onokumus) |
-| 2 | [moozzyk](https://github.com/moozzyk) |
-| 1 | [Ajedi32](https://github.com/Ajedi32) |
-| 1 | [caesar](https://github.com/caesar) |
-| 1 | [ianstormtaylor](https://github.com/ianstormtaylor) |
-| 1 | [qm3ster](https://github.com/qm3ster) |
-| 1 | [zachwhaley](https://github.com/zachwhaley) |
+| 179 | [jonschlinkert](https://github.com/jonschlinkert) |
+| 13  | [robertmassaioli](https://github.com/robertmassaioli) |
+| 7   | [RobLoach](https://github.com/RobLoach) |
+| 5   | [doowb](https://github.com/doowb) |
+| 5   | [heymind](https://github.com/heymind) |
+| 3   | [aljopro](https://github.com/aljopro) |
+| 3   | [shawnbot](https://github.com/shawnbot) |
+| 2   | [reccanti](https://github.com/reccanti) |
+| 2   | [onokumus](https://github.com/onokumus) |
+| 2   | [moozzyk](https://github.com/moozzyk) |
+| 2   | [ajaymathur](https://github.com/ajaymathur) |
+| 1   | [Ajedi32](https://github.com/Ajedi32) |
+| 1   | [arlair](https://github.com/arlair) |
+| 1   | [caesar](https://github.com/caesar) |
+| 1   | [ianstormtaylor](https://github.com/ianstormtaylor) |
+| 1   | [qm3ster](https://github.com/qm3ster) |
+| 1   | [zachwhaley](https://github.com/zachwhaley) |
 
 ### Author
 
 **Jon Schlinkert**
 
-* [LinkedIn Profile](https://linkedin.com/in/jonschlinkert)
 * [GitHub Profile](https://github.com/jonschlinkert)
 * [Twitter Profile](https://twitter.com/jonschlinkert)
+* [LinkedIn Profile](https://linkedin.com/in/jonschlinkert)
 
 ### License
 
-Copyright © 2018, [Jon Schlinkert](https://github.com/jonschlinkert).
+Copyright © 2023, [Jon Schlinkert](https://github.com/jonschlinkert).
 Released under the [MIT License](LICENSE).
 
 ***
 
-_This file was generated by [verb-generate-readme](https://github.com/verbose/verb-generate-readme), v0.6.0, on April 01, 2018._
+_This file was generated by [verb-generate-readme](https://github.com/verbose/verb-generate-readme), v0.8.0, on July 12, 2023._

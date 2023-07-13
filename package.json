@@ -46,9 +46,9 @@
     "delimiter-regex": "^2.0.0",
     "extend-shallow": "^3.0.2",
     "front-matter": "^2.3.0",
-    "gulp-format-md": "^1.0.0",
+    "gulp-format-md": "^2.0.0",
     "minimist": "^1.2.0",
-    "mocha": "^6.1.4",
+    "mocha": "^10.2.0",
     "toml": "^2.3.3",
     "vinyl": "^2.1.0",
     "write": "^1.0.3"
