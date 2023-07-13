@@ -16,7 +16,7 @@ describe('custom parser:', function() {
     var actual = matter.read('./test/fixtures/lang-yaml.md', {
       parser: function customParser(str, opts) {
         try {
-          return YAML.safeLoad(str, opts);
+          return YAML.load(str, opts);
         } catch (err) {
           throw new SyntaxError(err);
         }
