@@ -92,15 +92,27 @@ var utils = {
       value: val
     });
   },
+  /**
+   * Returns true if `val` is a buffer
+   */
   isBuffer: (val) => {
     return typeOf(val) === "buffer";
   },
+  /**
+   * Returns true if `val` is an object
+   */
   isObject: (val) => {
     return typeOf(val) === "object";
   },
+  /**
+  * Cast `input` to a buffer
+  */
   toBuffer(input) {
     return typeof input === "string" ? Buffer.from(input) : input;
   },
+  /**
+  * Cast `val` to a string.
+  */
   toString(input) {
     if (utils.isBuffer(input)) {
       return stripBom(String(input));
@@ -110,9 +122,15 @@ var utils = {
     }
     return stripBom(input);
   },
+  /**
+  * Cast `val` to an array.
+  */
   arrayify(val) {
     return val ? Array.isArray(val) ? val : [val] : [];
   },
+  /**
+  * Returns true if `str` starts with `substr`.
+  */
   startsWith(str2, substr, len) {
     if (typeof len !== "number") {
       len = substr.length;
