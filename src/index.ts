@@ -100,7 +100,7 @@ const matterDict: GrayMatterApi = {
     // get the raw front-matter block
     f.matter = f.content.slice(0, closeIndex);
 
-    const block = f.matter.replace(/^\s*#[^\n]+/gm, "").trim();
+    const block = f.matter.replaceAll(/^\s*#[^\n]+/gm, "").trim();
     if (block === "") {
       f.isEmpty = true;
       f.empty = f.content;
