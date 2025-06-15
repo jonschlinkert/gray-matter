@@ -98,6 +98,11 @@ function parseMatter(file, options) {
   // get the raw front-matter block
   file.matter = str.slice(0, closeIndex);
 
+  // fix trailing '\r' on windows
+  if (file.matter.endsWith('\r')) {
+    file.matter = file.matter.slice(0, -1);
+  }
+
   const block = file.matter.replace(/^\s*#[^\n]+/gm, '').trim();
   if (block === '') {
     file.isEmpty = true;

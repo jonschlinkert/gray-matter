@@ -8,7 +8,7 @@
 'use strict';
 
 var assert = require('assert');
-var YAML = require('js-yaml');
+var { parse } = require('yaml');
 var matter = require('..');
 
 describe('custom parser:', function() {
@@ -16,7 +16,7 @@ describe('custom parser:', function() {
     var actual = matter.read('./test/fixtures/lang-yaml.md', {
       parser: function customParser(str, opts) {
         try {
-          return YAML.safeLoad(str, opts);
+          return parse(str, opts);
         } catch (err) {
           throw new SyntaxError(err);
         }
