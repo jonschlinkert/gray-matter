@@ -53,9 +53,9 @@ describe('parse YAML:', function() {
     assert(actual.hasOwnProperty('orig'));
   });
 
-  it('should use safeLoad when specified', function() {
+  it('should use load when specified', function() {
     var fixture = '---\nabc: xyz\nversion: 2\n---\n\n<span class="alert alert-info">This is an alert</span>\n';
-    var actual = matter(fixture, {safeLoad: true});
+    var actual = matter(fixture);
     assert.deepEqual(actual.data, {abc: 'xyz', version: 2});
     assert.equal(actual.content, '\n<span class="alert alert-info">This is an alert</span>\n');
     assert(actual.hasOwnProperty('orig'));

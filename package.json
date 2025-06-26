@@ -34,7 +34,7 @@
     "test": "mocha"
   },
   "dependencies": {
-    "js-yaml": "^3.13.1",
+    "js-yaml": "^4.1.0",
     "kind-of": "^6.0.2",
     "section-matter": "^1.0.0",
     "strip-bom-string": "^1.0.0"

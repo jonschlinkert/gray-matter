@@ -33,7 +33,7 @@
   ],
   "dependencies": {
     "define-property": "^2.0.2",
-    "js-yaml": "^3.11.0",
+    "js-yaml": "^4.1.0",
     "kind-of": "^6.0.2",
     "section-matter": "^1.0.0",
     "strip-bom-string": "^1.0.0"
