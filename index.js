@@ -3,6 +3,7 @@
 const fs = require('fs');
 const sections = require('section-matter');
 const defaults = require('./lib/defaults');
+const delimiters = require('./lib/delimiters');
 const stringify = require('./lib/stringify');
 const excerpt = require('./lib/excerpt');
 const engines = require('./lib/engines');
@@ -56,38 +57,29 @@ function matter(input, options) {
 
 function parseMatter(file, options) {
   const opts = defaults(options);
-  const open = opts.delimiters[0];
-  const close = '\n' + opts.delimiters[1];
   let str = file.content;
 
   if (opts.language) {
     file.language = opts.language;
   }
 
-  // get the length of the opening delimiter
-  const openLen = open.length;
-  if (!utils.startsWith(str, open, openLen)) {
+  const language = matter.language(str, opts);
+  if (language.name) {
+    file.language = language.name;
+  }
+
+  if (!language.delimiters) {
     excerpt(file, opts);
     return file;
   }
 
-  // if the next character after the opening delimiter is
-  // a character from the delimiter, then it's not a front-
-  // matter delimiter
-  if (str.charAt(openLen) === open.slice(-1)) {
-    return file;
-  }
+  file.delimiters = language.delimiters;
+
+  const close = '\n' + file.delimiters[1];
 
   // strip the opening delimiter
-  str = str.slice(openLen);
+  str = str.slice(language.raw.length);
   const len = str.length;
-
-  // use the language defined after first delimiter, if it exists
-  const language = matter.language(str, opts);
-  if (language.name) {
-    file.language = language.name;
-    str = str.slice(language.raw.length);
-  }
 
   // get the index of the closing delimiter
   let closeIndex = str.indexOf(close);
@@ -183,10 +175,10 @@ matter.read = function(filepath, options) {
 };
 
 /**
- * Returns true if the given `string` has front matter.
+ * Returns true if the given `string` has default front matter.
  * @param  {String} `string`
  * @param  {Object} `options`
- * @return {Boolean} True if front matter exists.
+ * @return {Boolean} True if default front matter exists.
  * @api public
  */
 
@@ -205,15 +197,32 @@ matter.test = function(str, options) {
 matter.language = function(str, options) {
   const opts = defaults(options);
   const open = opts.delimiters[0];
+  let raw, name, delims;
 
-  if (matter.test(str)) {
-    str = str.slice(open.length);
+  if (!matter.test(str, options)) {
+    return delimiters(str, options);
   }
+  // if the next character after the opening delimiter is
+  // a character from the delimiter, then it's not a front-
+  // matter delimiter
+  if (str.charAt(open.length) === open.slice(-1)) {
+    return {
+      raw: '',
+      name: '',
+      delimiters: null
+    };
+  }
+  str = str.slice(open.length);
+  name = str.slice(0, str.search(/\r?\n/));
+  raw = open + name;
+  name = name.trim();
+  delims = opts.delimiters;
+  delims[0] = open + name;
 
-  const language = str.slice(0, str.search(/\r?\n/));
   return {
-    raw: language,
-    name: language ? language.trim() : ''
+    raw,
+    name,
+    delimiters: delims
   };
 };
 

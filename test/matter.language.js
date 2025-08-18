@@ -13,31 +13,37 @@ var matter = require('..');
 describe('.language', function() {
   it('should detect the name of the language to parse', function() {
     assert.deepEqual(matter.language('---\nfoo: bar\n---'), {
-      raw: '',
-      name: ''
+      raw: '---',
+      name: '',
+      delimiters: ['---', '---']
     });
     assert.deepEqual(matter.language('---js\nfoo: bar\n---'), {
-      raw: 'js',
-      name: 'js'
+      raw: '---js',
+      name: 'js',
+      delimiters: ['---js', '---']
     });
     assert.deepEqual(matter.language('---coffee\nfoo: bar\n---'), {
-      raw: 'coffee',
-      name: 'coffee'
+      raw: '---coffee',
+      name: 'coffee',
+      delimiters: ['---coffee', '---']
     });
   });
 
   it('should work around whitespace', function() {
     assert.deepEqual(matter.language('--- \nfoo: bar\n---'), {
-      raw: ' ',
-      name: ''
+      raw: '--- ',
+      name: '',
+      delimiters: ['---', '---']
     });
     assert.deepEqual(matter.language('--- js \nfoo: bar\n---'), {
-      raw: ' js ',
-      name: 'js'
+      raw: '--- js ',
+      name: 'js',
+      delimiters: ['---js', '---']
     });
     assert.deepEqual(matter.language('---  coffee \nfoo: bar\n---'), {
-      raw: '  coffee ',
-      name: 'coffee'
+      raw: '---  coffee ',
+      name: 'coffee',
+      delimiters: ['---coffee', '---']
     });
   });
 });

@@ -45,4 +45,19 @@ describe('parse TOML:', function() {
       matter('---toml\n[props\nuser = "jonschlinkert"\n---\nContent\n');
     });
   });
+
+  it('should auto-detect TOML with custom delimiters.', function() {
+    var actual = parse('+++\ntitle = "autodetect-TOML-custom-delims"\n[props]\nuser = "jonschlinkert"\n+++\nContent\n', {
+      engines: {
+        toml: {
+          parse: toml.parse.bind(toml),
+          delimiters: '+++'
+        }
+      }
+    });
+    assert.equal(actual.data.title, 'autodetect-TOML-custom-delims');
+    assert(actual.hasOwnProperty('data'));
+    assert(actual.hasOwnProperty('content'));
+    assert(actual.hasOwnProperty('orig'));
+  });
 });

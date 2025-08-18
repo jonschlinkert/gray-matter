@@ -51,6 +51,28 @@ describe('.stringify', function() {
     ].join('\n'));
   });
 
+  it('should stringify a file object with custom delimiters', function() {
+    var file = { content: 'Name: {{name}}', data: {name: 'gray-matter'}, delimiters: ['+++', '+++'] };
+    var actual = matter.stringify(file);
+    assert.equal(actual, [
+      '+++',
+      'name: gray-matter',
+      '+++',
+      'Name: {{name}}\n'
+    ].join('\n'));
+  });
+
+  it('should stringify a file object with extra language info', function() {
+    var file = { content: 'Name: {{name}}', data: {name: 'gray-matter'}, delimiters: ['---toml', '---'] };
+    var actual = matter.stringify(file);
+    assert.equal(actual, [
+      '---toml',
+      'name: gray-matter',
+      '---',
+      'Name: {{name}}\n'
+    ].join('\n'));
+  });
+
   it('should stringify an excerpt', function() {
     var file = { content: 'Name: {{name}}', data: {name: 'gray-matter'} };
     file.excerpt = 'This is an excerpt.';
