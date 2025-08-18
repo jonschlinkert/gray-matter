@@ -225,4 +225,5 @@ matter.cache = {};
 matter.clearCache = function() {
   matter.cache = {};
 };
+matter.default = matter;
 module.exports = matter;
