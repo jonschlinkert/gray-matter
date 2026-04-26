@@ -13,39 +13,48 @@
  * @return {Object}
  * @api public
  */
+
 declare function matter<
   I extends matter.Input,
-  O extends matter.GrayMatterOption<I, O>
->(input: I | { content: I }, options?: O): matter.GrayMatterFile<I>
+  O extends matter.GrayMatterOption<I, O>,
+  D extends matter.ParsedData = matter.ParsedData,
+>(input: I | { content: I }, options?: O): matter.GrayMatterFile<I, D>;
 
 declare namespace matter {
-  type Input = string | Buffer
+  type Input = string | Buffer;
+
+  type ParsedData = Record<string, any>;
+
   interface GrayMatterOption<
     I extends Input,
-    O extends GrayMatterOption<I, O>
+    O extends GrayMatterOption<I, O>,
   > {
-    parser?: () => void
-    eval?: boolean
-    excerpt?: boolean | ((input: I, options: O) => string)
-    excerpt_separator?: string
+    parser?: () => void;
+    eval?: boolean;
+    excerpt?: boolean | ((input: I, options: O) => string);
+    excerpt_separator?: string;
     engines?: {
       [index: string]:
         | ((input: string) => object)
-        | { parse: (input: string) => object; stringify?: (data: object) => string }
-    }
-    language?: string
-    delimiters?: string | [string, string]
+        | {
+            parse: (input: string) => object;
+            stringify?: (data: object) => string;
+          };
+    };
+    language?: string;
+    delimiters?: string | [string, string];
   }
-  interface GrayMatterFile<I extends Input> {
-    data: { [key: string]: any }
-    content: string
-    excerpt?: string
-    orig: Buffer | I
-    language: string
-    matter: string
-    stringify(lang: string): string
+
+  interface GrayMatterFile<I extends Input, D extends ParsedData = ParsedData> {
+    data: D;
+    content: string;
+    excerpt?: string;
+    orig: Buffer | I;
+    language: string;
+    matter: string;
+    stringify(lang: string): string;
   }
-  
+
   /**
    * Stringify an object to YAML or the specified language, and
    * append it to the given string. By default, only YAML and JSON
@@ -68,8 +77,8 @@ declare namespace matter {
   export function stringify<O extends GrayMatterOption<string, O>>(
     file: string | { content: string },
     data: object,
-    options?: GrayMatterOption<string, O>
-  ): string
+    options?: GrayMatterOption<string, O>,
+  ): string;
 
   /**
    * Synchronously read a file from the file system and parse
@@ -82,10 +91,13 @@ declare namespace matter {
    * @param {Object} `options` [Options](#options) to pass to gray-matter.
    * @return {Object} Returns [an object](#returned-object) with `data` and `content`
    */
-  export function read<O extends GrayMatterOption<string, O>>(
+  export function read<
+    O extends GrayMatterOption<string, O>,
+    D extends ParsedData = ParsedData,
+  >(
     fp: string,
-    options?: GrayMatterOption<string, O>
-  ): matter.GrayMatterFile<string>
+    options?: GrayMatterOption<string, O>,
+  ): matter.GrayMatterFile<string, D>;
 
   /**
    * Returns true if the given `string` has front matter.
@@ -95,8 +107,8 @@ declare namespace matter {
    */
   export function test<O extends matter.GrayMatterOption<string, O>>(
     str: string,
-    options?: GrayMatterOption<string, O>
-  ): boolean
+    options?: GrayMatterOption<string, O>,
+  ): boolean;
 
   /**
    * Detect the language to use, if one is defined after the
@@ -107,8 +119,8 @@ declare namespace matter {
    */
   export function language<O extends matter.GrayMatterOption<string, O>>(
     str: string,
-    options?: GrayMatterOption<string, O>
-  ): { name: string; raw: string }
+    options?: GrayMatterOption<string, O>,
+  ): { name: string; raw: string };
 }
 
-export = matter
+export = matter;
