@@ -38,16 +38,23 @@ function matter(input, options) {
     if (cached) {
       file = Object.assign({}, cached);
       file.orig = cached.orig;
+      file.matter = cached.matter;
+      file.language = cached.language;
       return file;
     }
+  }
 
-    // only cache if there are no options passed. if we cache when options
-    // are passed, we would need to also cache options values, which would
-    // negate any performance benefits of caching
+  const result = parseMatter(file, options);
+
+  // only cache if there are no options passed. if we cache when options
+  // are passed, we would need to also cache options values, which would
+  // negate any performance benefits of caching.
+  // Cache after parseMatter succeeds so invalid front-matter is not cached (fixes #166).
+  if (!options) {
     matter.cache[file.content] = file;
   }
 
-  return parseMatter(file, options);
+  return result;
 }
 
 /**
