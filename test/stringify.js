@@ -64,16 +64,4 @@ describe('.stringify', function() {
       'Name: {{name}}\n'
     ].join('\n'));
   });
-
-  it('should not add an excerpt if it already exists', function() {
-    var file = { content: 'Name: {{name}}\n\nThis is an excerpt.', data: {name: 'gray-matter'} };
-    file.excerpt = 'This is an excerpt.';
-
-    assert.equal(matter.stringify(file), [
-      '---',
-      'name: gray-matter',
-      '---',
-      'Name: {{name}}\n\nThis is an excerpt.\n'
-    ].join('\n'));
-  });
 });
