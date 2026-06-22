@@ -158,7 +158,11 @@ matter.engines = engines;
  */
 
 matter.stringify = function(file, data, options) {
-  if (typeof file === 'string') file = matter(file, options);
+  // A string argument is the body content to append to the stringified
+  // front-matter, so it must be treated as opaque content. Re-parsing it
+  // with matter() would extract a leading delimiter block out of the body
+  // and merge it into the front-matter, corrupting both content and data.
+  if (typeof file === 'string') file = { content: file, data: {} };
   return stringify(file, data, options);
 };
 
