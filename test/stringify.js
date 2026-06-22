@@ -29,6 +29,13 @@ describe('.stringify', function() {
     assert.equal(matter.stringify('Name: {{name}}\n'), 'Name: {{name}}\n');
   });
 
+  it('should append a content string that starts with a delimiter instead of parsing it', function() {
+    var body = '---\nnot: real\n---\nHello world';
+    var parsed = matter(matter.stringify(body, {title: 'Home'}));
+    assert.equal(parsed.content, body + '\n');
+    assert.deepEqual(parsed.data, {title: 'Home'});
+  });
+
   it('should use custom delimiters to stringify', function() {
     var data = {name: 'gray-matter'};
     var actual = matter.stringify('Name: {{name}}', data, {delims: '~~~'});
