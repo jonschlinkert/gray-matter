@@ -43,6 +43,8 @@ declare namespace matter {
     orig: Buffer | I
     language: string
     matter: string
+    isEmpty: boolean
+    empty?: string
     stringify(lang: string): string
   }
   
