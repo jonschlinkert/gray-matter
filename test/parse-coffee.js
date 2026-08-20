@@ -7,12 +7,14 @@
 
 'use strict';
 
-var path = require('path');
-var assert = require('assert');
-var extend = require('extend-shallow');
-var matter = require('../');
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import assert from 'node:assert';
+import extend from 'extend-shallow';
+import matter from '../index.js';
+import coffee from 'coffeescript';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 var fixture = path.join.bind(path, __dirname, 'fixtures');
-var coffee = require('coffeescript');
 var defaults = {
   engines: {
     coffee: {

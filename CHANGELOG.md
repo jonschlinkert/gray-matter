@@ -1,5 +1,20 @@
 # Release history
 
+## 5.0.0 - 2026-08-20
+
+### Breaking changes
+
+- Converted to pure ES modules (`type: "module"`). The package is no longer consumable via CommonJS `require()`; use `import` instead.
+- Now requires node v20.19.0 or higher.
+
+### Changed
+
+- Added an `exports` map with support for the package root, `./lib/*` subpaths and `./package.json`.
+
+### Removed
+
+- Dropped support for node 6–18.
+
 ## 4.0.0 - 2018-04-01
 
 ### Breaking changes

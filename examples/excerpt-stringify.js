@@ -1,5 +1,7 @@
-const matter = require('..');
-const green = require('ansi-green');
+'use strict';
+
+import matter from '../index.js';
+import green from 'ansi-green';
 
 const file = matter([
   '---',

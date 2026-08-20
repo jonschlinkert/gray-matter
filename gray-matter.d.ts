@@ -4,7 +4,7 @@
  * with `data`, `content` and other [useful properties](#returned-object).
  *
  * ```js
- * var matter = require('gray-matter');
+ * import matter from 'gray-matter';
  * console.log(matter('---\ntitle: Home\n---\nOther stuff'));
  * //=> { data: { title: 'Home'}, content: 'Other stuff' }
  * ```
@@ -45,7 +45,7 @@ declare namespace matter {
     matter: string
     stringify(lang: string): string
   }
-  
+
   /**
    * Stringify an object to YAML or the specified language, and
    * append it to the given string. By default, only YAML and JSON
@@ -65,7 +65,7 @@ declare namespace matter {
    * @param {Object} `options` [Options](#options) to pass to gray-matter and [js-yaml].
    * @return {String} Returns a string created by wrapping stringified yaml with delimiters, and appending that to the given string.
    */
-  export function stringify<O extends GrayMatterOption<string, O>>(
+  function stringify<O extends GrayMatterOption<string, O>>(
     file: string | { content: string },
     data: object,
     options?: GrayMatterOption<string, O>
@@ -76,13 +76,13 @@ declare namespace matter {
    * front matter. Returns the same object as the [main function](#matter).
    *
    * ```js
-   * var file = matter.read('./content/blog-post.md');
+   * const file = matter.read('./content/blog-post.md');
    * ```
    * @param {String} `filepath` file path of the file to read.
    * @param {Object} `options` [Options](#options) to pass to gray-matter.
    * @return {Object} Returns [an object](#returned-object) with `data` and `content`
    */
-  export function read<O extends GrayMatterOption<string, O>>(
+  function read<O extends GrayMatterOption<string, O>>(
     fp: string,
     options?: GrayMatterOption<string, O>
   ): matter.GrayMatterFile<string>
@@ -93,7 +93,7 @@ declare namespace matter {
    * @param  {Object} `options`
    * @return {Boolean} True if front matter exists.
    */
-  export function test<O extends matter.GrayMatterOption<string, O>>(
+  function test<O extends GrayMatterOption<string, O>>(
     str: string,
     options?: GrayMatterOption<string, O>
   ): boolean
@@ -105,10 +105,15 @@ declare namespace matter {
    * @param  {Object} `options`
    * @return {Object} Object with `raw` (actual language string), and `name`, the language with whitespace trimmed
    */
-  export function language<O extends matter.GrayMatterOption<string, O>>(
+  function language<O extends GrayMatterOption<string, O>>(
     str: string,
     options?: GrayMatterOption<string, O>
   ): { name: string; raw: string }
 }
 
-export = matter
+export default matter
+export { matter }
+export const read: typeof matter.read
+export const test: typeof matter.test
+export const language: typeof matter.language
+export const stringify: typeof matter.stringify

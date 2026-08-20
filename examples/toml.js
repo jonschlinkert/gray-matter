@@ -1,5 +1,7 @@
-const matter = require('..');
-const toml = require('toml');
+'use strict';
+
+import matter from '../index.js';
+import toml from 'toml';
 
 /**
  * Parse TOML front-matter

@@ -1,7 +1,11 @@
-const path = require('path');
-const matter = require('..');
-const coffee = require('coffeescript');
-const green = require('ansi-green');
+'use strict';
+
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import matter from '../index.js';
+import coffee from 'coffeescript';
+import green from 'ansi-green';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const fixture = path.join.bind(path, __dirname, 'fixtures');
 let file;
 

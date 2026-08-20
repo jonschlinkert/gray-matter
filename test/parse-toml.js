@@ -7,10 +7,10 @@
 
 'use strict';
 
-var assert = require('assert');
-var matter = require('..');
-var extend = require('extend-shallow');
-var toml = require('toml');
+import assert from 'node:assert';
+import matter from '../index.js';
+import extend from 'extend-shallow';
+import toml from 'toml';
 var defaults = {
   engines: {
     toml: toml.parse.bind(toml)

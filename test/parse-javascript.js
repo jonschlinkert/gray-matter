@@ -7,8 +7,8 @@
 
 'use strict';
 
-var assert = require('assert');
-var matter = require('../');
+import assert from 'node:assert';
+import matter from '../index.js';
 
 describe('parse javascript:', function() {
   it('should parse front matter when options.lang is javascript', function() {

@@ -32,8 +32,8 @@ Thanks to the following companies, organizations, and individuals for supporting
 Add the HTML in the following example to `example.html`, then add the following code to `example.js` and run `$ node example` (without the `$`):
 
 ```js
-const fs = require('fs');
-const matter = require('gray-matter');
+import fs from 'node:fs';
+import matter from 'gray-matter';
 const str = fs.readFileSync('example.html', 'utf8');
 console.log(matter(str));
 ```
@@ -102,18 +102,16 @@ Some libraries met most of the requirements, but _none met all of them_.
 
 ## Usage
 
-Using Node's `require()` system:
+Using ES modules:
 
 ```js
-const matter = require('gray-matter');
+import matter from 'gray-matter';
 ```
 
 Or with [typescript](https://www.typescriptlang.org)
 
 ```js
-import matter = require('gray-matter');
-// OR
-import * as matter from 'gray-matter';
+import matter from 'gray-matter';
 ```
 
 Pass a string and [options](#options) to gray-matter:
@@ -209,7 +207,7 @@ Takes a string or object with `content` property, extracts and parses front-matt
 **Example**
 
 ```js
-const matter = require('gray-matter');
+import matter from 'gray-matter';
 console.log(matter('---\ntitle: Home\n---\nOther stuff'));
 //=> { data: { title: 'Home'}, content: 'Other stuff' }
 ```

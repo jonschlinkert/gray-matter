@@ -1,4 +1,6 @@
-const matter = require('..');
+'use strict';
+
+import matter from '../index.js';
 
 /**
  * Parse YAML front-matter
