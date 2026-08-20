@@ -7,9 +7,11 @@
 
 'use strict';
 
-var path = require('path');
-var assert = require('assert');
-var matter = require('..');
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import assert from 'node:assert';
+import matter from '../index.js';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 var fixture = path.join.bind(path, __dirname, 'fixtures');
 
 describe('.read', function() {

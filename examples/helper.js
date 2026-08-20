@@ -3,10 +3,14 @@
  * the list of links to examples in the readme.
  */
 
-const fs = require('fs');
-const path = require('path');
+'use strict';
 
-module.exports = function() {
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+export default function() {
   const files = fs.readdirSync(__dirname);
   const links = [];
   for (let i = 0; i < files.length; i++) {
@@ -18,4 +22,4 @@ module.exports = function() {
     }
   }
   return links.join('\n');
-};
+}

@@ -1,9 +1,8 @@
 'use strict';
 
-require('mocha');
-var assert = require('assert');
-var utils = require('../lib/utils');
-var matter = require('..');
+import assert from 'node:assert';
+import * as utils from '../lib/utils.js';
+import matter from '../index.js';
 
 describe('gray-matter (windows carriage returns)', function() {
   it('should extract YAML front matter', function() {

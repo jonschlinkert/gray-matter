@@ -7,9 +7,9 @@
 
 'use strict';
 
-var assert = require('assert');
-var YAML = require('js-yaml');
-var matter = require('..');
+import assert from 'node:assert';
+import YAML from 'js-yaml';
+import matter from '../index.js';
 
 describe('custom parser:', function() {
   it('should allow a custom parser to be registered:', function() {

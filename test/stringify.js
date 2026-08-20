@@ -7,8 +7,8 @@
 
 'use strict';
 
-var assert = require('assert');
-var matter = require('../');
+import assert from 'node:assert';
+import matter from '../index.js';
 
 describe('.stringify', function() {
   it('should stringify front-matter from a file object', function() {

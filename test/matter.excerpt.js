@@ -7,9 +7,8 @@
 
 'use strict';
 
-require('mocha');
-var assert = require('assert');
-var matter = require('..');
+import assert from 'node:assert';
+import matter from '../index.js';
 
 describe('.excerpt', function() {
   it('should get an excerpt after front matter', function() {

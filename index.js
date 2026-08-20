@@ -1,14 +1,14 @@
 'use strict';
 
-const fs = require('fs');
-const sections = require('section-matter');
-const defaults = require('./lib/defaults');
-const stringify = require('./lib/stringify');
-const excerpt = require('./lib/excerpt');
-const engines = require('./lib/engines');
-const toFile = require('./lib/to-file');
-const parse = require('./lib/parse');
-const utils = require('./lib/utils');
+import fs from 'fs';
+import sections from 'section-matter';
+import defaults from './lib/defaults.js';
+import stringifyLib from './lib/stringify.js';
+import excerpt from './lib/excerpt.js';
+import engines from './lib/engines.js';
+import toFile from './lib/to-file.js';
+import parse from './lib/parse.js';
+import * as utils from './lib/utils.js';
 
 /**
  * Takes a string or object with `content` property, extracts
@@ -16,7 +16,7 @@ const utils = require('./lib/utils');
  * with `data`, `content` and other [useful properties](#returned-object).
  *
  * ```js
- * const matter = require('gray-matter');
+ * import matter from 'gray-matter';
  * console.log(matter('---\ntitle: Home\n---\nOther stuff'));
  * //=> { data: { title: 'Home'}, content: 'Other stuff' }
  * ```
@@ -159,7 +159,7 @@ matter.engines = engines;
 
 matter.stringify = function(file, data, options) {
   if (typeof file === 'string') file = matter(file, options);
-  return stringify(file, data, options);
+  return stringifyLib(file, data, options);
 };
 
 /**
@@ -225,4 +225,11 @@ matter.cache = {};
 matter.clearCache = function() {
   matter.cache = {};
 };
-module.exports = matter;
+
+export default matter;
+export { matter, engines };
+export const read = matter.read;
+export const test = matter.test;
+export const language = matter.language;
+export const stringify = matter.stringify;
+export const clearCache = matter.clearCache;

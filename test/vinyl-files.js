@@ -7,9 +7,9 @@
 
 'use strict';
 
-var assert = require('assert');
-var File = require('vinyl');
-var matter = require('..');
+import assert from 'node:assert';
+import File from 'vinyl';
+import matter from '../index.js';
 
 describe('vinyl files', function() {
   it('should take a vinyl file', function() {
