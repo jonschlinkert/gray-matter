@@ -4,6 +4,8 @@
 
 Please consider following this project's author, [Jon Schlinkert](https://github.com/jonschlinkert), and consider starring the project to show your :heart: and support.
 
+**Security overrides applied:** npm `overrides` force patched versions of vulnerable transitive dev dependencies (braces 3.0.3, micromatch 4.0.8, serialize-javascript 7.0.5) to clear security advisories.
+
 ## Install
 
 Install with [npm](https://www.npmjs.com/):
