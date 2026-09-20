@@ -32,7 +32,10 @@ function matter(input, options) {
   }
 
   let file = toFile(input);
-  const cached = matter.cache[file.content];
+  // Cache key must be the original input string. parseMatter mutates
+  // file.content to the body without front-matter.
+  const cacheKey = file.content;
+  const cached = matter.cache[cacheKey];
 
   if (!options) {
     if (cached) {
@@ -40,14 +43,18 @@ function matter(input, options) {
       file.orig = cached.orig;
       return file;
     }
-
-    // only cache if there are no options passed. if we cache when options
-    // are passed, we would need to also cache options values, which would
-    // negate any performance benefits of caching
-    matter.cache[file.content] = file;
   }
 
-  return parseMatter(file, options);
+  file = parseMatter(file, options);
+
+  // only cache successful parses when no options were passed. Caching before
+  // parseMatter left a half-built file in the cache when YAML threw, so the
+  // next call returned that stub instead of rethrowing (issue #166).
+  if (!options) {
+    matter.cache[cacheKey] = file;
+  }
+
+  return file;
 }
 
 /**

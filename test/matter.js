@@ -27,6 +27,18 @@ describe('gray-matter', function() {
     });
   });
 
+  it('should not cache a result when parsing throws', function() {
+    matter.clearCache();
+    var bad = '---\n{}+\n---\n';
+    assert.throws(function() {
+      matter(bad);
+    });
+    assert.throws(function() {
+      matter(bad);
+    });
+    matter.clearCache();
+  });
+
   it('boolean yaml types should still return the empty object', function() {
     var actual = matter('--- true\n---');
     assert.deepEqual(actual.data, {});
