@@ -221,8 +221,8 @@ matter.language = function(str, options) {
  * Expose `matter`
  */
 
-matter.cache = {};
+matter.cache = Object.create(null);
 matter.clearCache = function() {
-  matter.cache = {};
+  matter.cache = Object.create(null);
 };
 module.exports = matter;
