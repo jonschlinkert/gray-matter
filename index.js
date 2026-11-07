@@ -38,6 +38,8 @@ function matter(input, options) {
     if (cached) {
       file = Object.assign({}, cached);
       file.orig = cached.orig;
+      utils.define(file, 'matter', cached.matter);
+      utils.define(file, 'language', cached.language);
       return file;
     }
 
