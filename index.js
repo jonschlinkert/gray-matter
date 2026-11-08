@@ -32,7 +32,8 @@ function matter(input, options) {
   }
 
   let file = toFile(input);
-  const cached = matter.cache[file.content];
+  const cacheKey = file.content;
+  const cached = matter.cache[cacheKey];
 
   if (!options) {
     if (cached) {
@@ -40,14 +41,18 @@ function matter(input, options) {
       file.orig = cached.orig;
       return file;
     }
+  }
 
+  const result = parseMatter(file, options);
+
+  if (!options) {
     // only cache if there are no options passed. if we cache when options
     // are passed, we would need to also cache options values, which would
     // negate any performance benefits of caching
-    matter.cache[file.content] = file;
+    matter.cache[cacheKey] = result;
   }
 
-  return parseMatter(file, options);
+  return result;
 }
 
 /**
